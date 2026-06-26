@@ -1,0 +1,11 @@
+:root {
+  --color-headline:        #0F172A;
+  --color-body:            #475569;
+  --color-muted:           #64748B;
+  --color-brand-red:       #A01D25;
+  --color-brand-red-hover: #831820;
+  --color-bg:              #FAFAF9;
+  --color-card:            #FFFFFF;
+  --color-border:          #E2E8F0;
+  --color-border-strong:   #CBD5E1;
+}

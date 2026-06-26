@@ -1,17 +1,62 @@
 ---
-const buildTime = new Date().toISOString();
+// THROWAWAY A1 VERIFICATION SPECIMEN
+// Replace with real Home page content at A3.
+// Purpose: visually confirm type scale, color tokens, and font loading on the dev preview.
+// (Mirrors the old Bricks /style-test/ page.)
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Sawtooth Roofing — A0</title>
-  </head>
-  <body>
-    <h1>Sawtooth Roofing — Astro A0 OK</h1>
-    <p>Build timestamp: {buildTime}</p>
-  </body>
-</html>
+<BaseLayout
+  title="Sawtooth Roofing — A1 Type Specimen"
+  description="A1 design-foundation verification page. Replace with real content at A3."
+>
+  <main style="max-width: 72rem; margin: 6rem auto; padding: 0 2.4rem;">
+
+    <h1>Roofing You Can <span style="color: var(--color-brand-red);">Trust</span></h1>
+
+    <h2>Licensed, Insured & Local Since 2003</h2>
+
+    <h3>Our Services</h3>
+
+    <p class="lead">
+      Sawtooth Roofing delivers residential and commercial roofing across the Treasure Valley —
+      repairs, replacements, and storm-damage inspections done right the first time.
+    </p>
+
+    <p>
+      We show up on time, clean up when we leave, and back every job with a written warranty.
+      Our crews are W-2 employees, not subcontractors — the same faces on every job.
+      One word sets us apart: <span style="color: var(--color-brand-red);">accountability</span>.
+    </p>
+
+    <p class="caption">Trusted by 1,200+ homeowners in Ada & Canyon County</p>
+
+    <br />
+
+    <label for="demo-input">Your zip code</label><br />
+    <input
+      id="demo-input"
+      type="text"
+      placeholder="83702"
+      style="
+        font-size: 1.4rem;
+        padding: 0.8rem 1.2rem;
+        border: 1px solid var(--color-border);
+        border-radius: 0.4rem;
+        margin-top: 0.4rem;
+        margin-bottom: 1.6rem;
+        display: block;
+      "
+    />
+
+    <button type="button">Get a Free Estimate</button>
+
+    <br /><br />
+
+    <small>
+      By submitting you agree to our <a href="/privacy">Privacy Policy</a>.
+      No spam. No robo-calls.
+    </small>
+
+  </main>
+</BaseLayout>

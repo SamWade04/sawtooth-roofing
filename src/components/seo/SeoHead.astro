@@ -1,0 +1,42 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogType?: string;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogTitle,
+  ogDescription,
+  ogType = 'website',
+} = Astro.props;
+
+const SITE_NAME = 'Sawtooth Roofing'; // the ONLY hardcoded string allowed
+
+const resolvedTitle = title ?? SITE_NAME;
+
+// Canonical: prop → derive from Astro.site → omit
+const resolvedCanonical = canonical
+  ?? (Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined);
+
+// OG description: prefer dedicated ogDescription, fall back to description
+const resolvedOgDescription = ogDescription ?? description;
+
+// TODO A5: og:image, og:url, twitter card, JSON-LD
+---
+
+<title>{resolvedTitle}</title>
+
+{description && <meta name="description" content={description} />}
+
+{resolvedCanonical && <link rel="canonical" href={resolvedCanonical} />}
+
+<meta property="og:title" content={ogTitle ?? resolvedTitle} />
+{resolvedOgDescription && <meta property="og:description" content={resolvedOgDescription} />}
+<meta property="og:type" content={ogType} />
