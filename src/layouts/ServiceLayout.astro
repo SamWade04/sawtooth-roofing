@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  entry: CollectionEntry<'services'>;
+}
+
+const { entry } = Astro.props;
+const { title, summary, seo } = entry.data;
+
+// Title/description flow through BaseLayout → SeoHead (single source of <title>).
+// Fallback formula is adjustable at A5.
+const pageTitle = seo?.title ?? `${title} | Sawtooth Roofing`;
+const pageDescription = seo?.description ?? summary;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <main class="service-page">
+    <h1>{title}</h1>
+    <div class="service-body">
+      <slot />
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .service-page {
+    max-width: 72rem;
+    margin: 4rem auto;
+    padding: 0 2.4rem;
+  }
+
+  .service-body {
+    margin-top: 1.6rem;
+  }
+</style>

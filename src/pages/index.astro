@@ -1,62 +1,184 @@
 ---
-// THROWAWAY A1 VERIFICATION SPECIMEN
-// Replace with real Home page content at A3.
-// Purpose: visually confirm type scale, color tokens, and font loading on the dev preview.
-// (Mirrors the old Bricks /style-test/ page.)
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const services = (await getCollection('services', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+// Canon service-area cities; slug = lowercase city.
+const cities = ['Nampa', 'Caldwell', 'Meridian', 'Boise', 'Kuna'];
 ---
 
 <BaseLayout
-  title="Sawtooth Roofing — A1 Type Specimen"
-  description="A1 design-foundation verification page. Replace with real content at A3."
+  title="Sawtooth Roofing"
+  description="TODO[A3-content]: home meta description, canon-sourced."
 >
-  <main style="max-width: 72rem; margin: 6rem auto; padding: 0 2.4rem;">
+  <main class="home">
 
-    <h1>Roofing You Can <span style="color: var(--color-brand-red);">Trust</span></h1>
+    <!-- ── Hero ── -->
+    <section class="hero">
+      <h1>
+        <!-- TODO[A3-content]: hero headline, canon-sourced. Do NOT fabricate. -->
+        TODO[A3-content]: hero headline
+      </h1>
+      <p class="lead">
+        <!-- TODO[A3-content]: hero subhead, canon-sourced. Do NOT fabricate. -->
+        TODO[A3-content]: hero subhead
+      </p>
+      <a href="/contact" class="cta-button">Get a Free Estimate</a>
+    </section>
 
-    <h2>Licensed, Insured & Local Since 2003</h2>
+    <!-- ── Trust strip ── -->
+    {/* F3: verify live GBP count/score at publish — doc 30 §2 */}
+    <section class="trust-strip">
+      <p class="caption">5.0 &#9733; &middot; 83 Google reviews</p>
+    </section>
 
-    <h3>Our Services</h3>
+    <!-- ── Services grid ── -->
+    <section class="home-services">
+      <h2>Our Services</h2>
+      <ul class="service-grid">
+        {
+          services.map((service) => (
+            <li class="service-card">
+              <a href={`/services/${service.id}`} class="service-card-link">
+                <h3>{service.data.title}</h3>
+                <p>{service.data.summary}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
 
-    <p class="lead">
-      Sawtooth Roofing delivers residential and commercial roofing across the Treasure Valley —
-      repairs, replacements, and storm-damage inspections done right the first time.
-    </p>
+    <!-- ── Service area ── -->
+    <section class="service-area">
+      <h2>Areas We Serve</h2>
+      <p class="service-area-line">
+        {
+          cities.map((city, i) => (
+            <>
+              <a href={`/locations/${city.toLowerCase()}`} class="city-link">{city}</a>
+              {i < cities.length - 1 && <span class="sep">&middot;</span>}
+            </>
+          ))
+        }
+      </p>
+    </section>
 
-    <p>
-      We show up on time, clean up when we leave, and back every job with a written warranty.
-      Our crews are W-2 employees, not subcontractors — the same faces on every job.
-      One word sets us apart: <span style="color: var(--color-brand-red);">accountability</span>.
-    </p>
-
-    <p class="caption">Trusted by 1,200+ homeowners in Ada & Canyon County</p>
-
-    <br />
-
-    <label for="demo-input">Your zip code</label><br />
-    <input
-      id="demo-input"
-      type="text"
-      placeholder="83702"
-      style="
-        font-size: 1.4rem;
-        padding: 0.8rem 1.2rem;
-        border: 1px solid var(--color-border);
-        border-radius: 0.4rem;
-        margin-top: 0.4rem;
-        margin-bottom: 1.6rem;
-        display: block;
-      "
-    />
-
-    <button type="button">Get a Free Estimate</button>
-
-    <br /><br />
-
-    <small>
-      By submitting you agree to our <a href="/privacy">Privacy Policy</a>.
-      No spam. No robo-calls.
-    </small>
+    <!-- TODO[A3-content]: remaining home body — value props, process, CTA repeat. Canon-sourced. Do NOT fabricate. -->
 
   </main>
 </BaseLayout>
+
+<style>
+  .home {
+    max-width: 96rem;
+    margin: 0 auto;
+    padding: 0 2.4rem;
+  }
+
+  section {
+    margin: 4rem 0;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    margin-top: 4rem;
+  }
+
+  .hero .lead {
+    margin-top: 1.6rem;
+    max-width: 60rem;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2.4rem;
+    padding: 1.2rem 2.4rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    color: var(--color-card);
+    background: var(--color-brand-red);
+    border-radius: 0.4rem;
+    text-decoration: none;
+  }
+
+  .cta-button:hover {
+    background: var(--color-brand-red-hover);
+  }
+
+  @media (min-width: 768px) {
+    .cta-button {
+      font-size: 1.7rem;
+    }
+  }
+
+  /* ── Trust strip ── */
+  .trust-strip .caption {
+    color: var(--color-headline);
+  }
+
+  /* ── Services grid ── */
+  .service-grid {
+    list-style: none;
+    padding: 0;
+    margin: 2.4rem 0 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+
+  @media (min-width: 768px) {
+    .service-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .service-card {
+    display: flex;
+  }
+
+  .service-card-link {
+    display: block;
+    width: 100%;
+    padding: 2.4rem;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    text-decoration: none;
+  }
+
+  .service-card-link:hover {
+    border-color: var(--color-border-strong);
+  }
+
+  .service-card p {
+    margin-top: 0.8rem;
+  }
+
+  /* ── Service area ── */
+  .service-area-line {
+    margin-top: 1.2rem;
+  }
+
+  .city-link {
+    color: var(--color-brand-red);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .city-link:hover {
+    color: var(--color-brand-red-hover);
+  }
+
+  .sep {
+    margin: 0 0.8rem;
+    color: var(--color-muted);
+  }
+</style>

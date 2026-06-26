@@ -1,0 +1,96 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const services = (await getCollection('services', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<BaseLayout
+  title="Our Services | Sawtooth Roofing"
+  description="TODO[A3-content]: services hub meta description, canon-sourced."
+>
+  <main class="services-hub">
+    <h1>Our Services</h1>
+
+    <p class="lead">
+      <!-- TODO[A3-content]: services hub intro prose, canon-sourced. Do NOT fabricate. -->
+      TODO[A3-content]: services hub intro prose.
+    </p>
+
+    <ul class="service-grid">
+      {
+        services.map((service) => (
+          <li class="service-card">
+            <a href={`/services/${service.id}`} class="service-card-link">
+              <h2>{service.data.title}</h2>
+              <p>{service.data.summary}</p>
+              <span class="service-card-cta">Learn more &rarr;</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</BaseLayout>
+
+<style>
+  .services-hub {
+    max-width: 96rem;
+    margin: 4rem auto;
+    padding: 0 2.4rem;
+  }
+
+  .services-hub .lead {
+    margin-top: 1.2rem;
+  }
+
+  .service-grid {
+    list-style: none;
+    padding: 0;
+    margin: 3.2rem 0 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+
+  @media (min-width: 768px) {
+    .service-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .service-card {
+    display: flex;
+  }
+
+  .service-card-link {
+    display: block;
+    width: 100%;
+    padding: 2.4rem;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    text-decoration: none;
+  }
+
+  .service-card-link:hover {
+    border-color: var(--color-border-strong);
+  }
+
+  .service-card h2 {
+    font-size: 2.0rem;
+  }
+
+  .service-card p {
+    margin-top: 0.8rem;
+  }
+
+  .service-card-cta {
+    display: inline-block;
+    margin-top: 1.6rem;
+    font-weight: 700;
+    color: var(--color-brand-red);
+  }
+</style>
