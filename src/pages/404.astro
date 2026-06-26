@@ -1,14 +1,15 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>404 — Page Not Found</title>
-  </head>
-  <body>
+<BaseLayout title="Page not found — Sawtooth Roofing">
+  <main style="max-width: 72rem; margin: 8rem auto; padding: 0 2.4rem; text-align: center;">
     <h1>404 — Page Not Found</h1>
-    <p><a href="/">Back to home</a></p>
-  </body>
-</html>
+    <p class="lead" style="margin-top: 1.6rem;">
+      That page doesn't exist or may have moved.
+    </p>
+    <p style="margin-top: 2.4rem;">
+      <a href="/" style="color: var(--color-brand-red); font-weight: 700;">Back to home</a>
+    </p>
+  </main>
+</BaseLayout>
