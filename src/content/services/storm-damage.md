@@ -1,7 +1,7 @@
 ---
 title: Storm Damage
 order: 3
-summary: "TODO[A3-content]: canon-sourced summary"
+summary: "Fast hail- and wind-damage inspection and restoration when the weather turns."
 draft: false
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Roof Replacement
 order: 1
-summary: "TODO[A3-content]: canon-sourced summary"
+summary: "Full tear-off and replacement with Owens Corning products, built for Idaho weather."
 draft: false
 ---
 

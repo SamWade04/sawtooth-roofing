@@ -1,7 +1,7 @@
 ---
 title: Gutters
 order: 5
-summary: "TODO[A3-content]: canon-sourced summary"
+summary: "Seamless gutter replacement to protect the roof, fascia, and foundation."
 draft: false
 ---
 

@@ -1,43 +1,183 @@
 ---
+// A3 content pass — wired from A3_Home_and_Shared_Copy.md.
+// §S4 A5 SCHEMA REFERENCE (do NOT emit JSON-LD this step — A5 only):
+//   Type: RoofingContractor / LocalBusiness
+//   legalName: Sawtooth Roofing & Construction LLC
+//   name: Sawtooth Roofing
+//   address: 1560 S Carol St, Meridian, ID 83646
+//   telephone: +12089968748
+//   email: Contact@Sawtooth-Customs.com
+//   areaServed: Nampa, Caldwell, Meridian, Boise, Kuna
+//   sameAs: TODO[F2] — live GBP URL after NAP reconcile
+//   AggregateRating: 5.0 / 83 — TODO[F3] verify at publish; schema must match displayed number
+//   openingHoursSpecification: 8:00 AM–9:00 PM daily (sourced from live GBP, June 26 2026)
+//   FAQPage: built from FAQ collection (later step); 3 Home teaser Qs must match canonical entries verbatim
+//   NOTE: do NOT emit Review with consentVerified=true. Aggregate rating only.
+
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import TrustBar from '../components/ui/TrustBar.astro';
 
 const services = (await getCollection('services', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order
 );
-
-// Canon service-area cities; slug = lowercase city.
-const cities = ['Nampa', 'Caldwell', 'Meridian', 'Boise', 'Kuna'];
 ---
 
 <BaseLayout
-  title="Sawtooth Roofing"
-  description="TODO[A3-content]: home meta description, canon-sourced."
+  title="Roofing Contractor in the Treasure Valley, ID | Sawtooth Roofing"
+  description="Storm or hail damage? Sawtooth Roofing is your Idaho-registered insurance-restoration roofing contractor serving Nampa, Caldwell, Meridian, Boise & Kuna. Book a free inspection."
 >
   <main class="home">
 
-    <!-- ── Hero ── -->
+    <!-- ─────────────────────────────────────────────────
+         SECTION 1 — HERO
+         ───────────────────────────────────────────────── -->
     <section class="hero">
-      <h1>
-        <!-- TODO[A3-content]: hero headline, canon-sourced. Do NOT fabricate. -->
-        TODO[A3-content]: hero headline
-      </h1>
+      <div class="hero-content">
+        <p class="eyebrow">Insurance-Restoration Roofing &middot; Treasure Valley, Idaho</p>
+        <h1>Treasure Valley Roofing &amp; Storm-Damage Restoration</h1>
+        <p class="lead">
+          Sawtooth Roofing is an Idaho-registered roofing contractor specializing in storm- and
+          hail-damage restoration across the Treasure Valley. We inspect your roof, document the
+          damage in detail for your insurer, and complete the repair or full replacement — turning
+          a covered claim into a finished roof. Free, no-obligation inspections in Nampa, Caldwell,
+          Meridian, Boise, and Kuna.
+        </p>
+        <div class="hero-ctas">
+          {/* Primary CTA → §S2-B planned-project form (below, #book-inspection) */}
+          <a href="#book-inspection" class="cta-button">Book a Free Inspection</a>
+          {/* Secondary: tap-to-call */}
+          <a href="tel:+12089968748" class="cta-phone">Call 208.996.8748</a>
+        </div>
+      </div>
+
+      {/* §S2-A — Emergency micro-form scaffold (A6 builds the real GHL form)
+          Fields: Name · Phone · (hidden: service = "Storm damage")
+          Button: Get an Emergency Inspection
+          Microcopy: We'll call you back fast. No obligation. */}
+      <div class="form-scaffold form-scaffold--emergency" aria-label="Emergency inspection request form — coming soon">
+        <p class="form-scaffold-label">TODO[A6-forms]: §S2-A emergency micro-form</p>
+        <p class="form-scaffold-note">
+          Fields: Name · Phone · (hidden: Storm damage)<br />
+          Button: "Get an Emergency Inspection"<br />
+          Microcopy: "We'll call you back fast. No obligation."
+        </p>
+        <p class="form-scaffold-warning">
+          ⚠ GHL §S2-A form must be built in GHL before this embeds. Until then, primary
+          conversion path captures nothing — see A6.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────
+         SECTION 2 — TRUST BAR (§S1, directly under hero)
+         [F1 license · F3 verify rating]
+         ───────────────────────────────────────────────── -->
+    <section class="trust-bar-section" aria-label="Trust indicators">
+      <TrustBar />
+    </section>
+
+    <!-- ─────────────────────────────────────────────────
+         SECTION 3 — VALUE PROPS (3 blocks, answer-first)
+         ───────────────────────────────────────────────── -->
+    <section class="value-props">
+      <div class="value-props-grid">
+
+        <article class="value-prop">
+          <h2>Insurance restoration is what we do</h2>
+          <p>
+            Most Treasure Valley roofs we replace are tied to a storm or hail claim. That focus
+            means we know what insurers look for and how to document it. We photograph and itemize
+            the damage, hand you a clear report for your carrier, and stay involved through the
+            build — so the roof gets done right and the paperwork holds up.
+          </p>
+        </article>
+
+        <article class="value-prop">
+          <h2>A free inspection with no obligation</h2>
+          <p>
+            A roof inspection shouldn't come with pressure. We climb the roof, check for hail
+            bruising, wind-lifted shingles, flashing failures, and interior leak signs, then walk
+            you through what we found in plain language. If there's no real damage, we'll tell
+            you. If there is, you decide the next step — not us.
+          </p>
+        </article>
+
+        <article class="value-prop">
+          <h2>Local to the Treasure Valley</h2>
+          <p>
+            We work in Nampa, Caldwell, Meridian, Boise, and Kuna — not a national call center
+            routing you to a crew that's never seen an Idaho hailstorm. We know the local weather
+            patterns, the common roof types here, and the inspectors and suppliers in the valley.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────
+         SECTION 4 — HOW IT WORKS
+         LEGAL FRAMING LOCKED (§41-5802): describes the homeowner's claim process and our
+         inspection/documentation/build role ONLY. Never implies we file, handle, negotiate,
+         appraise, maximize, or advocate the claim. See doc 30 §4 legal note.
+         ───────────────────────────────────────────────── -->
+    <section class="how-it-works">
+      <h2>How does insurance-restoration roofing work?</h2>
       <p class="lead">
-        <!-- TODO[A3-content]: hero subhead, canon-sourced. Do NOT fabricate. -->
-        TODO[A3-content]: hero subhead
+        It's a four-step path. We inspect and document the storm or hail damage, give you a report
+        to file with your insurer, meet your adjuster on-site to walk them through what we found,
+        and complete the approved repair or replacement. You stay in control of your claim
+        throughout.
       </p>
-      <a href="/contact" class="cta-button">Get a Free Estimate</a>
+      <ol class="process-steps">
+        <li class="process-step">
+          <span class="step-number">1</span>
+          <div class="step-content">
+            <h3>Free inspection</h3>
+            <p>
+              We assess the roof and photograph storm or hail damage — bruising, granule loss,
+              lifted or torn shingles, flashing and vent damage.
+            </p>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-number">2</span>
+          <div class="step-content">
+            <h3>Damage documentation</h3>
+            <p>
+              You get a detailed, itemized report you can submit to your insurance carrier as part
+              of your claim.
+            </p>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-number">3</span>
+          <div class="step-content">
+            <h3>Adjuster meeting</h3>
+            <p>
+              When your carrier sends an adjuster, we meet them on the roof to show them the
+              damage we documented, so nothing gets missed.
+            </p>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-number">4</span>
+          <div class="step-content">
+            <h3>Restoration</h3>
+            <p>
+              Once your claim is approved, we schedule the work and complete the repair or full
+              replacement with quality materials and a clean jobsite.
+            </p>
+          </div>
+        </li>
+      </ol>
     </section>
 
-    <!-- ── Trust strip ── -->
-    {/* F3: verify live GBP count/score at publish — doc 30 §2 */}
-    <section class="trust-strip">
-      <p class="caption">5.0 &#9733; &middot; 83 Google reviews</p>
-    </section>
-
-    <!-- ── Services grid ── -->
+    <!-- ─────────────────────────────────────────────────
+         SECTION 5 — SERVICES GRID (5 cards → service pages)
+         ───────────────────────────────────────────────── -->
     <section class="home-services">
-      <h2>Our Services</h2>
+      <h2>Our roofing services</h2>
       <ul class="service-grid">
         {
           services.map((service) => (
@@ -45,6 +185,7 @@ const cities = ['Nampa', 'Caldwell', 'Meridian', 'Boise', 'Kuna'];
               <a href={`/services/${service.id}`} class="service-card-link">
                 <h3>{service.data.title}</h3>
                 <p>{service.data.summary}</p>
+                <span class="service-card-cta">Learn more &rarr;</span>
               </a>
             </li>
           ))
@@ -52,52 +193,178 @@ const cities = ['Nampa', 'Caldwell', 'Meridian', 'Boise', 'Kuna'];
       </ul>
     </section>
 
-    <!-- ── Service area ── -->
+    <!-- ─────────────────────────────────────────────────
+         SECTION 6 — SERVICE AREA STRIP
+         NOTE: city names are plain text here (not linked).
+         Internal links to location pages deferred — location
+         pages out of scope this pass (doc 30 F5). Link once
+         location routes exist.
+         ───────────────────────────────────────────────── -->
     <section class="service-area">
-      <h2>Areas We Serve</h2>
-      <p class="service-area-line">
-        {
-          cities.map((city, i) => (
-            <>
-              <a href={`/locations/${city.toLowerCase()}`} class="city-link">{city}</a>
-              {i < cities.length - 1 && <span class="sep">&middot;</span>}
-            </>
-          ))
-        }
+      <h2>Serving the Treasure Valley</h2>
+      <p>
+        Sawtooth Roofing serves homeowners across <strong>Nampa, Caldwell, Meridian, Boise, and
+        Kuna.</strong> Storm damage doesn't keep to one zip code — if you're in the valley and
+        your roof took a hit, we'll come take a look.
       </p>
     </section>
 
-    <!-- TODO[A3-content]: remaining home body — value props, process, CTA repeat. Canon-sourced. Do NOT fabricate. -->
+    <!-- ─────────────────────────────────────────────────
+         SECTION 7 — SOCIAL PROOF
+         Aggregate stat ONLY — no individual review text.
+         Google remains system of record; stat links out to
+         the live profile so visitors read reviews there.
+         consentVerified = false for all testimonials.
+         Decision locked: aggregate-only per Command
+         (FTC + consent + review-gating risk).
+         [F2: replace href with live GBP URL after NAP reconcile]
+         [F3: verify 83/5.0 against live GBP at publish; AggregateRating schema must match]
+         ───────────────────────────────────────────────── -->
+    <section class="social-proof">
+      <h2>What Treasure Valley homeowners say</h2>
+      {/* F2/F3: replace href with live GBP URL after NAP reconcile + rating verify */}
+      <a
+        href="/contact"
+        class="rating-stat"
+        aria-label="TODO[F2]: replace with live Google Business Profile URL"
+      >
+        <span class="rating-stars">&#9733;</span>
+        <span class="rating-score"><strong>5.0</strong> average from <strong>83 Google reviews</strong></span>
+      </a>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────
+         SECTION 8 — FAQ TEASER (3 questions)
+         Full FAQ collection is a later step.
+         Q&A in the collection must match FAQPage schema
+         verbatim (doc 08). Answers deferred to FAQ step.
+         ───────────────────────────────────────────────── -->
+    <section class="faq-teaser">
+      <h2>Common questions</h2>
+      <ul class="faq-list">
+        <li class="faq-item">
+          {/* TODO[FAQ-step]: link to canonical FAQ entry once FAQ collection is built */}
+          <a href="/contact" class="faq-question">
+            Does insurance cover roof storm damage in Idaho?
+          </a>
+        </li>
+        <li class="faq-item">
+          {/* TODO[FAQ-step]: link to canonical FAQ entry once FAQ collection is built */}
+          <a href="/contact" class="faq-question">
+            How much does a roof replacement cost in the Treasure Valley?
+          </a>
+        </li>
+        <li class="faq-item">
+          {/* TODO[FAQ-step]: link to canonical FAQ entry once FAQ collection is built */}
+          <a href="/contact" class="faq-question">
+            How do I know if my roof has hail damage?
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────
+         SECTION 9 — FINAL CTA
+         §S2-B planned-project form scaffold lives here.
+         ───────────────────────────────────────────────── -->
+    <section class="final-cta">
+      <h2>Think your roof took storm damage?</h2>
+      <p>
+        A free inspection takes the guesswork out of it. We'll tell you straight whether you've
+        got a claim worth filing — and if you do, we'll document it and see the job through.
+      </p>
+      <div class="final-cta-actions">
+        <a href="#book-inspection" class="cta-button">Book a Free Inspection</a>
+        <a href="tel:+12089968748" class="cta-phone">Call 208.996.8748</a>
+      </div>
+
+      {/* §S2-B — Planned-project form scaffold (A6 builds the real GHL form)
+          Fields: Name · Phone · Email · Address or City
+                  What's going on? (Storm/hail · Leak · Replacement · Repair · Gutters · Not sure)
+          Button: "Book My Free Inspection"
+          Microcopy: "Free, no-obligation. We serve Nampa, Caldwell, Meridian, Boise & Kuna."
+          CONSENT LINE: intentionally reads "Morrow Construction LLC" — do NOT change to
+          "Sawtooth Roofing" until EIN name record confirmed (Anthony's item). See doc 04. */}
+      <div
+        id="book-inspection"
+        class="form-scaffold form-scaffold--planned"
+        aria-label="Book a free inspection form — coming soon"
+      >
+        <p class="form-scaffold-label">TODO[A6-forms]: §S2-B planned-project form</p>
+        <p class="form-scaffold-note">
+          Fields: Name · Phone · Email · Address or City · What's going on?<br />
+          Button: "Book My Free Inspection"<br />
+          Microcopy: "Free, no-obligation. We serve Nampa, Caldwell, Meridian, Boise &amp; Kuna."<br />
+          Consent line: "Morrow Construction LLC" (do NOT change — see doc 04 + A6 note above).
+        </p>
+        <p class="form-scaffold-warning">
+          ⚠ GHL §S2-B form must be built in GHL before this embeds. Until then, Home's primary
+          conversion path captures nothing — see A6.
+        </p>
+      </div>
+    </section>
 
   </main>
 </BaseLayout>
 
 <style>
+  /* ── Page wrapper ── */
   .home {
     max-width: 96rem;
     margin: 0 auto;
-    padding: 0 2.4rem;
+    padding: 0 2.4rem 6rem;
   }
 
   section {
-    margin: 4rem 0;
+    margin: 5.6rem 0;
   }
 
-  /* ── Hero ── */
+  /* ── HERO ── */
   .hero {
     margin-top: 4rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.2rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+      gap: 4.8rem;
+    }
+  }
+
+  .eyebrow {
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-brand-red);
+    margin-bottom: 1.2rem;
+  }
+
+  .hero h1 {
+    margin-top: 0;
   }
 
   .hero .lead {
     margin-top: 1.6rem;
-    max-width: 60rem;
   }
 
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.6rem;
+    margin-top: 2.4rem;
+  }
+
+  /* ── Shared CTA button ── */
   .cta-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-top: 2.4rem;
     padding: 1.2rem 2.4rem;
     font-size: 1.6rem;
     font-weight: 700;
@@ -107,6 +374,7 @@ const cities = ['Nampa', 'Caldwell', 'Meridian', 'Boise', 'Kuna'];
     background: var(--color-brand-red);
     border-radius: 0.4rem;
     text-decoration: none;
+    white-space: nowrap;
   }
 
   .cta-button:hover {
@@ -119,16 +387,140 @@ const cities = ['Nampa', 'Caldwell', 'Meridian', 'Boise', 'Kuna'];
     }
   }
 
-  /* ── Trust strip ── */
-  .trust-strip .caption {
-    color: var(--color-headline);
+  .cta-phone {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-brand-red);
+    text-decoration: none;
+    white-space: nowrap;
   }
 
-  /* ── Services grid ── */
+  .cta-phone:hover {
+    color: var(--color-brand-red-hover);
+  }
+
+  /* ── Form scaffolds (CLS-safe: min-height holds space before GHL embeds) ── */
+  .form-scaffold {
+    background: var(--color-card);
+    border: 2px dashed var(--color-border-strong);
+    border-radius: 0.6rem;
+    padding: 2.4rem;
+  }
+
+  .form-scaffold--emergency {
+    min-height: 24rem;
+  }
+
+  .form-scaffold--planned {
+    min-height: 48rem;
+    margin-top: 3.2rem;
+  }
+
+  .form-scaffold-label {
+    font-weight: 700;
+    color: var(--color-headline);
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .form-scaffold-note {
+    font-size: 1.3rem;
+    color: var(--color-body);
+    line-height: 1.6;
+  }
+
+  .form-scaffold-warning {
+    margin-top: 1.6rem;
+    font-size: 1.3rem;
+    color: var(--color-brand-red);
+    font-weight: 600;
+  }
+
+  /* ── Trust bar section wrapper ── */
+  .trust-bar-section {
+    margin: 0;
+    /* TrustBar has its own full-width border/bg — cancel section margin */
+  }
+
+  /* ── VALUE PROPS ── */
+  .value-props-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.2rem;
+    margin-top: 0;
+  }
+
+  @media (min-width: 768px) {
+    .value-props-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .value-prop h2 {
+    margin-bottom: 1.2rem;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how-it-works h2 {
+    margin-bottom: 1.6rem;
+  }
+
+  .how-it-works .lead {
+    margin-bottom: 3.2rem;
+    max-width: 72rem;
+  }
+
+  .process-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.4rem;
+  }
+
+  @media (min-width: 768px) {
+    .process-steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .process-step {
+    display: flex;
+    gap: 1.6rem;
+    padding: 2.4rem;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.6rem;
+    height: 3.6rem;
+    background: var(--color-brand-red);
+    color: var(--color-card);
+    font-weight: 700;
+    font-size: 1.6rem;
+    border-radius: 50%;
+  }
+
+  .step-content h3 {
+    margin-bottom: 0.8rem;
+  }
+
+  /* ── SERVICES GRID ── */
+  .home-services h2 {
+    margin-bottom: 2.4rem;
+  }
+
   .service-grid {
     list-style: none;
     padding: 0;
-    margin: 2.4rem 0 0;
+    margin: 0;
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.6rem;
@@ -145,7 +537,8 @@ const cities = ['Nampa', 'Caldwell', 'Meridian', 'Boise', 'Kuna'];
   }
 
   .service-card-link {
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     padding: 2.4rem;
     background: var(--color-card);
@@ -158,27 +551,114 @@ const cities = ['Nampa', 'Caldwell', 'Meridian', 'Boise', 'Kuna'];
     border-color: var(--color-border-strong);
   }
 
-  .service-card p {
-    margin-top: 0.8rem;
+  .service-card h3 {
+    margin-bottom: 0.8rem;
   }
 
-  /* ── Service area ── */
-  .service-area-line {
-    margin-top: 1.2rem;
-  }
-
-  .city-link {
+  .service-card-cta {
+    margin-top: auto;
+    padding-top: 1.6rem;
+    font-weight: 700;
+    font-size: 1.4rem;
     color: var(--color-brand-red);
+  }
+
+  /* ── SERVICE AREA ── */
+  .service-area h2 {
+    margin-bottom: 1.2rem;
+  }
+
+  /* ── SOCIAL PROOF ── */
+  .social-proof {
+    text-align: center;
+  }
+
+  .social-proof h2 {
+    margin-bottom: 2rem;
+  }
+
+  .rating-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
     text-decoration: none;
+    padding: 1.6rem 2.4rem;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+  }
+
+  .rating-stat:hover {
+    border-color: var(--color-border-strong);
+  }
+
+  .rating-stars {
+    font-size: 2.4rem;
+    color: var(--color-headline);
+    line-height: 1;
+  }
+
+  .rating-score {
+    font-size: 1.6rem;
+    color: var(--color-body);
+  }
+
+  /* ── FAQ TEASER ── */
+  .faq-teaser h2 {
+    margin-bottom: 2rem;
+  }
+
+  .faq-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .faq-item:first-child {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .faq-question {
+    display: block;
+    padding: 1.6rem 0.4rem;
+    font-size: 1.6rem;
     font-weight: 600;
+    color: var(--color-headline);
+    text-decoration: none;
   }
 
-  .city-link:hover {
-    color: var(--color-brand-red-hover);
+  .faq-question:hover {
+    color: var(--color-brand-red);
   }
 
-  .sep {
-    margin: 0 0.8rem;
+  .faq-question::after {
+    content: ' \2192';
+    font-weight: 400;
     color: var(--color-muted);
+  }
+
+  /* ── FINAL CTA ── */
+  .final-cta h2 {
+    margin-bottom: 1.6rem;
+  }
+
+  .final-cta > p {
+    max-width: 60rem;
+    margin-bottom: 0;
+  }
+
+  .final-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.6rem;
+    margin-top: 2.4rem;
   }
 </style>

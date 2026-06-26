@@ -1,0 +1,72 @@
+---
+// §S1 — Trust Bar. Factual only. No manufacturer tier wording.
+// F1: RCE-##### pending DOPL (launch gate).
+// F3: verify 83 reviews / 5.0 score against live GBP at publish.
+// F2: replace the GBP href with the live URL after NAP reconcile.
+---
+
+<div class="trust-bar" aria-label="Trust indicators">
+  <ul class="trust-bar-list">
+    <li class="trust-bar-item">
+      {/* F3: verify count + score against live GBP at publish */}
+      {/* F2: replace href with live GBP URL after NAP reconcile */}
+      <a
+        href="/contact"
+        class="trust-bar-rating"
+        aria-label="TODO[F2]: replace with live Google Business Profile URL"
+      >
+        &#9733; 5.0 from 83 Google reviews
+      </a>
+    </li>
+    <li class="trust-bar-item trust-bar-sep" aria-hidden="true">&middot;</li>
+    <li class="trust-bar-item">Owens Corning roofing products</li>
+    <li class="trust-bar-item trust-bar-sep" aria-hidden="true">&middot;</li>
+    <li class="trust-bar-item">ABC Supply Co. partner</li>
+    <li class="trust-bar-item trust-bar-sep" aria-hidden="true">&middot;</li>
+    {/* F1: Idaho-registered roofing contractor — RCE-##### pending DOPL (launch gate) */}
+    <li class="trust-bar-item">Idaho-registered roofing contractor</li>
+    <li class="trust-bar-item trust-bar-sep" aria-hidden="true">&middot;</li>
+    <li class="trust-bar-item">Serving the Treasure Valley</li>
+  </ul>
+</div>
+
+<style>
+  .trust-bar {
+    background: var(--color-card);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: 1.2rem 2.4rem;
+  }
+
+  .trust-bar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 96rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.2rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .trust-bar-item {
+    font-size: 1.3rem;
+    color: var(--color-body);
+    white-space: nowrap;
+  }
+
+  .trust-bar-sep {
+    color: var(--color-border-strong);
+  }
+
+  .trust-bar-rating {
+    font-weight: 700;
+    color: var(--color-headline);
+    text-decoration: none;
+  }
+
+  .trust-bar-rating:hover {
+    color: var(--color-brand-red);
+  }
+</style>

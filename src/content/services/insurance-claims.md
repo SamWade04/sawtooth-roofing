@@ -1,7 +1,7 @@
 ---
 title: Insurance Claims
 order: 4
-summary: "TODO[A3-content]: canon-sourced summary"
+summary: "How the claim process works and where our inspection and documentation fit in."
 draft: false
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Roof Repair
 order: 2
-summary: "TODO[A3-content]: canon-sourced summary"
+summary: "Targeted fixes for leaks, missing shingles, and flashing failures before they spread."
 draft: false
 ---
 
