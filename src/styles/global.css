@@ -144,7 +144,7 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1.2rem 2.4rem;
+  padding: var(--space-sm) var(--space-md);
   font-size: 1.6rem;
   font-weight: 700;
   line-height: 1;
@@ -152,7 +152,7 @@ button {
   color: var(--color-card);
   background: var(--color-brand-red);
   border: 0;
-  border-radius: 0.4rem;
+  border-radius: var(--radius-sm);
   cursor: pointer;
 }
 
@@ -208,4 +208,64 @@ small {
   button {
     font-size: 1.7rem;
   }
+}
+
+/* ─── Composable button class (works on <a> and <button>) ──────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-sans);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--duration-base) var(--ease),
+              color var(--duration-base) var(--ease),
+              border-color var(--duration-base) var(--ease);
+}
+
+@media (min-width: 768px) {
+  .btn {
+    font-size: 1.7rem;
+  }
+}
+
+.btn--primary {
+  color: var(--color-card);
+  background: var(--color-brand-red);
+  border: 0;
+}
+
+.btn--primary:hover {
+  background: var(--color-brand-red-hover);
+}
+
+.btn--secondary {
+  color: var(--color-headline);
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+}
+
+.btn--secondary:hover {
+  border-color: var(--color-headline);
+}
+
+/* ─── Eyebrow label (uppercase caption register) ────────────────────────── */
+.eyebrow {
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+}
+
+/* ─── Reading-width text container (applied to prose blocks in Run 2) ───── */
+.u-reading {
+  max-width: var(--reading-width);
 }

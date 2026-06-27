@@ -34,13 +34,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <style>
   .contact-page {
     max-width: 72rem;
-    margin: 4rem auto;
-    padding: 0 2.4rem;
+    margin: var(--space-lg) auto;
+    padding: 0 var(--space-md);
   }
 
   .contact-nap {
     font-style: normal;
-    margin-top: 1.6rem;
+    margin-top: var(--space-sm);
   }
 
   .contact-brand {
@@ -49,7 +49,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .contact-nap p {
-    margin-top: 0.4rem;
+    margin-top: var(--space-2xs);
   }
 
   .contact-phone {
@@ -64,7 +64,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   /* CLS-safe container: reserves vertical space before the iframe loads. */
   .ghl-form-wrap {
-    margin-top: 3.2rem;
+    margin-top: var(--space-lg); /* snapped: 3.2rem → 4.0rem */
     min-height: 60rem;
   }
 
@@ -72,6 +72,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     width: 100%;
     min-height: 60rem;
     border: 0;
-    border-radius: 0.4rem;
+    border-radius: var(--radius-sm);
   }
 </style>

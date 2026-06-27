@@ -77,10 +77,10 @@ const navLinks = [
   .header-inner {
     display: flex;
     align-items: center;
-    gap: 1.6rem;
+    gap: var(--space-sm);
     max-width: 120rem;
     margin: 0 auto;
-    padding: 1.4rem 2.4rem;
+    padding: var(--space-sm) var(--space-md);
     flex-wrap: wrap;
   }
 
@@ -88,7 +88,7 @@ const navLinks = [
   .logo {
     display: inline-flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: var(--space-xs);
     text-decoration: none;
     flex-shrink: 0;
   }
@@ -111,7 +111,7 @@ const navLinks = [
   .phone-cta {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2xs); /* off-scale — flag: 0.5rem snapped from original */
     text-decoration: none;
     font-size: 1.4rem;
     font-weight: 700;
@@ -138,7 +138,7 @@ const navLinks = [
     padding: 0;
     background: transparent;
     border: 1px solid var(--color-border);
-    border-radius: 0.4rem;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     color: var(--color-headline);
     flex-shrink: 0;
@@ -156,8 +156,8 @@ const navLinks = [
     width: 1.8rem;
     height: 0.2rem;
     background: currentColor;
-    border-radius: 1px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    border-radius: 1px; /* off-scale — flag: 0.1rem hairline; --radius-sm (0.4rem) too large for burger bar */
+    transition: transform var(--duration-base) var(--ease), opacity var(--duration-base) var(--ease);
     position: relative;
   }
 
@@ -190,7 +190,7 @@ const navLinks = [
     flex-direction: column;
     width: 100%;
     order: 99;
-    padding: 0.8rem 0 1.2rem;
+    padding: var(--space-xs) 0 var(--space-sm);
     border-top: 1px solid var(--color-border);
   }
 
@@ -199,7 +199,7 @@ const navLinks = [
   }
 
   .nav-link {
-    padding: 1rem 0.4rem;
+    padding: var(--space-xs) var(--space-2xs);
     font-size: 1.5rem;
     font-weight: 600;
     text-decoration: none;
@@ -225,7 +225,7 @@ const navLinks = [
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 0.4rem;
+      gap: var(--space-2xs);
       width: auto;
       order: unset;
       padding: 0;
@@ -235,14 +235,14 @@ const navLinks = [
 
     /* Override inline order: logo | nav | phone */
     .phone-cta {
-      margin-left: 1.6rem;
+      margin-left: var(--space-sm);
     }
 
     .nav-link {
-      padding: 0.6rem 1rem;
+      padding: var(--space-xs) var(--space-xs);
       font-size: 1.4rem;
       border-bottom: none;
-      border-radius: 0.3rem;
+      border-radius: var(--radius-sm);
     }
 
     .nav-link:hover {
