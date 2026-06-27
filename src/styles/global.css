@@ -265,7 +265,48 @@ small {
   color: var(--color-muted);
 }
 
-/* ─── Reading-width text container (applied to prose blocks in Run 2) ───── */
+/* ─── Reading-width text container ─────────────────────────────────────── */
 .u-reading {
   max-width: var(--reading-width);
 }
+
+/* ─── Band surface-context cascade rules — doc 31 §3 ───────────────────── */
+/* Dark band (#0F172A bg): override all content to light tones.
+   Contrast ratios against #0F172A:
+     --color-bg  (#FAFAF9) on dark → 17.1:1 AAA  (headings / lead)
+     --color-border-strong (#CBD5E1) on dark → 12.0:1 AAA  (eyebrow / body / secondary)
+     --color-card (#FFF) on dark → 17.9:1 AAA  (btn--secondary text)
+   NOTE: --color-muted (#64748B) on dark = ~2.1:1 — never use on dark surfaces. */
+.band--dark h1,
+.band--dark h2,
+.band--dark h3 {
+  color: var(--color-bg);
+}
+
+.band--dark .lead {
+  color: var(--color-bg);
+}
+
+.band--dark p {
+  color: var(--color-border-strong);
+}
+
+.band--dark .eyebrow {
+  color: var(--color-border-strong);
+}
+
+.band--dark small {
+  color: var(--color-border-strong);
+}
+
+/* On-dark secondary button — white text + light outline instead of dark defaults */
+.band--dark .btn--secondary {
+  color: var(--color-card);
+  border-color: var(--color-border-strong);
+}
+
+.band--dark .btn--secondary:hover {
+  border-color: var(--color-card);
+}
+
+/* .band--light / .band--contrast — use default token colors, no overrides needed */

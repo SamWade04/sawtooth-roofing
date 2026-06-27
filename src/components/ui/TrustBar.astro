@@ -3,6 +3,7 @@
 // F1: RCE-##### pending DOPL (launch gate).
 // F3: verify 83 reviews / 5.0 score against live GBP at publish.
 // F2: replace the GBP href with the live URL after NAP reconcile.
+// Surface, padding, and divider are owned by the SectionBand wrapper.
 ---
 
 <div class="trust-bar" aria-label="Trust indicators">
@@ -31,11 +32,9 @@
 </div>
 
 <style>
+  /* Surface, padding, and edge borders are owned by the SectionBand wrapper. */
   .trust-bar {
-    background: var(--color-card);
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
-    padding: var(--space-sm) var(--space-md); /* snapped: 1.2rem → 1.6rem */
+    width: 100%;
   }
 
   .trust-bar-list {
@@ -45,7 +44,7 @@
     max-width: 96rem;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-xs) var(--space-sm); /* snapped: 0.6rem → 0.8rem, 1.2rem → 1.6rem */
+    gap: var(--space-xs) var(--space-sm);
     align-items: center;
     justify-content: center;
   }

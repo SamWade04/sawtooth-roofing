@@ -20,6 +20,7 @@
   --space-3xl: 12.8rem;
 
   /* radius — doc 31 §4 */
+  --radius-xs: 1px;    /* hairline — e.g. burger bars */
   --radius-sm: 0.4rem;
   --radius-md: 0.8rem;
   --radius-lg: 1.2rem;
