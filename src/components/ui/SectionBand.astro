@@ -1,0 +1,88 @@
+---
+interface Props {
+  surface: 'dark' | 'light' | 'contrast';
+  width?: 'content' | 'reading';
+  pad?: 'band' | 'thin';
+  divider?: 'top' | 'bottom';
+  class?: string;
+  id?: string;
+}
+
+const {
+  surface,
+  width = 'content',
+  pad = 'band',
+  divider,
+  class: innerClass,
+  id,
+} = Astro.props;
+
+const sectionClasses = [
+  'band',
+  `band--${surface}`,
+  `band--pad-${pad}`,
+  divider ? `band--divider-${divider}` : null,
+].filter(Boolean).join(' ');
+
+const innerClasses = [
+  'band-inner',
+  `band-inner--${width}`,
+  innerClass ?? '',
+].filter(Boolean).join(' ');
+---
+
+<section class={sectionClasses}>
+  <div class={innerClasses} id={id}>
+    <slot />
+  </div>
+</section>
+
+<style>
+  /* ── Full-bleed band shell ── */
+  .band {
+    width: 100%;
+  }
+
+  /* Surface backgrounds */
+  .band--dark     { background: var(--color-headline); }
+  .band--light    { background: var(--color-bg); }
+  .band--contrast { background: var(--color-card); }
+
+  /* Vertical padding variants */
+  .band--pad-band {
+    padding-block: var(--space-xl);
+  }
+  @media (min-width: 768px) {
+    .band--pad-band {
+      padding-block: var(--space-2xl);
+    }
+  }
+
+  .band--pad-thin {
+    padding-block: var(--space-sm);
+  }
+  @media (min-width: 768px) {
+    .band--pad-thin {
+      padding-block: var(--space-md);
+    }
+  }
+
+  /* Optional edge hairlines */
+  .band--divider-top    { border-top: 1px solid var(--color-border); }
+  .band--divider-bottom { border-bottom: 1px solid var(--color-border); }
+
+  /* ── Centered inner container ── */
+  .band-inner {
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+  @media (min-width: 768px) {
+    .band-inner {
+      padding-inline: var(--gutter-lg);
+    }
+  }
+
+  /* Width modifiers */
+  .band-inner--content { max-width: var(--content-max); }
+  .band-inner--reading { max-width: var(--reading-width); }
+</style>

@@ -1,17 +1,653 @@
 ---
-const buildTime = new Date().toISOString();
+// A3 content pass — wired from A3_Home_and_Shared_Copy.md.
+// §S4 A5 SCHEMA REFERENCE (do NOT emit JSON-LD this step — A5 only):
+//   Type: RoofingContractor / LocalBusiness
+//   legalName: Sawtooth Roofing & Construction LLC
+//   name: Sawtooth Roofing
+//   address: 1560 S Carol St, Meridian, ID 83646
+//   telephone: +12089968748
+//   email: Contact@Sawtooth-Customs.com
+//   areaServed: Nampa, Caldwell, Meridian, Boise, Kuna
+//   sameAs: TODO[F2] — live GBP URL after NAP reconcile
+//   AggregateRating: 5.0 / 83 — TODO[F3] verify at publish; schema must match displayed number
+//   openingHoursSpecification: 8:00 AM–9:00 PM daily (sourced from live GBP, June 26 2026)
+//   FAQPage: built from FAQ collection (later step); 3 Home teaser Qs must match canonical entries verbatim
+//   NOTE: do NOT emit Review with consentVerified=true. Aggregate rating only.
+
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TrustBar from '../components/ui/TrustBar.astro';
+import SectionBand from '../components/ui/SectionBand.astro';
+
+const allServices = await getCollection('services');
+// Home grid: exactly 3 core tiles in canonical order (doc 11 + doc 30 §1/§3(b)/§6)
+const homeGridSlugs = ['storm-damage-restoration', 'roof-replacement', 'roof-repair'];
+const services = homeGridSlugs
+  .map((slug) => allServices.find((s) => s.id === slug))
+  .filter(Boolean);
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Sawtooth Roofing — A0</title>
-  </head>
-  <body>
-    <h1>Sawtooth Roofing — Astro A0 OK</h1>
-    <p>Build timestamp: {buildTime}</p>
-  </body>
-</html>
+<BaseLayout
+  title="Roofing Contractor in the Treasure Valley, ID | Sawtooth Roofing"
+  description="Storm or hail damage? Sawtooth Roofing is your Idaho-registered insurance-restoration roofing contractor serving Nampa, Caldwell, Meridian, Boise & Kuna. Book a free inspection."
+>
+  <!-- main.home is a plain flow container; bands own all width/padding/surface -->
+  <main class="home">
+
+    <!-- ─────────────────────────────────────────────────
+         SECTION 1 — HERO
+         Dark band, solid. NO image (F6 launch gate).
+         ───────────────────────────────────────────────── -->
+    <SectionBand surface="dark" width="content" pad="band">
+      <div class="hero">
+        <div class="hero-content">
+          <p class="eyebrow">Insurance-Restoration Roofing &middot; Treasure Valley, Idaho</p>
+          <h1>Treasure Valley Roofing &amp; Storm-Damage Restoration</h1>
+          <p class="lead u-reading">
+            Sawtooth Roofing is an Idaho-registered roofing contractor specializing in storm- and
+            hail-damage restoration across the Treasure Valley. We inspect your roof, document the
+            damage in detail for your insurer, and complete the repair or full replacement — turning
+            a covered claim into a finished roof. Free, no-obligation inspections in Nampa, Caldwell,
+            Meridian, Boise, and Kuna.
+          </p>
+          <div class="hero-ctas">
+            {/* Primary CTA → §S2-B planned-project form (below, #book-inspection) */}
+            <a href="#book-inspection" class="btn btn--primary">Book a Free Inspection</a>
+            {/* Secondary: tap-to-call — renders as light outline on dark band */}
+            <a href="tel:+12089968748" class="btn btn--secondary">Call 208.996.8748</a>
+          </div>
+        </div>
+
+        {/* §S2-A — Emergency micro-form scaffold (A6 builds the real GHL form)
+            Fields: Name · Phone · (hidden: service = "Storm damage")
+            Button: Get an Emergency Inspection
+            Microcopy: We'll call you back fast. No obligation. */}
+        <div class="form-scaffold form-scaffold--emergency" aria-label="Emergency inspection request form — coming soon">
+          <p class="form-scaffold-label">TODO[A6-forms]: §S2-A emergency micro-form</p>
+          <p class="form-scaffold-note">
+            Fields: Name · Phone · (hidden: Storm damage)<br />
+            Button: "Get an Emergency Inspection"<br />
+            Microcopy: "We'll call you back fast. No obligation."
+          </p>
+          <p class="form-scaffold-warning">
+            ⚠ GHL §S2-A form must be built in GHL before this embeds. Until then, primary
+            conversion path captures nothing — see A6.
+          </p>
+        </div>
+      </div>
+    </SectionBand>
+
+    <!-- ─────────────────────────────────────────────────
+         SECTION 2 — TRUST BAR (§S1, directly under hero)
+         [F1 license · F3 verify rating]
+         ───────────────────────────────────────────────── -->
+    <SectionBand surface="light" pad="thin" divider="bottom">
+      <TrustBar />
+    </SectionBand>
+
+    <!-- ─────────────────────────────────────────────────
+         SECTION 3 — VALUE PROPS (3 blocks, answer-first)
+         ───────────────────────────────────────────────── -->
+    <SectionBand surface="contrast" width="content" pad="band">
+      <div class="value-props-grid">
+
+        <article class="value-prop">
+          <h2>Insurance restoration is what we do</h2>
+          <p>
+            Most Treasure Valley roofs we replace are tied to a storm or hail claim. That focus
+            means we know what insurers look for and how to document it. We photograph and itemize
+            the damage, hand you a clear report for your carrier, and stay involved through the
+            build — so the roof gets done right and the paperwork holds up.
+          </p>
+        </article>
+
+        <article class="value-prop">
+          <h2>A free inspection with no obligation</h2>
+          <p>
+            A roof inspection shouldn't come with pressure. We climb the roof, check for hail
+            bruising, wind-lifted shingles, flashing failures, and interior leak signs, then walk
+            you through what we found in plain language. If there's no real damage, we'll tell
+            you. If there is, you decide the next step — not us.
+          </p>
+        </article>
+
+        <article class="value-prop">
+          <h2>Local to the Treasure Valley</h2>
+          <p>
+            We work in Nampa, Caldwell, Meridian, Boise, and Kuna — not a national call center
+            routing you to a crew that's never seen an Idaho hailstorm. We know the local weather
+            patterns, the common roof types here, and the inspectors and suppliers in the valley.
+          </p>
+        </article>
+
+      </div>
+    </SectionBand>
+
+    <!-- ─────────────────────────────────────────────────
+         SECTION 4 — HOW IT WORKS
+         LEGAL FRAMING LOCKED (§41-5802): describes the homeowner's claim process and our
+         inspection/documentation/build role ONLY. Never implies we file, handle, negotiate,
+         appraise, maximize, or advocate the claim. See doc 30 §4 legal note.
+         ───────────────────────────────────────────────── -->
+    <SectionBand surface="light" width="content" pad="band">
+      <div class="how-it-works">
+        <h2>How does insurance-restoration roofing work?</h2>
+        <p class="lead u-reading">
+          It's a four-step path. We inspect and document the storm or hail damage, give you a report
+          to file with your insurer, meet your adjuster on-site to walk them through what we found,
+          and complete the approved repair or replacement. You stay in control of your claim
+          throughout.
+        </p>
+        <ol class="process-steps">
+          <li class="process-step">
+            <span class="step-number">1</span>
+            <div class="step-content">
+              <h3>Free inspection</h3>
+              <p>
+                We assess the roof and photograph storm or hail damage — bruising, granule loss,
+                lifted or torn shingles, flashing and vent damage.
+              </p>
+            </div>
+          </li>
+          <li class="process-step">
+            <span class="step-number">2</span>
+            <div class="step-content">
+              <h3>Damage documentation</h3>
+              <p>
+                You get a detailed, itemized report you can submit to your insurance carrier as part
+                of your claim.
+              </p>
+            </div>
+          </li>
+          <li class="process-step">
+            <span class="step-number">3</span>
+            <div class="step-content">
+              <h3>Adjuster meeting</h3>
+              <p>
+                When your carrier sends an adjuster, we meet them on the roof to show them the
+                damage we documented, so nothing gets missed.
+              </p>
+            </div>
+          </li>
+          <li class="process-step">
+            <span class="step-number">4</span>
+            <div class="step-content">
+              <h3>Restoration</h3>
+              <p>
+                Once your claim is approved, we schedule the work and complete the repair or full
+                replacement with quality materials and a clean jobsite.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </SectionBand>
+
+    <!-- ─────────────────────────────────────────────────
+         SECTION 5 — SERVICES GRID (5 cards → service pages)
+         ───────────────────────────────────────────────── -->
+    <SectionBand surface="contrast" width="content" pad="band">
+      <div class="home-services">
+        <h2>Our roofing services</h2>
+        <ul class="service-grid">
+          {
+            services.map((service) => (
+              <li class="service-card">
+                <a href={`/services/${service.id}`} class="service-card-link">
+                  <h3>{service.data.shortTitle ?? service.data.title}</h3>
+                  <p>{service.data.summary}</p>
+                  <span class="service-card-cta">Learn more &rarr;</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </SectionBand>
+
+    <!-- ─────────────────────────────────────────────────
+         SECTION 6 — SERVICE AREA STRIP
+         NOTE: city names are plain text here (not linked).
+         Internal links to location pages deferred — location
+         pages out of scope this pass (doc 30 F5). Link once
+         location routes exist.
+         ───────────────────────────────────────────────── -->
+    <SectionBand surface="light" width="reading" pad="band">
+      <div class="service-area">
+        <h2>Serving the Treasure Valley</h2>
+        <p class="u-reading">
+          Sawtooth Roofing serves homeowners across <strong>Nampa, Caldwell, Meridian, Boise, and
+          Kuna.</strong> Storm damage doesn't keep to one zip code — if you're in the valley and
+          your roof took a hit, we'll come take a look.
+        </p>
+      </div>
+    </SectionBand>
+
+    <!-- ─────────────────────────────────────────────────
+         SECTION 7 — SOCIAL PROOF
+         Aggregate stat ONLY — no individual review text.
+         Google remains system of record; stat links out to
+         the live profile so visitors read reviews there.
+         consentVerified = false for all testimonials.
+         Decision locked: aggregate-only per Command
+         (FTC + consent + review-gating risk).
+         [F2: replace href with live GBP URL after NAP reconcile]
+         [F3: verify 83/5.0 against live GBP at publish; AggregateRating schema must match]
+         ───────────────────────────────────────────────── -->
+    <SectionBand surface="contrast" width="content" pad="band">
+      <div class="social-proof">
+        <h2>What Treasure Valley homeowners say</h2>
+        {/* F2/F3: replace href with live GBP URL after NAP reconcile + rating verify */}
+        <a
+          href="/contact"
+          class="rating-stat"
+          aria-label="TODO[F2]: replace with live Google Business Profile URL"
+        >
+          <span class="rating-stars">&#9733;</span>
+          <span class="rating-score"><strong>5.0</strong> average from <strong>83 Google reviews</strong></span>
+        </a>
+      </div>
+    </SectionBand>
+
+    <!-- ─────────────────────────────────────────────────
+         SECTION 8 — FAQ TEASER (3 questions)
+         Full FAQ collection is a later step.
+         Q&A in the collection must match FAQPage schema
+         verbatim (doc 08). Answers deferred to FAQ step.
+         ───────────────────────────────────────────────── -->
+    <SectionBand surface="light" width="content" pad="band">
+      <div class="faq-teaser">
+        <h2>Common questions</h2>
+        <ul class="faq-list">
+          <li class="faq-item">
+            {/* TODO[FAQ-step]: link to canonical FAQ entry once FAQ collection is built */}
+            <a href="/contact" class="faq-question">
+              Does insurance cover roof storm damage in Idaho?
+            </a>
+          </li>
+          <li class="faq-item">
+            {/* TODO[FAQ-step]: link to canonical FAQ entry once FAQ collection is built */}
+            <a href="/contact" class="faq-question">
+              How much does a roof replacement cost in the Treasure Valley?
+            </a>
+          </li>
+          <li class="faq-item">
+            {/* TODO[FAQ-step]: link to canonical FAQ entry once FAQ collection is built */}
+            <a href="/contact" class="faq-question">
+              How do I know if my roof has hail damage?
+            </a>
+          </li>
+        </ul>
+      </div>
+    </SectionBand>
+
+    <!-- ─────────────────────────────────────────────────
+         SECTION 9 — FINAL CTA
+         Dark band, solid. §S2-B planned-project form scaffold.
+         ───────────────────────────────────────────────── -->
+    <SectionBand surface="dark" width="content" pad="band">
+      <div class="final-cta">
+        <h2>Think your roof took storm damage?</h2>
+        <p>
+          A free inspection takes the guesswork out of it. We'll tell you straight whether you've
+          got a claim worth filing — and if you do, we'll document it and see the job through.
+        </p>
+        <div class="final-cta-actions">
+          <a href="#book-inspection" class="btn btn--primary">Book a Free Inspection</a>
+          {/* Secondary: tap-to-call — renders as light outline on dark band */}
+          <a href="tel:+12089968748" class="btn btn--secondary">Call 208.996.8748</a>
+        </div>
+
+        {/* §S2-B — Planned-project form scaffold (A6 builds the real GHL form)
+            Fields: Name · Phone · Email · Address or City
+                    What's going on? (Storm/hail · Leak · Replacement · Repair · Gutters · Not sure)
+            Button: "Book My Free Inspection"
+            Microcopy: "Free, no-obligation. We serve Nampa, Caldwell, Meridian, Boise & Kuna."
+            CONSENT LINE: intentionally reads "Morrow Construction LLC" — do NOT change to
+            "Sawtooth Roofing" until EIN name record confirmed (Anthony's item). See doc 04. */}
+        <div
+          id="book-inspection"
+          class="form-scaffold form-scaffold--planned"
+          aria-label="Book a free inspection form — coming soon"
+        >
+          <p class="form-scaffold-label">TODO[A6-forms]: §S2-B planned-project form</p>
+          <p class="form-scaffold-note">
+            Fields: Name · Phone · Email · Address or City · What's going on?<br />
+            Button: "Book My Free Inspection"<br />
+            Microcopy: "Free, no-obligation. We serve Nampa, Caldwell, Meridian, Boise &amp; Kuna."<br />
+            Consent line: "Morrow Construction LLC" (do NOT change — see doc 04 + A6 note above).
+          </p>
+          <p class="form-scaffold-warning">
+            ⚠ GHL §S2-B form must be built in GHL before this embeds. Until then, Home's primary
+            conversion path captures nothing — see A6.
+          </p>
+        </div>
+      </div>
+    </SectionBand>
+
+  </main>
+</BaseLayout>
+
+<style>
+  /* ── main.home — plain flow container; bands own all layout ── */
+  .home {
+    /* no constraints */
+  }
+
+  /* ── HERO (internal 2-col grid; band owns width + padding + bg) ── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+      gap: var(--space-lg);
+    }
+  }
+
+  /* eyebrow spacing — color handled by global .band--dark context */
+  .eyebrow {
+    margin-bottom: var(--space-sm);
+  }
+
+  .hero h1 {
+    margin-top: 0;
+  }
+
+  .hero .lead {
+    margin-top: var(--space-sm);
+  }
+
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+
+  /* ── Form scaffolds — clean card surface floated on dark band ──
+     CLS-safe: min-heights hold space before GHL embeds. ── */
+  .form-scaffold {
+    background: var(--color-card);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-md);
+  }
+
+  .form-scaffold--emergency {
+    min-height: 24rem;
+  }
+
+  .form-scaffold--planned {
+    min-height: 48rem;
+    margin-top: var(--space-lg);
+  }
+
+  .form-scaffold-label {
+    font-weight: 700;
+    color: var(--color-headline);
+    font-size: 1.4rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .form-scaffold-note {
+    font-size: 1.3rem;
+    color: var(--color-body);
+    line-height: 1.6;
+  }
+
+  .form-scaffold-warning {
+    margin-top: var(--space-sm);
+    font-size: 1.3rem;
+    color: var(--color-brand-red);
+    font-weight: 600;
+  }
+
+  /* ── VALUE PROPS (grid only; band owns surface + padding) ── */
+  .value-props-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    .value-props-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Card surface + hover-lift — compositor-only props; zero CLS */
+  .value-prop {
+    padding: var(--space-md);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--duration-base) var(--ease-out),
+                box-shadow var(--duration-base) var(--ease-out),
+                border-color var(--duration-base) var(--ease-out);
+  }
+
+  .value-prop:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-border-strong);
+  }
+
+  .value-prop h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how-it-works h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .how-it-works .lead {
+    margin-bottom: var(--space-lg);
+    /* max-width delegated to .u-reading class */
+  }
+
+  .process-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  @media (min-width: 768px) {
+    .process-steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .process-step {
+    display: flex;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.6rem;
+    height: 3.6rem;
+    background: var(--color-brand-red);
+    color: var(--color-card);
+    font-weight: 700;
+    font-size: 1.6rem;
+    border-radius: 50%;
+  }
+
+  .step-content h3 {
+    margin-bottom: var(--space-xs);
+  }
+
+  /* ── SERVICES GRID ── */
+  .home-services h2 {
+    margin-bottom: var(--space-md);
+  }
+
+  .service-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  @media (min-width: 768px) {
+    .service-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .service-card {
+    display: flex;
+  }
+
+  .service-card-link {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: var(--space-md);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: transform var(--duration-base) var(--ease-out),
+                box-shadow var(--duration-base) var(--ease-out),
+                border-color var(--duration-base) var(--ease-out);
+  }
+
+  /* Hover-lift — compositor-only props; zero CLS */
+  .service-card-link:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-border-strong);
+  }
+
+  .service-card h3 {
+    margin-bottom: var(--space-xs);
+  }
+
+  .service-card-cta {
+    margin-top: auto;
+    padding-top: var(--space-sm);
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--color-brand-red);
+  }
+
+  /* ── SERVICE AREA ── */
+  .service-area h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  /* ── SOCIAL PROOF ── */
+  .social-proof {
+    text-align: center;
+  }
+
+  .social-proof h2 {
+    margin-bottom: var(--space-md);
+  }
+
+  .rating-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    text-decoration: none;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .rating-stat:hover {
+    border-color: var(--color-border-strong);
+  }
+
+  .rating-stars {
+    font-size: 2.4rem;
+    color: var(--color-headline);
+    line-height: 1;
+  }
+
+  .rating-score {
+    font-size: 1.6rem;
+    color: var(--color-body);
+  }
+
+  /* ── FAQ TEASER ── */
+  .faq-teaser h2 {
+    margin-bottom: var(--space-md);
+  }
+
+  .faq-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .faq-item:first-child {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .faq-question {
+    display: block;
+    padding: var(--space-sm) var(--space-2xs);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--color-headline);
+    text-decoration: none;
+  }
+
+  .faq-question:hover {
+    color: var(--color-brand-red);
+  }
+
+  .faq-question::after {
+    content: ' \2192';
+    font-weight: 400;
+    color: var(--color-muted);
+  }
+
+  /* ── FINAL CTA (dark band; band--dark cascade handles text colors) ── */
+  .final-cta h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .final-cta > p {
+    max-width: var(--reading-width);
+    margin-bottom: 0;
+  }
+
+  .final-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+</style>

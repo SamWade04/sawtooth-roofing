@@ -1,0 +1,215 @@
+---
+// §S3 — Footer NAP + legal line.
+// F1: RCE-##### pending DOPL (launch gate — Idaho legally requires the number in advertising; footer counts).
+const year = new Date().getFullYear();
+
+// A2 Quick Links nav PRESERVED — Blog link must remain here per IA decision.
+const footerLinks = [
+  { label: 'Services',        href: '/services'  },
+  { label: 'Locations',       href: '/locations' },
+  { label: 'Portfolio',       href: '/portfolio' },
+  { label: 'About',           href: '/about'     },
+  { label: 'Contact',         href: '/contact'   },
+  { label: 'Blog',            href: '/blog'      },
+  { label: 'Privacy Policy',  href: '/privacy'   },
+];
+
+const serviceAreas = [
+  { city: 'Nampa',    href: '/locations/nampa'    },
+  { city: 'Caldwell', href: '/locations/caldwell' },
+  { city: 'Meridian', href: '/locations/meridian' },
+  { city: 'Boise',    href: '/locations/boise'    },
+  { city: 'Kuna',     href: '/locations/kuna'     },
+];
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <!-- §S3 NAP block — must match GBP + schema exactly -->
+    <div class="footer-nap">
+      <p class="footer-brand">Sawtooth Roofing</p>
+      <address class="footer-address">
+        1560 S Carol St<br />Meridian, ID 83646
+      </address>
+      <a href="tel:+12089968748" class="footer-phone">208.996.8748</a>
+      <a href="mailto:Contact@Sawtooth-Customs.com" class="footer-email">
+        Contact@Sawtooth-Customs.com
+      </a>
+      <p class="footer-service-area-text">
+        Serving Nampa, Caldwell, Meridian, Boise &amp; Kuna and the greater Treasure Valley.
+      </p>
+    </div>
+
+    <!-- Service area links -->
+    <div class="footer-section">
+      <p class="footer-section-heading">Service Areas</p>
+      <ul class="footer-city-list">
+        {serviceAreas.map(({ city, href }) => (
+          <li><a href={href} class="footer-link">{city}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Quick Links — A2 nav preserved; Blog link must stay here -->
+    <div class="footer-section footer-section--links">
+      <p class="footer-section-heading">Quick Links</p>
+      <ul class="footer-link-list">
+        {footerLinks.map(({ label, href }) => (
+          <li><a href={href} class="footer-link">{label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- §S3 Legal bar -->
+  <div class="footer-legal-bar">
+    <p class="footer-legal">
+      &copy; {year} Sawtooth Roofing &amp; Construction LLC
+    </p>
+    {/* F1 LAUNCH GATE: real RCE-##### must be sourced from DOPL before launch — see doc 30 §2.
+        Idaho legally requires the contractor registration number in advertising; footer counts. */}
+    <p class="footer-legal footer-license-placeholder">
+      Idaho-Registered Roofing Contractor RCE-##### &mdash; <em>PENDING DOPL</em>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+    margin-top: auto;
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg); /* snapped: 3.2rem → 4.0rem */
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: var(--space-lg) var(--space-md) var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    .footer-inner {
+      grid-template-columns: 1.6fr 1fr 1.4fr;
+      gap: var(--space-lg);
+    }
+  }
+
+  /* ── NAP block ── */
+  .footer-brand {
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--color-headline);
+    margin-bottom: var(--space-xs);
+  }
+
+  .footer-address {
+    font-style: normal;
+    font-size: 1.4rem;
+    color: var(--color-body);
+    line-height: 1.6;
+    margin-bottom: var(--space-xs);
+  }
+
+  .footer-phone {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-brand-red);
+    text-decoration: none;
+    margin-bottom: var(--space-2xs);
+  }
+
+  .footer-phone:hover {
+    color: var(--color-brand-red-hover);
+  }
+
+  .footer-email {
+    display: block;
+    font-size: 1.3rem;
+    color: var(--color-body);
+    text-decoration: none;
+    margin-bottom: var(--space-sm); /* snapped: 1.2rem → 1.6rem */
+  }
+
+  .footer-email:hover {
+    color: var(--color-brand-red);
+  }
+
+  .footer-service-area-text {
+    font-size: 1.3rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  /* ── Section headings ── */
+  .footer-section-heading {
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-headline);
+    margin-bottom: var(--space-sm); /* snapped: 1.2rem → 1.6rem */
+  }
+
+  /* ── City list + quick links ── */
+  .footer-city-list,
+  .footer-link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs); /* snapped: 0.6rem → 0.8rem */
+  }
+
+  .footer-link {
+    font-size: 1.4rem;
+    color: var(--color-body);
+    text-decoration: none;
+  }
+
+  .footer-link:hover {
+    color: var(--color-brand-red);
+  }
+
+  /* 2-col on mobile to save vertical space */
+  .footer-section--links .footer-link-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xs) var(--space-sm); /* snapped: 0.6rem → 0.8rem */
+  }
+
+  @media (min-width: 768px) {
+    .footer-section--links .footer-link-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Legal bar ── */
+  .footer-legal-bar {
+    border-top: 1px solid var(--color-border);
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: var(--space-md) var(--space-md); /* snapped: 2.0rem → 2.4rem */
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs) var(--space-md);
+    align-items: center;
+  }
+
+  .footer-legal {
+    font-size: 1.2rem;
+    color: var(--color-muted);
+    margin: 0;
+  }
+
+  /* Visually distinct so placeholder cannot be confused for a real license number */
+  .footer-license-placeholder {
+    font-style: italic;
+  }
+</style>

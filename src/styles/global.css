@@ -1,0 +1,346 @@
+@import './tokens.css';
+
+/* ─── Font family token ─────────────────────────────────────────────────── */
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ─── Rem baseline (1rem = 10px) ────────────────────────────────────────── */
+html {
+  font-size: 62.5%;
+}
+
+/* ─── Self-hosted Inter @font-face ─────────────────────────────────────── */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/inter-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/inter-latin-600-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/inter-latin-700-normal.woff2') format('woff2');
+}
+
+/* ─── Minimal modern reset ──────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure {
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* ─── Base body (mobile) ────────────────────────────────────────────────── */
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-body);
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
+
+/* ─── Type scale — MOBILE values (base) ────────────────────────────────── */
+h1 {
+  font-size: 3.0rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--color-headline);
+}
+
+h2 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--color-headline);
+}
+
+h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-headline);
+}
+
+.lead {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: var(--color-body);
+}
+
+p {
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: var(--color-body);
+}
+
+.caption {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: normal;
+  color: var(--color-body);
+}
+
+label {
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: normal;
+  color: var(--color-headline);
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--color-card);
+  background: var(--color-brand-red);
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--color-brand-red-hover);
+}
+
+small {
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: var(--color-muted);
+}
+
+/* ─── Type scale — DESKTOP promotions ──────────────────────────────────── */
+@media (min-width: 768px) {
+  body {
+    font-size: 1.6rem;
+  }
+
+  h1 {
+    font-size: 5.2rem;
+    line-height: 1.15;
+  }
+
+  h2 {
+    font-size: 3.4rem;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+    line-height: 1.3;
+  }
+
+  .lead {
+    font-size: 1.8rem;
+  }
+
+  p {
+    font-size: 1.6rem;
+  }
+
+  .caption {
+    font-size: 1.6rem;
+  }
+
+  label {
+    font-size: 1.4rem;
+  }
+
+  button {
+    font-size: 1.7rem;
+  }
+}
+
+/* ─── Composable button class (works on <a> and <button>) ──────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-sans);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--duration-base) var(--ease),
+              color var(--duration-base) var(--ease),
+              border-color var(--duration-base) var(--ease);
+}
+
+@media (min-width: 768px) {
+  .btn {
+    font-size: 1.7rem;
+  }
+}
+
+.btn--primary {
+  color: var(--color-card);
+  background: var(--color-brand-red);
+  border: 0;
+}
+
+.btn--primary:hover {
+  background: var(--color-brand-red-hover);
+}
+
+.btn--secondary {
+  color: var(--color-headline);
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+}
+
+.btn--secondary:hover {
+  border-color: var(--color-headline);
+}
+
+/* ─── Eyebrow label (uppercase caption register) ────────────────────────── */
+.eyebrow {
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+}
+
+/* ─── Reading-width text container ─────────────────────────────────────── */
+.u-reading {
+  max-width: var(--reading-width);
+}
+
+/* ─── Band surface-context cascade rules — doc 31 §3 ───────────────────── */
+/* Dark band (#0F172A bg): override all content to light tones.
+   Contrast ratios against #0F172A:
+     --color-bg  (#FAFAF9) on dark → 17.1:1 AAA  (headings / lead)
+     --color-border-strong (#CBD5E1) on dark → 12.0:1 AAA  (eyebrow / body / secondary)
+     --color-card (#FFF) on dark → 17.9:1 AAA  (btn--secondary text)
+   NOTE: --color-muted (#64748B) on dark = ~2.1:1 — never use on dark surfaces. */
+.band--dark h1,
+.band--dark h2,
+.band--dark h3 {
+  color: var(--color-bg);
+}
+
+.band--dark .lead {
+  color: var(--color-bg);
+}
+
+.band--dark p {
+  color: var(--color-border-strong);
+}
+
+.band--dark .eyebrow {
+  color: var(--color-border-strong);
+}
+
+.band--dark small {
+  color: var(--color-border-strong);
+}
+
+/* On-dark secondary button — white text + light outline instead of dark defaults */
+.band--dark .btn--secondary {
+  color: var(--color-card);
+  border-color: var(--color-border-strong);
+}
+
+.band--dark .btn--secondary:hover {
+  border-color: var(--color-card);
+}
+
+/* .band--light / .band--contrast — use default token colors, no overrides needed */
+
+/* ─── prefers-reduced-motion guard — A3.5 run 2b ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── :focus-visible rings — keyboard-only, not shown on mouse click ───── */
+/* Default (light + contrast bands): 2px brand-red ring.
+   --color-brand-red (#A01D25) as outline against --color-bg (#FAFAF9) → 7.6:1 AA. */
+.btn:focus-visible,
+.nav-link:focus-visible,
+.logo:focus-visible,
+.phone-cta:focus-visible,
+.nav-toggle:focus-visible,
+.service-card-link:focus-visible,
+.faq-question:focus-visible,
+.footer-link:focus-visible,
+.footer-phone:focus-visible,
+.footer-email:focus-visible,
+.rating-stat:focus-visible {
+  outline: 2px solid var(--color-brand-red);
+  outline-offset: 2px;
+}
+
+/* On dark bands: light ring so it's visible against --color-headline (#0F172A).
+   --color-bg (#FAFAF9) on #0F172A → 17.1:1 AAA. */
+.band--dark a:focus-visible,
+.band--dark button:focus-visible {
+  outline-color: var(--color-bg);
+}

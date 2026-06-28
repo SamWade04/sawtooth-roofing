@@ -1,0 +1,135 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const services = (await getCollection('services')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<BaseLayout
+  title="Our Services | Sawtooth Roofing"
+  description="TODO[A3-content]: services hub meta description, canon-sourced."
+>
+  <main class="services-hub">
+    <h1>Our Services</h1>
+
+    <p class="lead">
+      <!-- TODO[A3-content]: services hub intro prose, canon-sourced. Do NOT fabricate. -->
+      TODO[A3-content]: services hub intro prose.
+    </p>
+
+    <ul class="service-grid">
+      {
+        services.map((service) =>
+          service.data.draft ? (
+            /* Insurance Restoration: DRAFT — link held until Anthony clears (doc 30 §3(b)) */
+            <li class="service-card service-card--draft">
+              <div class="service-card-link service-card-link--draft">
+                <span class="draft-badge">DRAFT — coming soon</span>
+                <h2>{service.data.title}</h2>
+                <p>{service.data.summary}</p>
+              </div>
+            </li>
+          ) : (
+            <li class="service-card">
+              <a href={`/services/${service.id}`} class="service-card-link">
+                <h2>{service.data.title}</h2>
+                <p>{service.data.summary}</p>
+                <span class="service-card-cta">Learn more &rarr;</span>
+              </a>
+            </li>
+          )
+        )
+      }
+    </ul>
+  </main>
+</BaseLayout>
+
+<style>
+  .services-hub {
+    max-width: 96rem;
+    margin: var(--space-lg) auto;
+    padding: 0 var(--space-md);
+  }
+
+  .services-hub .lead {
+    margin-top: var(--space-sm); /* snapped: 1.2rem → 1.6rem */
+  }
+
+  .service-grid {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-lg) 0 0; /* snapped: 3.2rem → 4.0rem */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  @media (min-width: 768px) {
+    .service-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .service-card {
+    display: flex;
+  }
+
+  .service-card-link {
+    display: block;
+    width: 100%;
+    padding: var(--space-md);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md); /* snapped: 0.6rem → 0.8rem */
+    text-decoration: none;
+  }
+
+  /* Hover-lift scoped to interactive (non-draft) cards; compositor-only props; zero CLS */
+  .service-card-link:not(.service-card-link--draft) {
+    transition: transform var(--duration-base) var(--ease-out),
+                box-shadow var(--duration-base) var(--ease-out),
+                border-color var(--duration-base) var(--ease-out);
+  }
+
+  .service-card-link:not(.service-card-link--draft):hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-border-strong);
+  }
+
+  .service-card h2 {
+    font-size: 2.0rem;
+  }
+
+  .service-card p {
+    margin-top: var(--space-xs);
+  }
+
+  .service-card-cta {
+    display: inline-block;
+    margin-top: var(--space-sm);
+    font-weight: 700;
+    color: var(--color-brand-red);
+  }
+
+  .service-card--draft .service-card-link--draft {
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .draft-badge {
+    display: inline-block;
+    margin-bottom: var(--space-xs);
+    padding: 0.2rem 0.8rem;
+    background: var(--color-border);
+    color: var(--color-muted);
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm, 0.4rem);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+</style>

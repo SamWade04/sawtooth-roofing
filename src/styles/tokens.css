@@ -1,0 +1,44 @@
+:root {
+  --color-headline:        #0F172A;
+  --color-body:            #475569;
+  --color-muted:           #64748B;
+  --color-brand-red:       #A01D25;
+  --color-brand-red-hover: #831820;
+  --color-bg:              #FAFAF9;
+  --color-card:            #FFFFFF;
+  --color-border:          #E2E8F0;
+  --color-border-strong:   #CBD5E1;
+
+  /* spacing scale — doc 31 §1 */
+  --space-2xs: 0.4rem;
+  --space-xs:  0.8rem;
+  --space-sm:  1.6rem;
+  --space-md:  2.4rem;
+  --space-lg:  4.0rem;
+  --space-xl:  6.4rem;   /* section band vertical padding — mobile */
+  --space-2xl: 9.6rem;   /* section band vertical padding — desktop */
+  --space-3xl: 12.8rem;
+
+  /* radius — doc 31 §4 */
+  --radius-xs: 1px;    /* hairline — e.g. burger bars */
+  --radius-sm: 0.4rem;
+  --radius-md: 0.8rem;
+  --radius-lg: 1.2rem;
+
+  /* elevation — slate-tinted, doc 31 §4 */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 24px rgba(15, 23, 42, 0.12);
+
+  /* motion — doc 31 §6 */
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --ease: ease;
+  --ease-out: ease-out;
+
+  /* layout widths & gutters — doc 31 §1 */
+  --reading-width: 68rem;   /* text containers, 65–72ch */
+  --content-max:   120rem;  /* wide/grid band inner max */
+  --gutter:    var(--space-md);   /* page side padding — mobile */
+  --gutter-lg: var(--space-lg);   /* page side padding — desktop */
+}

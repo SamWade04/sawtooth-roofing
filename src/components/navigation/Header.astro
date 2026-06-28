@@ -1,0 +1,252 @@
+---
+const navLinks = [
+  { label: 'Services',  href: '/services'  },
+  { label: 'Locations', href: '/locations' },
+  { label: 'Portfolio', href: '/portfolio' },
+  { label: 'About',     href: '/about'     },
+  { label: 'Contact',   href: '/contact'   },
+];
+---
+
+<header class="site-header">
+  <div class="header-inner">
+
+    <!-- Logo lockup — links to home, NOT an h1 -->
+    <a href="/" class="logo" aria-label="Sawtooth Roofing — home">
+      <svg viewBox="0 0 32 24" width="28" height="21" aria-hidden="true" focusable="false">
+        <path
+          d="M2 22 L16 4 L30 22"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="3.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+      <span class="wordmark">Sawtooth Roofing</span>
+    </a>
+
+    <!-- Phone CTA — always visible (not behind toggle) -->
+    <a href="tel:+12089968748" class="phone-cta">
+      <svg class="phone-icon" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false">
+        <path
+          d="M2 3a1.5 1.5 0 0 1 1.5-1.5h1.8c.6 0 1.1.4 1.3 1l.9 2.7a1.5 1.5 0 0 1-.4 1.6L6 7.8c.9 1.8 2.4 3.3 4.2 4.2l1-1.1a1.5 1.5 0 0 1 1.6-.4l2.7.9c.6.2 1 .7 1 1.3v1.8A1.5 1.5 0 0 1 15 16C7.8 16 2 10.2 2 3Z"
+          fill="currentColor"
+        />
+      </svg>
+      <span>208.996.8748</span>
+    </a>
+
+    <!-- Mobile menu toggle -->
+    <button
+      class="nav-toggle"
+      aria-expanded="false"
+      aria-controls="primary-nav"
+      aria-label="Menu"
+    >
+      <span class="burger" aria-hidden="true"></span>
+    </button>
+
+    <!-- Primary nav — 5 items -->
+    <nav id="primary-nav" class="primary-nav" aria-label="Primary navigation">
+      {navLinks.map(({ label, href }) => (
+        <a href={href} class="nav-link">{label}</a>
+      ))}
+    </nav>
+
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const nav    = document.getElementById('primary-nav');
+
+  toggle?.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    nav?.setAttribute('data-open', String(!expanded));
+  });
+</script>
+
+<style>
+  .site-header {
+    background: var(--color-card);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: var(--space-sm) var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  /* ── Logo ── */
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .logo svg {
+    color: var(--color-brand-red);
+    flex-shrink: 0;
+  }
+
+  .wordmark {
+    font-weight: 700;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-headline);
+    white-space: nowrap;
+  }
+
+  /* ── Phone CTA — always visible ── */
+  .phone-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs); /* off-scale — flag: 0.5rem snapped from original */
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-brand-red);
+    white-space: nowrap;
+    margin-left: auto;
+  }
+
+  .phone-cta:hover {
+    color: var(--color-brand-red-hover);
+  }
+
+  .phone-icon {
+    flex-shrink: 0;
+  }
+
+  /* ── Mobile toggle ── */
+  .nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    color: var(--color-headline);
+    flex-shrink: 0;
+  }
+
+  .nav-toggle:hover {
+    background: var(--color-bg);
+  }
+
+  /* Hamburger icon drawn in CSS */
+  .burger,
+  .burger::before,
+  .burger::after {
+    display: block;
+    width: 1.8rem;
+    height: 0.2rem;
+    background: currentColor;
+    border-radius: var(--radius-xs);
+    transition: transform var(--duration-base) var(--ease), opacity var(--duration-base) var(--ease);
+    position: relative;
+  }
+
+  .burger::before,
+  .burger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+
+  .burger::before { top: -0.6rem; }
+  .burger::after  { top:  0.6rem; }
+
+  /* Toggle open state — X mark */
+  [aria-expanded="true"] .burger {
+    background: transparent;
+  }
+
+  [aria-expanded="true"] .burger::before {
+    transform: translateY(0.6rem) rotate(45deg);
+  }
+
+  [aria-expanded="true"] .burger::after {
+    transform: translateY(-0.6rem) rotate(-45deg);
+  }
+
+  /* ── Primary nav — mobile (hidden, shown when open) ── */
+  .primary-nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    order: 99;
+    padding: var(--space-xs) 0 var(--space-sm);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .primary-nav[data-open="true"] {
+    display: flex;
+  }
+
+  .nav-link {
+    padding: var(--space-xs) var(--space-2xs);
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-headline);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav-link:last-child {
+    border-bottom: none;
+  }
+
+  .nav-link:hover {
+    color: var(--color-brand-red);
+  }
+
+  /* ── Desktop (≥768px) ── */
+  @media (min-width: 768px) {
+    .nav-toggle {
+      display: none;
+    }
+
+    .primary-nav {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: var(--space-2xs);
+      width: auto;
+      order: unset;
+      padding: 0;
+      border-top: none;
+      margin-left: auto;
+    }
+
+    /* Override inline order: logo | nav | phone */
+    .phone-cta {
+      margin-left: var(--space-sm);
+    }
+
+    .nav-link {
+      padding: var(--space-xs) var(--space-xs);
+      font-size: 1.4rem;
+      border-bottom: none;
+      border-radius: var(--radius-sm);
+    }
+
+    .nav-link:hover {
+      background: var(--color-bg);
+    }
+  }
+</style>

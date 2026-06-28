@@ -8,6 +8,10 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+## Site IA
+
+3×5 tiered IA — Home grid = 3 core tiles led by Storm Damage (Storm Damage · Roof Replacement · Roof Repair); Insurance = process band (existing How-It-Works), not a tile; Gutters dropped; Free Roof Inspection = primary CTA. Collection = 4 entries (3 core + Insurance DRAFT).
+
 ## Documentation
 
 Full documentation: https://docs.astro.build
