@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const services = (await getCollection('services', ({ data }) => !data.draft)).sort(
+const services = (await getCollection('services')).sort(
   (a, b) => a.data.order - b.data.order
 );
 ---
@@ -21,15 +21,26 @@ const services = (await getCollection('services', ({ data }) => !data.draft)).so
 
     <ul class="service-grid">
       {
-        services.map((service) => (
-          <li class="service-card">
-            <a href={`/services/${service.id}`} class="service-card-link">
-              <h2>{service.data.title}</h2>
-              <p>{service.data.summary}</p>
-              <span class="service-card-cta">Learn more &rarr;</span>
-            </a>
-          </li>
-        ))
+        services.map((service) =>
+          service.data.draft ? (
+            /* Insurance Restoration: DRAFT — link held until Anthony clears (doc 30 §3(b)) */
+            <li class="service-card service-card--draft">
+              <div class="service-card-link service-card-link--draft">
+                <span class="draft-badge">DRAFT — coming soon</span>
+                <h2>{service.data.title}</h2>
+                <p>{service.data.summary}</p>
+              </div>
+            </li>
+          ) : (
+            <li class="service-card">
+              <a href={`/services/${service.id}`} class="service-card-link">
+                <h2>{service.data.title}</h2>
+                <p>{service.data.summary}</p>
+                <span class="service-card-cta">Learn more &rarr;</span>
+              </a>
+            </li>
+          )
+        )
       }
     </ul>
   </main>
@@ -92,5 +103,24 @@ const services = (await getCollection('services', ({ data }) => !data.draft)).so
     margin-top: var(--space-sm);
     font-weight: 700;
     color: var(--color-brand-red);
+  }
+
+  .service-card--draft .service-card-link--draft {
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .draft-badge {
+    display: inline-block;
+    margin-bottom: var(--space-xs);
+    padding: 0.2rem 0.8rem;
+    background: var(--color-border);
+    color: var(--color-muted);
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm, 0.4rem);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 </style>

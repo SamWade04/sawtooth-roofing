@@ -19,9 +19,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import TrustBar from '../components/ui/TrustBar.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
 
-const services = (await getCollection('services', ({ data }) => !data.draft)).sort(
-  (a, b) => a.data.order - b.data.order
-);
+const allServices = await getCollection('services');
+// Home grid: exactly 3 core tiles in canonical order (doc 11 + doc 30 §1/§3(b)/§6)
+const homeGridSlugs = ['storm-damage-restoration', 'roof-replacement', 'roof-repair'];
+const services = homeGridSlugs
+  .map((slug) => allServices.find((s) => s.id === slug))
+  .filter(Boolean);
 ---
 
 <BaseLayout
@@ -191,7 +194,7 @@ const services = (await getCollection('services', ({ data }) => !data.draft)).so
             services.map((service) => (
               <li class="service-card">
                 <a href={`/services/${service.id}`} class="service-card-link">
-                  <h3>{service.data.title}</h3>
+                  <h3>{service.data.shortTitle ?? service.data.title}</h3>
                   <p>{service.data.summary}</p>
                   <span class="service-card-cta">Learn more &rarr;</span>
                 </a>

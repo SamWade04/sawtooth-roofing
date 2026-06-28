@@ -1,5 +1,6 @@
 ---
-title: Storm Damage
+title: Storm Damage Restoration
+shortTitle: "Storm Damage"
 order: 3
 summary: "Fast hail- and wind-damage inspection and restoration when the weather turns."
 draft: false
