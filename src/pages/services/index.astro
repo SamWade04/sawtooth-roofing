@@ -86,7 +86,16 @@ const services = (await getCollection('services')).sort(
     text-decoration: none;
   }
 
-  .service-card-link:hover {
+  /* Hover-lift scoped to interactive (non-draft) cards; compositor-only props; zero CLS */
+  .service-card-link:not(.service-card-link--draft) {
+    transition: transform var(--duration-base) var(--ease-out),
+                box-shadow var(--duration-base) var(--ease-out),
+                border-color var(--duration-base) var(--ease-out);
+  }
+
+  .service-card-link:not(.service-card-link--draft):hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
     border-color: var(--color-border-strong);
   }
 

@@ -310,3 +310,37 @@ small {
 }
 
 /* .band--light / .band--contrast — use default token colors, no overrides needed */
+
+/* ─── prefers-reduced-motion guard — A3.5 run 2b ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── :focus-visible rings — keyboard-only, not shown on mouse click ───── */
+/* Default (light + contrast bands): 2px brand-red ring.
+   --color-brand-red (#A01D25) as outline against --color-bg (#FAFAF9) → 7.6:1 AA. */
+.btn:focus-visible,
+.nav-link:focus-visible,
+.logo:focus-visible,
+.phone-cta:focus-visible,
+.nav-toggle:focus-visible,
+.service-card-link:focus-visible,
+.faq-question:focus-visible,
+.footer-link:focus-visible,
+.footer-phone:focus-visible,
+.footer-email:focus-visible,
+.rating-stat:focus-visible {
+  outline: 2px solid var(--color-brand-red);
+  outline-offset: 2px;
+}
+
+/* On dark bands: light ring so it's visible against --color-headline (#0F172A).
+   --color-bg (#FAFAF9) on #0F172A → 17.1:1 AAA. */
+.band--dark a:focus-visible,
+.band--dark button:focus-visible {
+  outline-color: var(--color-bg);
+}

@@ -421,6 +421,24 @@ const services = homeGridSlugs
     }
   }
 
+  /* Card surface + hover-lift — compositor-only props; zero CLS */
+  .value-prop {
+    padding: var(--space-md);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--duration-base) var(--ease-out),
+                box-shadow var(--duration-base) var(--ease-out),
+                border-color var(--duration-base) var(--ease-out);
+  }
+
+  .value-prop:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-border-strong);
+  }
+
   .value-prop h2 {
     margin-bottom: var(--space-sm);
   }
@@ -510,9 +528,15 @@ const services = homeGridSlugs
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     text-decoration: none;
+    transition: transform var(--duration-base) var(--ease-out),
+                box-shadow var(--duration-base) var(--ease-out),
+                border-color var(--duration-base) var(--ease-out);
   }
 
+  /* Hover-lift — compositor-only props; zero CLS */
   .service-card-link:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
     border-color: var(--color-border-strong);
   }
 
