@@ -15,8 +15,10 @@ const services = (await getCollection('services')).sort(
     <h1>Our Services</h1>
 
     <p class="lead">
-      <!-- TODO[A3-content]: services hub intro prose, canon-sourced. Do NOT fabricate. -->
-      TODO[A3-content]: services hub intro prose.
+      Sawtooth Roofing is the Treasure Valley's storm- and hail-damage insurance-restoration specialist. Whether a storm just hit or your roof has simply reached the end of its life, we start the same way — with a free, no-obligation inspection that tells you exactly where you stand, in writing.
+    </p>
+    <p class="services-hub-sub">
+      Below are our core roofing services. When storm damage is involved, we also document it for your insurance claim and work with your insurer through the restoration — you stay in control of your claim, start to finish.
     </p>
 
     <ul class="service-grid">
@@ -55,6 +57,10 @@ const services = (await getCollection('services')).sort(
 
   .services-hub .lead {
     margin-top: var(--space-sm); /* snapped: 1.2rem → 1.6rem */
+  }
+
+  .services-hub-sub {
+    margin-top: var(--space-sm);
   }
 
   .service-grid {
