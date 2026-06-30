@@ -1,18 +1,42 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { GBP_URL } from '../consts';
 ---
 
 <BaseLayout
-  title="About | Sawtooth Roofing"
-  description="TODO[A3-content]: about meta description, canon-sourced."
+  title="About Sawtooth Roofing — Treasure Valley Insurance-Restoration Roofers"
+  description="Sawtooth Roofing is an Idaho-registered, Meridian-based roofing contractor specializing in storm- and hail-damage insurance restoration across the Treasure Valley."
 >
   <main class="about-page">
     <h1>About</h1>
-    {/* doc 08: robust E-E-A-T About is a content-pass priority */}
-    <p>
-      <!-- TODO[A3-content]: About body — company story, team, credentials. Canon-sourced. Do NOT fabricate history. -->
-      TODO[A3-content]: About body.
-    </p>
+
+    <h2>About Sawtooth Roofing</h2>
+    <p>Sawtooth Roofing is an Idaho-registered roofing contractor based in Meridian, specializing in storm- and hail-damage insurance-restoration roofing across the Treasure Valley. When a storm moves through Nampa, Caldwell, Meridian, Boise, or Kuna, we're the local crew homeowners call to inspect the damage, document it for their insurance claim, and rebuild the roof right.</p>
+
+    <h3>What we do</h3>
+    <p>We focus on three core services — <strong>roof replacement, roof repair, and storm-damage restoration</strong> — wrapped by the work that defines us: helping homeowners through the insurance-restoration process. We inspect, we document, we work with your insurance, and we complete the approved repairs. You stay in control of your claim throughout.</p>
+
+    <h3>Why we specialize in insurance restoration</h3>
+    <p>The Treasure Valley gets real weather — hail and high wind that does real damage to roofs. Because the majority of our work is storm and insurance restoration, the parts of the job that are occasional for a general contractor are routine for us: thorough damage documentation, on-site adjuster meetings, and manufacturer-spec rebuilds. That focus is the point. It means a homeowner dealing with a damaged roof and an insurance claim is working with a crew that does this every week, not once in a while.</p>
+
+    <h3>Products and partners</h3>
+    <p>We install <strong>Owens Corning roofing products</strong> and source materials through <strong>ABC Supply Co.</strong> — quality systems installed to manufacturer specification, built for Idaho's climate.</p>
+
+    <h3>Proof, not promises</h3>
+    <p>We let the work speak. Sawtooth Roofing holds a <strong>5.0 average across 83 Google reviews</strong> — see them for yourself on our <a href={GBP_URL} target="_blank" rel="noopener">Google Business Profile</a>.</p>
+
+    <h3>The team</h3>
+    <p>Sawtooth Roofing &amp; Construction LLC is owner-led by a small, hands-on team:</p>
+    <ul>
+      <li><strong>Anthony [TK: last name] — Co-owner.</strong> Leads claims, insurance-restoration coordination, and the company's financial and legal operations; he's the team's authority on the homeowner insurance-claim process. <em>[TK: 1–2 sentences of verifiable background.]</em></li>
+      <li><strong>Josh [TK: last name] — Co-owner.</strong> Leads production and fulfillment and personally handles roof inspections and on-site quality. <em>[TK: 1–2 sentences of verifiable background.]</em></li>
+      <li><strong>Sam Wade — Director of Marketing &amp; Systems.</strong> <em>[TK: optional short line.]</em></li>
+    </ul>
+
+    <h3>Where we work</h3>
+    <p>We serve homeowners across the Treasure Valley from our Meridian base: <strong>Nampa, Caldwell, Meridian, Boise, and Kuna.</strong></p>
+
+    <p><strong>Storm damage, a stubborn leak, or a roof near the end of its life? <a href="#">Book a free roof inspection</a> — no obligation, straight answers.</strong></p>
   </main>
 </BaseLayout>
 
@@ -23,7 +47,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     padding: 0 var(--space-md);
   }
 
+  .about-page h2 {
+    margin-top: var(--space-lg);
+  }
+
+  .about-page h3 {
+    margin-top: var(--space-md);
+  }
+
   .about-page p {
     margin-top: var(--space-sm);
+  }
+
+  .about-page ul {
+    margin-top: var(--space-sm);
+    padding-left: var(--space-md);
+  }
+
+  .about-page li {
+    margin-top: var(--space-xs);
   }
 </style>

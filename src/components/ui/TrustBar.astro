@@ -2,19 +2,20 @@
 // §S1 — Trust Bar. Factual only. No manufacturer tier wording.
 // F1: RCE-##### pending DOPL (launch gate).
 // F3: verify 83 reviews / 5.0 score against live GBP at publish.
-// F2: replace the GBP href with the live URL after NAP reconcile.
 // Surface, padding, and divider are owned by the SectionBand wrapper.
+import { GBP_URL } from '../../consts';
 ---
 
 <div class="trust-bar" aria-label="Trust indicators">
   <ul class="trust-bar-list">
     <li class="trust-bar-item">
       {/* F3: verify count + score against live GBP at publish */}
-      {/* F2: replace href with live GBP URL after NAP reconcile */}
       <a
-        href="/contact"
+        href={GBP_URL}
+        target="_blank"
+        rel="noopener"
         class="trust-bar-rating"
-        aria-label="TODO[F2]: replace with live Google Business Profile URL"
+        aria-label="See our 5.0 rating on Google"
       >
         &#9733; 5.0 from 83 Google reviews
       </a>
