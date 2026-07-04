@@ -2,7 +2,6 @@
 const navLinks = [
   { label: 'Services',  href: '/services'  },
   { label: 'Locations', href: '/locations' },
-  { label: 'Portfolio', href: '/portfolio' },
   { label: 'About',     href: '/about'     },
   { label: 'Contact',   href: '/contact'   },
 ];
@@ -47,7 +46,7 @@ const navLinks = [
       <span class="burger" aria-hidden="true"></span>
     </button>
 
-    <!-- Primary nav — 5 items -->
+    <!-- Primary nav — 4 items -->
     <nav id="primary-nav" class="primary-nav" aria-label="Primary navigation">
       {navLinks.map(({ label, href }) => (
         <a href={href} class="nav-link">{label}</a>

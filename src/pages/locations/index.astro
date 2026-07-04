@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionBand from '../../components/ui/SectionBand.astro';
+
+const cities = ['Nampa', 'Caldwell', 'Meridian', 'Boise', 'Kuna'];
+---
+
+<BaseLayout
+  title="Service Areas — Roofing in Nampa, Caldwell, Meridian, Boise & Kuna | Sawtooth Roofing"
+  description="Sawtooth Roofing serves the Treasure Valley from Meridian — storm damage restoration, roof replacement & repair across Nampa, Caldwell, Meridian, Boise & Kuna. Free inspections."
+>
+  <!-- main.locations-hub is a plain flow container; bands own all width/padding/surface -->
+  <main class="locations-hub">
+
+    <SectionBand surface="dark" width="content" pad="band">
+      <h1>Where We Work</h1>
+      <p class="lead u-reading">
+        Sawtooth Roofing serves homeowners across the Treasure Valley from our Meridian base — Nampa, Caldwell, Meridian, Boise, and Kuna. Storm damage, insurance restoration, roof replacement, or roof repair: wherever you are in the valley, we inspect free, document thoroughly, and build to manufacturer spec with Owens Corning products.
+      </p>
+      <p class="hero-cta u-reading">
+        Storm just moved through your neighborhood? <a href="#">Book a free roof inspection</a> — we'll tell you exactly where your roof stands, in writing.
+      </p>
+    </SectionBand>
+
+    <SectionBand surface="light" width="content" pad="band">
+      <ul class="city-grid">
+        {
+          cities.map((city) => (
+            /* City pages gated (F6) — non-linked cards until per-city content clears */
+            <li class="city-card">
+              <div class="city-card-body">
+                <span class="coming-soon-badge">Coming soon</span>
+                <h2>{city}</h2>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </SectionBand>
+
+  </main>
+</BaseLayout>
+
+<style>
+  .lead {
+    margin-top: var(--space-sm);
+  }
+
+  .hero-cta {
+    margin-top: var(--space-sm);
+  }
+
+  /* On-dark inline link — brand red fails contrast on --color-headline; use light tone */
+  .hero-cta a {
+    color: var(--color-bg);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .city-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  @media (min-width: 768px) {
+    .city-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .city-card {
+    display: flex;
+  }
+
+  /* Same dimmed, non-interactive treatment as the /services DRAFT card */
+  .city-card-body {
+    display: block;
+    width: 100%;
+    padding: var(--space-md);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .city-card h2 {
+    font-size: 2.0rem;
+  }
+
+  .coming-soon-badge {
+    display: inline-block;
+    margin-bottom: var(--space-xs);
+    padding: 0.2rem 0.8rem;
+    background: var(--color-border);
+    color: var(--color-muted);
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm, 0.4rem);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+</style>
