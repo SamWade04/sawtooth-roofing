@@ -1,0 +1,171 @@
+---
+// A3.6 — shared composed content-page primitive (hero band + body band).
+// On-dark text is handled entirely by the global .band--dark cascade — no color rules here.
+import BaseLayout from './BaseLayout.astro';
+import SectionBand from '../components/ui/SectionBand.astro';
+
+interface Props {
+  title: string;          // → BaseLayout → SeoHead
+  description?: string;
+  heading: string;        // hero H1 — always verbatim existing copy
+  eyebrow?: string;       // optional; when absent, render nothing
+  lead?: string;          // optional; when absent, render nothing
+  heroSurface?: 'dark' | 'light';
+  imageSlot?: boolean;    // F6 placeholder
+  asideSlot?: boolean;    // A6 form-rail placeholder
+}
+
+const {
+  title,
+  description,
+  heading,
+  eyebrow,
+  lead,
+  heroSurface = 'dark',
+  imageSlot = false,
+  asideSlot = false,
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <main class="content-page">
+
+    <SectionBand surface={heroSurface} width="content" pad="band">
+      <div class="content-hero">
+        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+        <h1>{heading}</h1>
+        {lead && <p class="lead u-reading">{lead}</p>}
+      </div>
+    </SectionBand>
+
+    <SectionBand surface="light" width={asideSlot ? 'content' : 'reading'} pad="band">
+      {
+        asideSlot ? (
+          <div class="content-body-grid">
+            <div class="content-main">
+              {imageSlot && (
+                <div class="media-placeholder">
+                  TODO[F6-photo] — project photography pending. No stock or AI imagery.
+                </div>
+              )}
+              <slot />
+            </div>
+            <aside class="content-rail">
+              <div class="form-rail-placeholder" aria-label="Inspection form — coming soon">
+                <p class="form-rail-label">TODO[A6-form]</p>
+                <p class="form-rail-note">
+                  GHL inspection form embeds here at A6. No embed until the form exists in GHL.
+                </p>
+              </div>
+            </aside>
+          </div>
+        ) : (
+          <div class="content-main">
+            {imageSlot && (
+              <div class="media-placeholder">
+                TODO[F6-photo] — project photography pending. No stock or AI imagery.
+              </div>
+            )}
+            <slot />
+          </div>
+        )
+      }
+    </SectionBand>
+
+  </main>
+</BaseLayout>
+
+<style>
+  /* ── HERO (spacing mirrors Home hero; colors via global .band--dark cascade) ── */
+  .content-hero .eyebrow {
+    margin-bottom: var(--space-sm);
+  }
+
+  .content-hero .lead {
+    margin-top: var(--space-sm);
+  }
+
+  /* ── BODY grid: reading column + aside rail (rail stacks below on mobile) ── */
+  .content-body-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    .content-body-grid {
+      grid-template-columns: minmax(0, 1fr) var(--rail-width);
+      align-items: start;
+    }
+  }
+
+  /* Text column stays reading-capped even inside a content-width band */
+  .content-main {
+    max-width: var(--reading-width);
+  }
+
+  /* ── F6 image placeholder — CLS-safe: aspect-ratio reserves height from width ── */
+  .media-placeholder {
+    aspect-ratio: 16 / 9;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    display: grid;
+    place-items: center;
+    color: var(--color-muted);
+    font-size: 1.3rem;
+    text-align: center;
+    padding: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+
+  /* ── A6 form-rail placeholder — non-interactive; matches Home form-scaffold recipe ── */
+  .form-rail-placeholder {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-sm);
+    min-height: 48rem;
+  }
+
+  .form-rail-label {
+    font-weight: 700;
+    color: var(--color-headline);
+  }
+
+  .form-rail-note {
+    margin-top: var(--space-xs);
+    font-size: 1.3rem;
+    color: var(--color-body);
+  }
+
+  /* ── Prose rhythm for slotted markdown — the global reset zeroes these margins
+     and nothing restores them for rendered <Content />; tokens only, mirrors About ── */
+  .content-main :global(h2) {
+    margin-top: var(--space-lg);
+  }
+
+  .content-main :global(h3) {
+    margin-top: var(--space-md);
+  }
+
+  .content-main :global(p) {
+    margin-top: var(--space-sm);
+  }
+
+  .content-main :global(ul),
+  .content-main :global(ol) {
+    margin-top: var(--space-sm);
+    padding-left: var(--space-md);
+  }
+
+  .content-main :global(li) {
+    margin-top: var(--space-xs);
+  }
+
+  .content-main > :global(:first-child),
+  .content-main :global(h2:first-child) {
+    margin-top: 0;
+  }
+</style>
