@@ -41,4 +41,5 @@
   --content-max:   120rem;  /* wide/grid band inner max */
   --gutter:    var(--space-md);   /* page side padding — mobile */
   --gutter-lg: var(--space-lg);   /* page side padding — desktop */
+  --rail-width: 32rem;   /* content-page aside rail — A3.6 */
 }

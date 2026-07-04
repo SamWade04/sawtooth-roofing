@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import BaseLayout from './BaseLayout.astro';
+import ContentPageLayout from './ContentPageLayout.astro';
 
 interface Props {
   entry: CollectionEntry<'services'>;
@@ -15,23 +15,13 @@ const pageTitle = seo?.title ?? `${title} | Sawtooth Roofing`;
 const pageDescription = seo?.description ?? summary;
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
-  <main class="service-page">
-    <h1>{title}</h1>
-    <div class="service-body">
-      <slot />
-    </div>
-  </main>
-</BaseLayout>
-
-<style>
-  .service-page {
-    max-width: 72rem;
-    margin: var(--space-lg) auto;
-    padding: 0 var(--space-md);
-  }
-
-  .service-body {
-    margin-top: var(--space-sm);
-  }
-</style>
+<ContentPageLayout
+  title={pageTitle}
+  description={pageDescription}
+  heading={title}
+  lead={summary}
+  imageSlot
+  asideSlot
+>
+  <slot />
+</ContentPageLayout>
