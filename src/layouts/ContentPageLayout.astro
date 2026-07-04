@@ -168,4 +168,20 @@ const {
   .content-main :global(h2:first-child) {
     margin-top: 0;
   }
+
+  .content-main :global(a) {
+    color: var(--color-brand-red);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .content-main :global(a:hover) {
+    color: var(--color-brand-red-hover);
+  }
+
+  .content-main :global(a:focus-visible) {
+    outline: 2px solid var(--color-brand-red);
+    outline-offset: 2px;
+  }
 </style>

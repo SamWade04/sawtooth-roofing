@@ -1,15 +1,37 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionBand from '../components/ui/SectionBand.astro';
 ---
 
 <BaseLayout title="Page not found — Sawtooth Roofing">
-  <main style="max-width: 72rem; margin: var(--space-2xl) auto; padding: 0 var(--space-md); text-align: center;">
-    <h1>404 — Page Not Found</h1>
-    <p class="lead" style="margin-top: var(--space-sm);">
-      That page doesn't exist or may have moved.
-    </p>
-    <p style="margin-top: var(--space-md);">
-      <a href="/" style="color: var(--color-brand-red); font-weight: 700;">Back to home</a>
-    </p>
+  <main class="not-found">
+    <SectionBand surface="light" width="reading" pad="band">
+      <h1>404 — Page Not Found</h1>
+      <p class="lead">
+        That page doesn't exist or may have moved.
+      </p>
+      <p class="not-found-home">
+        <a href="/">Back to home</a>
+      </p>
+    </SectionBand>
   </main>
 </BaseLayout>
+
+<style>
+  .not-found {
+    text-align: center;
+  }
+
+  .not-found .lead {
+    margin-top: var(--space-sm);
+  }
+
+  .not-found-home {
+    margin-top: var(--space-md);
+  }
+
+  .not-found-home a {
+    color: var(--color-brand-red);
+    font-weight: 700;
+  }
+</style>
