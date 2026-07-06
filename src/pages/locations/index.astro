@@ -1,8 +1,11 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionBand from '../../components/ui/SectionBand.astro';
 
-const cities = ['Nampa', 'Caldwell', 'Meridian', 'Boise', 'Kuna'];
+const locations = (await getCollection('locations')).sort(
+  (a, b) => a.data.order - b.data.order
+);
 ---
 
 <BaseLayout
@@ -25,15 +28,24 @@ const cities = ['Nampa', 'Caldwell', 'Meridian', 'Boise', 'Kuna'];
     <SectionBand surface="light" width="content" pad="band">
       <ul class="city-grid">
         {
-          cities.map((city) => (
-            /* City pages gated (F6) — non-linked cards until per-city content clears */
-            <li class="city-card">
-              <div class="city-card-body">
-                <span class="coming-soon-badge">Coming soon</span>
-                <h2>{city}</h2>
-              </div>
-            </li>
-          ))
+          locations.map((location) =>
+            location.data.draft ? (
+              /* City pages gated (F6) — non-linked cards until per-city content clears */
+              <li class="city-card">
+                <div class="city-card-body">
+                  <span class="coming-soon-badge">Coming soon</span>
+                  <h2>{location.data.city}</h2>
+                </div>
+              </li>
+            ) : (
+              <li class="city-card">
+                <a href={`/locations/${location.id}`} class="city-card-link">
+                  <h2>{location.data.city}</h2>
+                  <span class="city-card-cta">Learn more &rarr;</span>
+                </a>
+              </li>
+            )
+          )
         }
       </ul>
     </SectionBand>
@@ -77,17 +89,49 @@ const cities = ['Nampa', 'Caldwell', 'Meridian', 'Boise', 'Kuna'];
     display: flex;
   }
 
-  /* Same dimmed, non-interactive treatment as the /services DRAFT card */
-  .city-card-body {
+  /* Shared card box; .city-card-body (draft) adds the dimmed non-interactive
+     treatment, .city-card-link (published) adds the /services hover-lift */
+  .city-card-body,
+  .city-card-link {
     display: block;
     width: 100%;
     padding: var(--space-md);
     background: var(--color-card);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
+  }
+
+  /* Same dimmed, non-interactive treatment as the /services DRAFT card */
+  .city-card-body {
     opacity: 0.6;
     cursor: default;
     pointer-events: none;
+  }
+
+  /* Hover-lift scoped to linked cards; compositor-only props; zero CLS */
+  .city-card-link {
+    text-decoration: none;
+    transition: transform var(--duration-base) var(--ease-out),
+                box-shadow var(--duration-base) var(--ease-out),
+                border-color var(--duration-base) var(--ease-out);
+  }
+
+  .city-card-link:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-border-strong);
+  }
+
+  .city-card-link:focus-visible {
+    outline: 2px solid var(--color-brand-red);
+    outline-offset: 2px;
+  }
+
+  .city-card-cta {
+    display: inline-block;
+    margin-top: var(--space-sm);
+    font-weight: 700;
+    color: var(--color-brand-red);
   }
 
   .city-card h2 {
