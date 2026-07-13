@@ -1,36 +1,143 @@
 ---
-import ContentPageLayout from '../layouts/ContentPageLayout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionBand from '../components/ui/SectionBand.astro';
 import GHLFormEmbed from '../components/forms/GHLFormEmbed.astro';
 import FinancingBand from '../components/ui/FinancingBand.astro';
 ---
 
-<ContentPageLayout
+<BaseLayout
   title="Book a Free Roof Inspection | Sawtooth Roofing"
-  description="Schedule your free roof inspection anywhere in the Treasure Valley. We inspect, document everything, and coordinate directly with your carrier — you stay in control."
-  heading="Book Your Free Roof Inspection"
-  eyebrow="Free · No obligation"
-  lead="Tell us about your roof and we'll get you on the schedule. We inspect, document everything, and if storm damage is in play, we coordinate directly with your carrier — you stay copied and in control the whole way."
-  heroSurface="dark"
+  description="Storm damage is most of what we do. Free roof inspection, full documentation, and we manage your roof claim start to finish — you stay in control. Serving the Treasure Valley."
 >
-  <!-- Placed before the form markup so the embed activates right after
-       DOMContentLoaded, not after the whole page parses (A6 hoist fix). -->
-  <script is:inline src="https://link.msgsndr.com/js/form_embed.js" defer></script>
+  <!-- main.book-inspection-page is a plain flow container; bands own all width/padding/surface -->
+  <main class="book-inspection-page">
 
-  <div class="book-inspection-form">
-    <GHLFormEmbed
-      formId="mcsTvRXmk7j7LusDqds3"
-      title="Book your free roof inspection"
-      minHeight="90rem"
-      loading="eager"
-    />
-  </div>
+    <!-- ─────────────────────────────────────────────────
+         BAND 1 — HERO (two-column: words | image)
+         ───────────────────────────────────────────────── -->
+    <SectionBand surface="dark" width="content" pad="band">
+      <div class="hero">
+        <div class="hero-content">
+          <p class="eyebrow">Free &middot; No obligation</p>
+          <h1>Storm Damage Is Most of What We Do. We'll Manage Your Roof Claim Start to Finish.</h1>
+          <p class="lead u-reading">
+            Dealing with a damaged roof is stressful enough. We inspect, document everything, submit
+            it to your carrier, and stay your point of contact from the first inspection to the
+            finished roof — you stay in control the whole way.
+          </p>
+          <p class="hero-trust">5.0 &#9733; &middot; 83 Google reviews &middot; Idaho-registered &middot; Owens Corning &amp; ABC Supply</p>
 
-  <FinancingBand />
-</ContentPageLayout>
+          <!-- RATIFICATION-GATED (Command §41-5802 PA question, July 13 flag): on
+               confirm, "manage"→"handle" in H1; optional denial/appeal line. Do NOT
+               uncomment until Command ratifies.
+          <h1>Storm Damage Is Most of What We Do. We'll Handle Your Roof Claim Start to Finish.</h1>
+          <p class="lead u-reading">
+            Dealing with a damaged roof is stressful enough. We inspect, document everything, submit
+            it to your carrier, and stay your point of contact from the first inspection to the
+            finished roof — even if your claim is denied or needs an appeal, we stay in your corner.
+          </p>
+          -->
+        </div>
+
+        <div class="hero-image">
+          <!-- TODO[F6-photo]: real Treasure Valley roof photo (Nampa proof set, pending confirms) -->
+          <span class="hero-image-label">Photo &mdash; F6</span>
+        </div>
+      </div>
+    </SectionBand>
+
+    <!-- ─────────────────────────────────────────────────
+         BAND 2 — THE FORM
+         ───────────────────────────────────────────────── -->
+    <SectionBand surface="light" width="reading" pad="band">
+      <p class="eyebrow">Get on the schedule</p>
+      <p class="lead u-reading">Tell us about your roof and we'll get you booked in.</p>
+
+      <!-- Placed before the form markup so the embed activates right after
+           DOMContentLoaded, not after the whole page parses (A6 hoist fix). -->
+      <script is:inline src="https://link.msgsndr.com/js/form_embed.js" defer></script>
+
+      <div class="book-inspection-form">
+        <GHLFormEmbed
+          formId="mcsTvRXmk7j7LusDqds3"
+          title="Book your free roof inspection"
+          minHeight="90rem"
+          loading="eager"
+        />
+      </div>
+    </SectionBand>
+
+    <!-- ─────────────────────────────────────────────────
+         BAND 3 — FINANCING
+         ───────────────────────────────────────────────── -->
+    <FinancingBand />
+
+  </main>
+</BaseLayout>
 
 <style>
+  .book-inspection-page {
+    /* no constraints */
+  }
+
+  /* ── HERO (internal 2-col grid; band owns width + padding + bg) ── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+      gap: var(--space-lg);
+    }
+  }
+
+  .eyebrow {
+    margin-bottom: var(--space-sm);
+  }
+
+  .hero h1 {
+    margin-top: 0;
+  }
+
+  .hero .lead {
+    margin-top: var(--space-sm);
+  }
+
+  .hero-trust {
+    margin-top: var(--space-md);
+    font-size: 1.4rem;
+  }
+
+  /* CLS-safe placeholder — reserves space via aspect-ratio, no image src yet. */
+  .hero-image {
+    order: 2;
+    aspect-ratio: 4 / 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  @media (min-width: 768px) {
+    .hero-image {
+      order: 0;
+    }
+  }
+
+  .hero-image-label {
+    color: var(--color-muted);
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  /* ── FORM BAND ── */
   .book-inspection-form {
-    max-width: var(--reading-width);
-    margin-inline: auto;
+    margin-top: var(--space-lg);
   }
 </style>
