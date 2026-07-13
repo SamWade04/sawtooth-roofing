@@ -26,4 +26,4 @@ Idaho's wind and hail drive most of what we see: shingles lifted or torn off by 
 
 It can, when the damage is sudden and storm-related — but your insurer determines what your specific policy covers. We inspect the roof and document the damage for your claim; you file and control the claim. For storm-related work, see [Storm Damage Restoration](/services/storm-damage-restoration).
 
-**Got a leak or missing shingles? [Book a free roof inspection](/book-inspection) and we'll show you exactly what's going on up there.**
+**Got a leak or missing shingles? [Book a free roof inspection](/contact) and we'll show you exactly what's going on up there.**

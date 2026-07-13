@@ -27,4 +27,4 @@ Our process is built around your claim, not around us: we inspect and document t
 
 Sudden hail and wind damage is commonly covered, but coverage depends on your specific policy and your insurer's determination — only your insurer decides what's covered. A documented inspection gives you the evidence to make an informed decision. For a fuller walk-through of the claim process and our role in it, see Insurance Restoration / Claims Support.
 
-**Storm just moved through? [Book a free storm-damage inspection](/book-inspection) — we'll document everything and walk you through your options.**
+**Storm just moved through? [Book a free storm-damage inspection](/contact) — we'll document everything and walk you through your options.**

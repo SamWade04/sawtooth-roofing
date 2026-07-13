@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
+import GHLFormEmbed from '../components/forms/GHLFormEmbed.astro';
 ---
 
 <BaseLayout
@@ -14,32 +15,51 @@ import SectionBand from '../components/ui/SectionBand.astro';
       <h1>Contact</h1>
     </SectionBand>
 
-    <SectionBand surface="light" width="reading" pad="band">
-      <!-- Canon NAP block -->
-      <address class="contact-nap">
-        <p class="contact-brand">Sawtooth Roofing</p>
-        <p>1560 S Carol St<br />Meridian, ID 83646</p>
-        <p><a href="tel:+12089968748" class="contact-phone">208.996.8748</a></p>
-        <!-- TODO[A3-content]: email slot — retired customs.com domain intentionally omitted; add canon email when available. -->
-      </address>
+    <SectionBand surface="light" width="content" pad="band">
+      <div class="contact-grid">
 
-      {/* A6 refactors this into a reusable CLS-safe GHLFormEmbed.astro */}
-      <div class="ghl-form-wrap">
-        <iframe
-          src="https://api.leadconnectorhq.com/widget/form/509nlDsN02SsN7H7Q7os"
-          title="Contact Sawtooth Roofing"
-          class="ghl-form-iframe"
-          loading="lazy"
-        ></iframe>
+        <div class="contact-form-col">
+          <!-- Placed before the form markup so the embed activates right after
+               DOMContentLoaded, not after the whole page parses (A6 hoist fix). -->
+          <script is:inline src="https://link.msgsndr.com/js/form_embed.js" defer></script>
+
+          <GHLFormEmbed
+            formId="mcsTvRXmk7j7LusDqds3"
+            title="Book your free roof inspection"
+            minHeight="90rem"
+            loading="eager"
+          />
+        </div>
+
+        <!-- Canon NAP block -->
+        <address class="contact-nap">
+          <p class="contact-brand">Sawtooth Roofing</p>
+          <p>1560 S Carol St<br />Meridian, ID 83646</p>
+          <p><a href="tel:+12089968748" class="contact-phone">208.996.8748</a></p>
+          <p>Open 8:00 AM&ndash;9:00 PM daily</p>
+          <!-- TODO[A3-content]: email slot — retired customs.com domain intentionally omitted; add canon email when available. -->
+        </address>
+
       </div>
-
-      <script is:inline src="https://link.msgsndr.com/js/form_embed.js"></script>
     </SectionBand>
 
   </main>
 </BaseLayout>
 
 <style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+
   .contact-nap {
     font-style: normal;
   }
@@ -61,18 +81,5 @@ import SectionBand from '../components/ui/SectionBand.astro';
 
   .contact-phone:hover {
     color: var(--color-brand-red-hover);
-  }
-
-  /* CLS-safe container: reserves vertical space before the iframe loads. */
-  .ghl-form-wrap {
-    margin-top: var(--space-lg);
-    min-height: 60rem;
-  }
-
-  .ghl-form-iframe {
-    width: 100%;
-    min-height: 60rem;
-    border: 0;
-    border-radius: var(--radius-sm);
   }
 </style>
