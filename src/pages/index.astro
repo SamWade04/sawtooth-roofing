@@ -36,6 +36,10 @@ const services = homeGridSlugs
   <!-- main.home is a plain flow container; bands own all width/padding/surface -->
   <main class="home">
 
+    <!-- Placed early + deferred so the above-fold emergency form activates
+         right after DOMContentLoaded, not after the whole page parses. -->
+    <script is:inline src="https://link.msgsndr.com/js/form_embed.js" defer></script>
+
     <!-- ─────────────────────────────────────────────────
          SECTION 1 — HERO
          Dark band, solid. NO image (F6 launch gate).
@@ -64,6 +68,7 @@ const services = homeGridSlugs
           formId="lS0Y9yigL7YY609WmWYG"
           title="Emergency inspection request"
           minHeight="52rem"
+          loading="eager"
         />
       </div>
     </SectionBand>
@@ -319,8 +324,6 @@ const services = homeGridSlugs
     </SectionBand>
 
   </main>
-
-  <script is:inline src="https://link.msgsndr.com/js/form_embed.js"></script>
 </BaseLayout>
 
 <style>
