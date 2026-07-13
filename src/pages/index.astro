@@ -57,19 +57,21 @@ const services = homeGridSlugs
             Meridian, Boise, and Kuna.
           </p>
           <div class="hero-ctas">
-            {/* Primary CTA → §S2-B planned-project form (below, #book-inspection) */}
-            <a href="#book-inspection" class="btn btn--primary">Book a Free Inspection</a>
+            {/* Primary CTA → dedicated planned-project booking page */}
+            <a href="/book-inspection" class="btn btn--primary">Book a Free Inspection</a>
             {/* Secondary: tap-to-call — renders as light outline on dark band */}
             <a href="tel:+12089968748" class="btn btn--secondary">Call 208.996.8748</a>
           </div>
         </div>
 
-        <GHLFormEmbed
-          formId="lS0Y9yigL7YY609WmWYG"
-          title="Emergency inspection request"
-          minHeight="52rem"
-          loading="eager"
-        />
+        <div class="hero-form">
+          <GHLFormEmbed
+            formId="lS0Y9yigL7YY609WmWYG"
+            title="Emergency inspection request"
+            minHeight="52rem"
+            loading="eager"
+          />
+        </div>
       </div>
     </SectionBand>
 
@@ -291,19 +293,9 @@ const services = homeGridSlugs
           got a claim worth filing — and if you do, we'll document it and see the job through.
         </p>
         <div class="final-cta-actions">
-          <a href="#book-inspection" class="btn btn--primary">Book a Free Inspection</a>
+          <a href="/book-inspection" class="btn btn--primary">Book a Free Inspection</a>
           {/* Secondary: tap-to-call — renders as light outline on dark band */}
           <a href="tel:+12089968748" class="btn btn--secondary">Call 208.996.8748</a>
-        </div>
-
-        {/* Consent line inside the GHL form intentionally reads "Morrow Construction LLC" —
-            do NOT change to "Sawtooth Roofing" until EIN name record confirmed. See doc 04. */}
-        <div id="book-inspection">
-          <GHLFormEmbed
-            formId="mcsTvRXmk7j7LusDqds3"
-            title="Book your free roof inspection"
-            minHeight="90rem"
-          />
         </div>
       </div>
     </SectionBand>
@@ -324,11 +316,20 @@ const services = homeGridSlugs
     gap: var(--space-lg);
   }
 
+  /* Micro-form is desktop-only — the hero's Book/Call buttons carry mobile. */
+  .hero-form {
+    display: none;
+  }
+
   @media (min-width: 768px) {
     .hero {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.4fr 1fr;
       align-items: start;
       gap: var(--space-lg);
+    }
+
+    .hero-form {
+      display: block;
     }
   }
 
@@ -351,10 +352,6 @@ const services = homeGridSlugs
     align-items: center;
     gap: var(--space-sm);
     margin-top: var(--space-md);
-  }
-
-  #book-inspection {
-    margin-top: var(--space-lg);
   }
 
   /* ── VALUE PROPS (grid only; band owns surface + padding) ── */
