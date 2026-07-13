@@ -3,6 +3,7 @@
 // On-dark text is handled entirely by the global .band--dark cascade — no color rules here.
 import BaseLayout from './BaseLayout.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
+import GHLFormEmbed from '../components/forms/GHLFormEmbed.astro';
 
 interface Props {
   title: string;          // → BaseLayout → SeoHead
@@ -42,6 +43,10 @@ const {
       {
         asideSlot ? (
           <div class="content-body-grid">
+            {/* Placed before the rail's form markup so the embed activates right
+                after DOMContentLoaded, not after the whole page parses (A6 hoist fix). */}
+            <script is:inline src="https://link.msgsndr.com/js/form_embed.js" defer></script>
+
             <div class="content-main">
               {imageSlot && (
                 <div class="media-placeholder">
@@ -51,12 +56,13 @@ const {
               <slot />
             </div>
             <aside class="content-rail">
-              <div class="form-rail-placeholder" aria-label="Inspection form — coming soon">
-                <p class="form-rail-label">TODO[A6-form]</p>
-                <p class="form-rail-note">
-                  GHL inspection form embeds here at A6. No embed until the form exists in GHL.
-                </p>
-              </div>
+              <p class="content-rail-heading">Request a free inspection</p>
+              <GHLFormEmbed
+                formId="lS0Y9yigL7YY609WmWYG"
+                title="Request a free inspection"
+                minHeight="52rem"
+                loading="lazy"
+              />
             </aside>
           </div>
         ) : (
@@ -119,25 +125,11 @@ const {
     margin-bottom: var(--space-lg);
   }
 
-  /* ── A6 form-rail placeholder — non-interactive; matches Home form-scaffold recipe ── */
-  .form-rail-placeholder {
-    background: var(--color-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-md);
-    box-shadow: var(--shadow-sm);
-    min-height: 48rem;
-  }
-
-  .form-rail-label {
+  /* ── A6 form rail — micro-form eyebrow ── */
+  .content-rail-heading {
+    margin-bottom: var(--space-sm);
     font-weight: 700;
     color: var(--color-headline);
-  }
-
-  .form-rail-note {
-    margin-top: var(--space-xs);
-    font-size: 1.3rem;
-    color: var(--color-body);
   }
 
   /* ── Prose rhythm for slotted markdown — the global reset zeroes these margins
