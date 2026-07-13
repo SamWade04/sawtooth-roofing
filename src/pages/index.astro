@@ -18,6 +18,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TrustBar from '../components/ui/TrustBar.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
+import GHLFormEmbed from '../components/forms/GHLFormEmbed.astro';
 import { GBP_URL } from '../consts';
 
 const allServices = await getCollection('services');
@@ -59,22 +60,11 @@ const services = homeGridSlugs
           </div>
         </div>
 
-        {/* §S2-A — Emergency micro-form scaffold (A6 builds the real GHL form)
-            Fields: Name · Phone · (hidden: service = "Storm damage")
-            Button: Get an Emergency Inspection
-            Microcopy: We'll call you back fast. No obligation. */}
-        <div class="form-scaffold form-scaffold--emergency" aria-label="Emergency inspection request form — coming soon">
-          <p class="form-scaffold-label">TODO[A6-forms]: §S2-A emergency micro-form</p>
-          <p class="form-scaffold-note">
-            Fields: Name · Phone · (hidden: Storm damage)<br />
-            Button: "Get an Emergency Inspection"<br />
-            Microcopy: "We'll call you back fast. No obligation."
-          </p>
-          <p class="form-scaffold-warning">
-            ⚠ GHL §S2-A form must be built in GHL before this embeds. Until then, primary
-            conversion path captures nothing — see A6.
-          </p>
-        </div>
+        <GHLFormEmbed
+          formId="lS0Y9yigL7YY609WmWYG"
+          title="Emergency inspection request"
+          minHeight="111.4rem"
+        />
       </div>
     </SectionBand>
 
@@ -329,6 +319,8 @@ const services = homeGridSlugs
     </SectionBand>
 
   </main>
+
+  <script is:inline src="https://link.msgsndr.com/js/form_embed.js"></script>
 </BaseLayout>
 
 <style>
