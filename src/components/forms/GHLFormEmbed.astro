@@ -1,0 +1,33 @@
+---
+interface Props {
+  formId: string;
+  title: string;
+  minHeight: string;
+  loading?: 'lazy' | 'eager';
+}
+
+const { formId, title, minHeight, loading = 'lazy' } = Astro.props;
+---
+
+<div class="ghl-form-wrap" style={`--_mh: ${minHeight}`}>
+  <iframe
+    src={`https://api.leadconnectorhq.com/widget/form/${formId}`}
+    title={title}
+    class="ghl-form-iframe"
+    loading={loading}
+  ></iframe>
+</div>
+
+<style>
+  .ghl-form-wrap {
+    min-height: var(--_mh);
+    width: 100%;
+  }
+
+  .ghl-form-iframe {
+    width: 100%;
+    min-height: var(--_mh);
+    border: 0;
+    border-radius: var(--radius-sm);
+  }
+</style>
