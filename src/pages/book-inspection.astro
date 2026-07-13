@@ -1,0 +1,36 @@
+---
+import ContentPageLayout from '../layouts/ContentPageLayout.astro';
+import GHLFormEmbed from '../components/forms/GHLFormEmbed.astro';
+import FinancingBand from '../components/ui/FinancingBand.astro';
+---
+
+<ContentPageLayout
+  title="Book a Free Roof Inspection | Sawtooth Roofing"
+  description="Schedule your free roof inspection anywhere in the Treasure Valley. We inspect, document everything, and coordinate directly with your carrier — you stay in control."
+  heading="Book Your Free Roof Inspection"
+  eyebrow="Free · No obligation"
+  lead="Tell us about your roof and we'll get you on the schedule. We inspect, document everything, and if storm damage is in play, we coordinate directly with your carrier — you stay copied and in control the whole way."
+  heroSurface="light"
+>
+  <!-- Placed before the form markup so the embed activates right after
+       DOMContentLoaded, not after the whole page parses (A6 hoist fix). -->
+  <script is:inline src="https://link.msgsndr.com/js/form_embed.js" defer></script>
+
+  <div class="book-inspection-form">
+    <GHLFormEmbed
+      formId="mcsTvRXmk7j7LusDqds3"
+      title="Book your free roof inspection"
+      minHeight="90rem"
+      loading="eager"
+    />
+  </div>
+
+  <FinancingBand />
+</ContentPageLayout>
+
+<style>
+  .book-inspection-form {
+    max-width: var(--reading-width);
+    margin-inline: auto;
+  }
+</style>
