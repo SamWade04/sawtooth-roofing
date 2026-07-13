@@ -296,29 +296,14 @@ const services = homeGridSlugs
           <a href="tel:+12089968748" class="btn btn--secondary">Call 208.996.8748</a>
         </div>
 
-        {/* §S2-B — Planned-project form scaffold (A6 builds the real GHL form)
-            Fields: Name · Phone · Email · Address or City
-                    What's going on? (Storm/hail · Leak · Replacement · Repair · Gutters · Not sure)
-            Button: "Book My Free Inspection"
-            Microcopy: "Free, no-obligation. We serve Nampa, Caldwell, Meridian, Boise & Kuna."
-            CONSENT LINE: intentionally reads "Morrow Construction LLC" — do NOT change to
-            "Sawtooth Roofing" until EIN name record confirmed (Anthony's item). See doc 04. */}
-        <div
-          id="book-inspection"
-          class="form-scaffold form-scaffold--planned"
-          aria-label="Book a free inspection form — coming soon"
-        >
-          <p class="form-scaffold-label">TODO[A6-forms]: §S2-B planned-project form</p>
-          <p class="form-scaffold-note">
-            Fields: Name · Phone · Email · Address or City · What's going on?<br />
-            Button: "Book My Free Inspection"<br />
-            Microcopy: "Free, no-obligation. We serve Nampa, Caldwell, Meridian, Boise &amp; Kuna."<br />
-            Consent line: "Morrow Construction LLC" (do NOT change — see doc 04 + A6 note above).
-          </p>
-          <p class="form-scaffold-warning">
-            ⚠ GHL §S2-B form must be built in GHL before this embeds. Until then, Home's primary
-            conversion path captures nothing — see A6.
-          </p>
+        {/* Consent line inside the GHL form intentionally reads "Morrow Construction LLC" —
+            do NOT change to "Sawtooth Roofing" until EIN name record confirmed. See doc 04. */}
+        <div id="book-inspection">
+          <GHLFormEmbed
+            formId="mcsTvRXmk7j7LusDqds3"
+            title="Book your free roof inspection"
+            minHeight="90rem"
+          />
         </div>
       </div>
     </SectionBand>
@@ -368,42 +353,8 @@ const services = homeGridSlugs
     margin-top: var(--space-md);
   }
 
-  /* ── Form scaffolds — clean card surface floated on dark band ──
-     CLS-safe: min-heights hold space before GHL embeds. ── */
-  .form-scaffold {
-    background: var(--color-card);
-    border-radius: var(--radius-md);
-    padding: var(--space-md);
-    box-shadow: var(--shadow-md);
-  }
-
-  .form-scaffold--emergency {
-    min-height: 24rem;
-  }
-
-  .form-scaffold--planned {
-    min-height: 48rem;
+  #book-inspection {
     margin-top: var(--space-lg);
-  }
-
-  .form-scaffold-label {
-    font-weight: 700;
-    color: var(--color-headline);
-    font-size: 1.4rem;
-    margin-bottom: var(--space-sm);
-  }
-
-  .form-scaffold-note {
-    font-size: 1.3rem;
-    color: var(--color-body);
-    line-height: 1.6;
-  }
-
-  .form-scaffold-warning {
-    margin-top: var(--space-sm);
-    font-size: 1.3rem;
-    color: var(--color-brand-red);
-    font-weight: 600;
   }
 
   /* ── VALUE PROPS (grid only; band owns surface + padding) ── */
