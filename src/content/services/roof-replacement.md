@@ -6,6 +6,7 @@ seo:
   title: "Roof Replacement in the Treasure Valley, ID | Sawtooth Roofing"
   description: "Full roof replacement with Owens Corning products, built for Idaho weather. Free inspection and written estimate across Nampa, Caldwell, Meridian, Boise & Kuna."
 draft: false
+financingBand: true
 ---
 
 Sawtooth Roofing replaces storm-worn and aging roofs across the Treasure Valley with Owens Corning roofing products built for Idaho's hail, wind, and temperature swings. A full replacement means a complete tear-off down to the decking, repair of any damaged sheathing, and a new roof system installed to manufacturer specification — and it always starts with a free, no-obligation inspection so you know exactly what your roof needs before you commit to anything.
@@ -26,4 +27,4 @@ A typical replacement runs in clear stages: a full inspection and written estima
 
 If a storm damaged your roof, replacement may be covered by your homeowner's insurance. Your insurer determines what your policy covers — what we do is inspect your roof and document the damage in detail for your claim, then complete the work your insurer approves. You file and stay in control of your claim throughout. See Insurance Restoration / Claims Support for how that process works.
 
-**Ready to find out where your roof stands? [Book a free roof inspection](#) — we'll give you a straight answer and a written estimate.**
+**Ready to find out where your roof stands? [Book a free roof inspection](/contact) — we'll give you a straight answer and a written estimate.**

@@ -1,0 +1,27 @@
+---
+// Slim financing note. Self-contained band — mirrors the trust-bar thin-band
+// treatment (SectionBand surface="contrast" pad="thin" divider) so callers
+// just drop in <FinancingBand /> with no wrapping required.
+import SectionBand from './SectionBand.astro';
+---
+
+<SectionBand surface="contrast" width="reading" pad="thin" divider="top">
+  <div class="financing-band">
+    <p>
+      Financing options available through our lending partner. Ask about flexible
+      payment options when you book your free inspection.
+    </p>
+    <!-- TODO[financing-link]: optional "See financing options" button when Hearth href supplied -->
+  </div>
+</SectionBand>
+
+<style>
+  .financing-band {
+    text-align: center;
+  }
+
+  .financing-band p {
+    color: var(--color-body);
+    margin: 0;
+  }
+</style>

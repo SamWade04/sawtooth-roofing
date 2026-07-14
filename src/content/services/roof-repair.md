@@ -6,6 +6,7 @@ seo:
   title: "Roof Repair in the Treasure Valley, ID | Sawtooth Roofing"
   description: "Fast, reliable roof repair for leaks, missing shingles & failed flashing across Nampa, Caldwell, Meridian, Boise & Kuna. Free inspection — repair or replace, in writing."
 draft: false
+financingBand: true
 ---
 
 Sawtooth Roofing repairs leaks, missing or wind-lifted shingles, and failed flashing for homeowners across Nampa, Caldwell, Meridian, Boise, and Kuna. A repair is the right call when damage is isolated and the rest of the roof still has sound service life left. Not sure which you need? A free inspection gives you a straight answer — repair or replace — in writing, with no obligation.
@@ -26,4 +27,4 @@ Idaho's wind and hail drive most of what we see: shingles lifted or torn off by 
 
 It can, when the damage is sudden and storm-related — but your insurer determines what your specific policy covers. We inspect the roof and document the damage for your claim; you file and control the claim. For storm-related work, see [Storm Damage Restoration](/services/storm-damage-restoration).
 
-**Got a leak or missing shingles? [Book a free roof inspection](#) and we'll show you exactly what's going on up there.**
+**Got a leak or missing shingles? [Book a free roof inspection](/contact) and we'll show you exactly what's going on up there.**

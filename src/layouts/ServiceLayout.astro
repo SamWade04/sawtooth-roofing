@@ -1,13 +1,14 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import ContentPageLayout from './ContentPageLayout.astro';
+import FinancingBand from '../components/ui/FinancingBand.astro';
 
 interface Props {
   entry: CollectionEntry<'services'>;
 }
 
 const { entry } = Astro.props;
-const { title, summary, seo } = entry.data;
+const { title, summary, seo, financingBand } = entry.data;
 
 // Title/description flow through BaseLayout → SeoHead (single source of <title>).
 // Fallback formula is adjustable at A5.
@@ -24,4 +25,5 @@ const pageDescription = seo?.description ?? summary;
   asideSlot
 >
   <slot />
+  {financingBand && <FinancingBand slot="after" />}
 </ContentPageLayout>
