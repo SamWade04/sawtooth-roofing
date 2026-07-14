@@ -132,6 +132,25 @@ const {
     color: var(--color-headline);
   }
 
+  /* Rail form's reserved floor is responsive: the GHLFormEmbed prop sets a
+     ~120rem floor for desktop (matches the form's ~1156px natural height there),
+     but the form reflows much shorter on mobile — the same floor there just
+     over-reserves and leaves a gap before the footer. Override min-height
+     directly (:global reaches into the child component's scoped markup;
+     the extra `aside.content-rail` specificity wins deterministically over
+     GHLFormEmbed's own scoped rule without needing !important). */
+  aside.content-rail :global(.ghl-form-wrap),
+  aside.content-rail :global(.ghl-form-iframe) {
+    min-height: 65rem;
+  }
+
+  @media (min-width: 768px) {
+    aside.content-rail :global(.ghl-form-wrap),
+    aside.content-rail :global(.ghl-form-iframe) {
+      min-height: 120rem;
+    }
+  }
+
   /* ── Prose rhythm for slotted markdown — the global reset zeroes these margins
      and nothing restores them for rendered <Content />; tokens only, mirrors About ── */
   .content-main :global(h2) {
