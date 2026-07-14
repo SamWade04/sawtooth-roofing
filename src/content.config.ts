@@ -19,6 +19,7 @@ const services = defineCollection({
     icon: z.string().optional(),
     seo,
     draft: z.boolean().default(false),
+    financingBand: z.boolean().default(false),
   }),
 });
 
