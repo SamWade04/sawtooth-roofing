@@ -346,10 +346,35 @@ const services = homeGridSlugs
     margin-top: var(--space-sm);
   }
 
+  /* Mobile-first: full-width stacked buttons; ≥768px promotes back to an
+     inline row (existing desktop treatment, unchanged). */
+  .hero-ctas,
+  .final-cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-ctas .btn,
+  .final-cta-actions .btn {
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .hero-ctas,
+    .final-cta-actions {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .hero-ctas .btn,
+    .final-cta-actions .btn {
+      width: auto;
+    }
+  }
+
   .hero-ctas {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
     gap: var(--space-sm);
     margin-top: var(--space-md);
   }
@@ -592,7 +617,6 @@ const services = homeGridSlugs
   .final-cta-actions {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
     gap: var(--space-sm);
     margin-top: var(--space-md);
   }
