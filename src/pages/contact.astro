@@ -15,30 +15,35 @@ import GHLBookingEmbed from '../components/forms/GHLBookingEmbed.astro';
       <h1>Contact</h1>
     </SectionBand>
 
-    <SectionBand surface="light" width="content" pad="band">
+    <SectionBand surface="light" width="content" pad="band" class="contact-band">
       <!-- Placed before the widget markup so the embed activates right after
            DOMContentLoaded, not after the whole page parses (A6 hoist fix). -->
       <script is:inline src="https://link.msgsndr.com/js/form_embed.js" defer></script>
 
-      <GHLBookingEmbed
-        calendarId="uEQ7viDh1491uAGd9kAJ"
-        embedId="pENu8WZrTGtbt1G2TqZe_1784587881017"
-        title="Book a free roof inspection"
-        minHeight="152rem"
-        minHeightWide="80rem"
-        loading="eager"
-      />
+      <div class="contact-layout">
 
-      <div class="contact-info-row">
+        <GHLBookingEmbed
+          calendarId="uEQ7viDh1491uAGd9kAJ"
+          embedId="pENu8WZrTGtbt1G2TqZe_1784587881017"
+          title="Book a free roof inspection"
+          minHeight="152rem"
+          minHeightMid="80rem"
+          minHeightWide="98rem"
+          loading="eager"
+        />
 
-        <!-- Canon NAP block -->
-        <address class="contact-nap">
-          <p class="contact-brand">Sawtooth Roofing</p>
-          <p>1560 S Carol St<br />Meridian, ID 83646</p>
-          <p><a href="tel:+12089968748" class="contact-phone">208.996.8748</a></p>
-          <p>Open 8:00 AM&ndash;9:00 PM daily</p>
-          <!-- TODO[A3-content]: email slot — retired customs.com domain intentionally omitted; add canon email when available. -->
-        </address>
+        <div class="contact-rail">
+
+          <!-- Canon NAP block -->
+          <address class="contact-nap">
+            <p class="contact-brand">Sawtooth Roofing</p>
+            <p>1560 S Carol St<br />Meridian, ID 83646</p>
+            <p><a href="tel:+12089968748" class="contact-phone">208.996.8748</a></p>
+            <p><a href="mailto:contact@sawtooth-roofing.com" class="contact-phone">contact@sawtooth-roofing.com</a></p>
+            <p>Open 8:00 AM&ndash;9:00 PM daily</p>
+          </address>
+
+        </div>
 
       </div>
     </SectionBand>
@@ -47,16 +52,46 @@ import GHLBookingEmbed from '../components/forms/GHLBookingEmbed.astro';
 </BaseLayout>
 
 <style>
-  .contact-info-row {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
-    margin-top: var(--space-lg);
+  /* :has() reaches the SectionBand's own outer .band--pad-band section from
+     here, since .contact-band (below) lands on its inner .band-inner div —
+     avoids touching SectionBand.astro while stepping this band's top padding
+     down one level on the --space-* scale; bottom padding is untouched. */
+  :global(section.band--pad-band:has(> .contact-band)) {
+    padding-block-start: var(--space-lg);
   }
 
   @media (min-width: 768px) {
-    .contact-info-row {
-      grid-template-columns: repeat(3, 1fr);
+    :global(section.band--pad-band:has(> .contact-band)) {
+      padding-block-start: var(--space-xl);
+    }
+  }
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 1200px) {
+    .contact-layout {
+      grid-template-columns: 1fr var(--rail-width);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+  }
+
+  .contact-rail {
+    margin-top: var(--space-lg);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+  }
+
+  @media (min-width: 1200px) {
+    .contact-rail {
+      margin-top: 0;
+      position: sticky;
+      top: var(--space-lg);
     }
   }
 

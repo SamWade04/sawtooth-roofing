@@ -4,14 +4,15 @@ interface Props {
   embedId: string;
   title: string;
   minHeight: string;
+  minHeightMid: string;
   minHeightWide: string;
   loading?: 'lazy' | 'eager';
 }
 
-const { calendarId, embedId, title, minHeight, minHeightWide, loading = 'lazy' } = Astro.props;
+const { calendarId, embedId, title, minHeight, minHeightMid, minHeightWide, loading = 'lazy' } = Astro.props;
 ---
 
-<div class="ghl-booking-wrap" style={`--_mh: ${minHeight}; --_mh-wide: ${minHeightWide}`}>
+<div class="ghl-booking-wrap" style={`--_mh: ${minHeight}; --_mh-mid: ${minHeightMid}; --_mh-wide: ${minHeightWide}`}>
   <iframe
     src={`https://api.leadconnectorhq.com/widget/booking/${calendarId}`}
     title={title}
@@ -30,6 +31,13 @@ const { calendarId, embedId, title, minHeight, minHeightWide, loading = 'lazy' }
   }
 
   @media (min-width: 1062px) {
+    .ghl-booking-wrap,
+    .ghl-booking-iframe {
+      min-height: var(--_mh-mid);
+    }
+  }
+
+  @media (min-width: 1200px) {
     .ghl-booking-wrap,
     .ghl-booking-iframe {
       min-height: var(--_mh-wide);
