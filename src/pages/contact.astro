@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
-import GHLFormEmbed from '../components/forms/GHLFormEmbed.astro';
+import GHLBookingEmbed from '../components/forms/GHLBookingEmbed.astro';
 ---
 
 <BaseLayout
@@ -16,20 +16,20 @@ import GHLFormEmbed from '../components/forms/GHLFormEmbed.astro';
     </SectionBand>
 
     <SectionBand surface="light" width="content" pad="band">
-      <div class="contact-grid">
+      <!-- Placed before the widget markup so the embed activates right after
+           DOMContentLoaded, not after the whole page parses (A6 hoist fix). -->
+      <script is:inline src="https://link.msgsndr.com/js/form_embed.js" defer></script>
 
-        <div class="contact-form-col">
-          <!-- Placed before the form markup so the embed activates right after
-               DOMContentLoaded, not after the whole page parses (A6 hoist fix). -->
-          <script is:inline src="https://link.msgsndr.com/js/form_embed.js" defer></script>
+      <GHLBookingEmbed
+        calendarId="uEQ7viDh1491uAGd9kAJ"
+        embedId="pENu8WZrTGtbt1G2TqZe_1784587881017"
+        title="Book a free roof inspection"
+        minHeight="152rem"
+        minHeightWide="80rem"
+        loading="eager"
+      />
 
-          <GHLFormEmbed
-            formId="mcsTvRXmk7j7LusDqds3"
-            title="Book your free roof inspection"
-            minHeight="90rem"
-            loading="eager"
-          />
-        </div>
+      <div class="contact-info-row">
 
         <!-- Canon NAP block -->
         <address class="contact-nap">
@@ -47,16 +47,16 @@ import GHLFormEmbed from '../components/forms/GHLFormEmbed.astro';
 </BaseLayout>
 
 <style>
-  .contact-grid {
+  .contact-info-row {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-lg);
+    margin-top: var(--space-lg);
   }
 
   @media (min-width: 768px) {
-    .contact-grid {
-      grid-template-columns: 1fr 1fr;
-      align-items: start;
+    .contact-info-row {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 

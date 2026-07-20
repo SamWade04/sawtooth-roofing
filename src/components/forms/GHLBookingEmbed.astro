@@ -1,0 +1,38 @@
+---
+interface Props {
+  calendarId: string;
+  embedId: string;
+  title: string;
+  minHeight: string;
+  minHeightWide: string;
+  loading?: 'lazy' | 'eager';
+}
+
+const { calendarId, embedId, title, minHeight, minHeightWide, loading = 'lazy' } = Astro.props;
+---
+
+<div class="ghl-booking-wrap" style={`--_mh: ${minHeight}; --_mh-wide: ${minHeightWide}`}>
+  <iframe
+    src={`https://api.leadconnectorhq.com/widget/booking/${calendarId}`}
+    title={title}
+    class="ghl-booking-iframe"
+    id={embedId}
+    scrolling="no"
+    loading={loading}
+    style="width:100%;border:none;overflow:hidden"
+  ></iframe>
+</div>
+
+<style>
+  .ghl-booking-wrap,
+  .ghl-booking-iframe {
+    min-height: var(--_mh);
+  }
+
+  @media (min-width: 1062px) {
+    .ghl-booking-wrap,
+    .ghl-booking-iframe {
+      min-height: var(--_mh-wide);
+    }
+  }
+</style>
