@@ -20,23 +20,19 @@ import GHLBookingEmbed from '../components/forms/GHLBookingEmbed.astro';
            DOMContentLoaded, not after the whole page parses (A6 hoist fix). -->
       <script is:inline src="https://link.msgsndr.com/js/form_embed.js" defer></script>
 
-      <h2>Book a free roof inspection</h2>
+      <div class="contact-block">
+        <p class="contact-name">Sawtooth Roofing</p>
+        <p class="contact-address">1560 S Carol St, Meridian, ID 83646</p>
+        <p class="contact-phone-line">
+          <a href="tel:+12089968748" class="contact-phone">208.996.8748</a>
+        </p>
+        <p class="contact-email-line">
+          <a href="mailto:contact@sawtooth-roofing.com" class="contact-email">contact@sawtooth-roofing.com</a>
+        </p>
+        <p class="contact-hours">Open 8:00 AM&ndash;9:00 PM daily</p>
+      </div>
 
-      <ul class="contact-nap-line">
-        <li class="contact-nap-item">Sawtooth Roofing</li>
-        <li class="contact-nap-item contact-nap-sep" aria-hidden="true">&middot;</li>
-        <li class="contact-nap-item">1560 S Carol St, Meridian, ID 83646</li>
-        <li class="contact-nap-item contact-nap-sep" aria-hidden="true">&middot;</li>
-        <li class="contact-nap-item">
-          <a href="tel:+12089968748" class="contact-nap-phone">208.996.8748</a>
-        </li>
-        <li class="contact-nap-item contact-nap-sep" aria-hidden="true">&middot;</li>
-        <li class="contact-nap-item">
-          <a href="mailto:contact@sawtooth-roofing.com" class="contact-nap-email">contact@sawtooth-roofing.com</a>
-        </li>
-        <li class="contact-nap-item contact-nap-sep" aria-hidden="true">&middot;</li>
-        <li class="contact-nap-item">Open 8:00 AM&ndash;9:00 PM daily</li>
-      </ul>
+      <h2>Book a free roof inspection</h2>
 
       <GHLBookingEmbed
         calendarId="uEQ7viDh1491uAGd9kAJ"
@@ -66,42 +62,75 @@ import GHLBookingEmbed from '../components/forms/GHLBookingEmbed.astro';
     }
   }
 
-  .contact-nap-line {
-    list-style: none;
-    margin: var(--space-xs) 0 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: var(--space-2xs) var(--space-sm);
+  .contact-block {
+    text-align: left;
   }
 
-  .contact-nap-item {
+  .contact-block p {
+    margin: 0;
+  }
+
+  .contact-block p + p {
+    margin-top: var(--space-xs);
+  }
+
+  .contact-name {
     font-size: 1.4rem;
-    color: var(--color-muted);
+    font-weight: 600;
+    color: var(--color-headline);
   }
 
-  .contact-nap-sep {
-    color: var(--color-border-strong);
+  .contact-address {
+    font-size: 1.5rem;
+    color: var(--color-body);
   }
 
-  .contact-nap-phone {
+  .contact-phone {
+    font-size: 2.4rem;
     font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
     color: var(--color-brand-red);
     text-decoration: none;
   }
 
-  .contact-nap-phone:hover {
+  .contact-phone:hover {
     color: var(--color-brand-red-hover);
   }
 
-  .contact-nap-email {
-    color: var(--color-muted);
+  .contact-email {
+    font-size: 1.5rem;
+    color: var(--color-brand-red);
     text-decoration: none;
   }
 
-  .contact-nap-email:hover {
-    color: var(--color-brand-red);
+  .contact-email:hover {
+    color: var(--color-brand-red-hover);
+  }
+
+  .contact-hours {
+    font-size: 1.5rem;
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 768px) {
+    .contact-name {
+      font-size: 1.6rem;
+    }
+
+    .contact-address,
+    .contact-email,
+    .contact-hours {
+      font-size: 1.8rem;
+    }
+
+    .contact-phone {
+      font-size: 3.4rem;
+    }
+  }
+
+  h2 {
+    margin-top: var(--space-lg);
   }
 
   /* GHLBookingEmbed's own wrapper carries no top margin — reach into its
