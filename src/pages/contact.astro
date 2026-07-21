@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
-import ContactBand from '../components/ui/ContactBand.astro';
 import GHLBookingEmbed from '../components/forms/GHLBookingEmbed.astro';
 ---
 
@@ -16,12 +15,28 @@ import GHLBookingEmbed from '../components/forms/GHLBookingEmbed.astro';
       <h1>Contact</h1>
     </SectionBand>
 
-    <ContactBand />
-
     <SectionBand surface="light" width="content" pad="band" class="contact-band">
       <!-- Placed before the widget markup so the embed activates right after
            DOMContentLoaded, not after the whole page parses (A6 hoist fix). -->
       <script is:inline src="https://link.msgsndr.com/js/form_embed.js" defer></script>
+
+      <h2>Book a free roof inspection</h2>
+
+      <ul class="contact-nap-line">
+        <li class="contact-nap-item">Sawtooth Roofing</li>
+        <li class="contact-nap-item contact-nap-sep" aria-hidden="true">&middot;</li>
+        <li class="contact-nap-item">1560 S Carol St, Meridian, ID 83646</li>
+        <li class="contact-nap-item contact-nap-sep" aria-hidden="true">&middot;</li>
+        <li class="contact-nap-item">
+          <a href="tel:+12089968748" class="contact-nap-phone">208.996.8748</a>
+        </li>
+        <li class="contact-nap-item contact-nap-sep" aria-hidden="true">&middot;</li>
+        <li class="contact-nap-item">
+          <a href="mailto:contact@sawtooth-roofing.com" class="contact-nap-email">contact@sawtooth-roofing.com</a>
+        </li>
+        <li class="contact-nap-item contact-nap-sep" aria-hidden="true">&middot;</li>
+        <li class="contact-nap-item">Open 8:00 AM&ndash;9:00 PM daily</li>
+      </ul>
 
       <GHLBookingEmbed
         calendarId="uEQ7viDh1491uAGd9kAJ"
@@ -40,12 +55,7 @@ import GHLBookingEmbed from '../components/forms/GHLBookingEmbed.astro';
   /* :has() reaches the SectionBand's own outer .band--pad-band section from
      here, since .contact-band (below) lands on its inner .band-inner div —
      avoids touching SectionBand.astro while stepping this band's top padding
-     down one level on the --space-* scale; bottom padding is untouched.
-     NOTE: after the ContactBand restructure this still matches (the widget's
-     SectionBand still carries .contact-band on its inner div), but it is no
-     longer the band immediately below the hero — ContactBand now sits
-     between them. Left as-is per instruction not to silently relocate it;
-     see report. */
+     down one level on the --space-* scale; bottom padding is untouched. */
   :global(section.band--pad-band:has(> .contact-band)) {
     padding-block-start: var(--space-lg);
   }
@@ -54,5 +64,51 @@ import GHLBookingEmbed from '../components/forms/GHLBookingEmbed.astro';
     :global(section.band--pad-band:has(> .contact-band)) {
       padding-block-start: var(--space-xl);
     }
+  }
+
+  .contact-nap-line {
+    list-style: none;
+    margin: var(--space-xs) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: var(--space-2xs) var(--space-sm);
+  }
+
+  .contact-nap-item {
+    font-size: 1.4rem;
+    color: var(--color-muted);
+  }
+
+  .contact-nap-sep {
+    color: var(--color-border-strong);
+  }
+
+  .contact-nap-phone {
+    font-weight: 700;
+    color: var(--color-brand-red);
+    text-decoration: none;
+  }
+
+  .contact-nap-phone:hover {
+    color: var(--color-brand-red-hover);
+  }
+
+  .contact-nap-email {
+    color: var(--color-muted);
+    text-decoration: none;
+  }
+
+  .contact-nap-email:hover {
+    color: var(--color-brand-red);
+  }
+
+  /* GHLBookingEmbed's own wrapper carries no top margin — reach into its
+     scoped markup rather than adding padding-top to the widget wrapper
+     itself (same :global() pattern used in ContentPageLayout for the rail
+     form's height override). */
+  :global(.ghl-booking-wrap) {
+    margin-top: var(--space-xs);
   }
 </style>
