@@ -76,7 +76,7 @@ import { GBP_URL } from '../consts';
         embedId="pENu8WZrTGtbt1G2TqZe_1784587881017"
         title="Book a free roof inspection"
         minHeight="142rem"
-        minHeightWide="78rem"
+        minHeightWide="130rem"
         loading="eager"
       />
     </SectionBand>
@@ -210,8 +210,13 @@ import { GBP_URL } from '../consts';
   /* GHLBookingEmbed's own wrapper carries no top margin — reach into its
      scoped markup rather than adding padding-top to the widget wrapper
      itself (same :global() pattern used in ContentPageLayout for the rail
-     form's height override). */
+     form's height override). 76rem keeps the widget's container below GHL's
+     982px layout threshold at every viewport, forcing its stacked variant
+     (full content height, no internal scrollbar) instead of the side-by-side
+     variant that hard-caps at 700px with an internal scroll. */
   :global(.ghl-booking-wrap) {
-    margin-top: var(--space-xs);
+    margin-top: var(--space-lg);
+    max-width: 76rem;
+    margin-inline: auto;
   }
 </style>
