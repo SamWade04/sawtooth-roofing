@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
 import GHLBookingEmbed from '../components/forms/GHLBookingEmbed.astro';
+import { GBP_URL } from '../consts';
 ---
 
 <BaseLayout
@@ -20,16 +21,52 @@ import GHLBookingEmbed from '../components/forms/GHLBookingEmbed.astro';
            DOMContentLoaded, not after the whole page parses (A6 hoist fix). -->
       <script is:inline src="https://link.msgsndr.com/js/form_embed.js" defer></script>
 
-      <div class="contact-block">
-        <p class="contact-name">Sawtooth Roofing</p>
-        <p class="contact-address">1560 S Carol St, Meridian, ID 83646</p>
-        <p class="contact-phone-line">
-          <a href="tel:+12089968748" class="contact-phone">208.996.8748</a>
-        </p>
-        <p class="contact-email-line">
-          <a href="mailto:contact@sawtooth-roofing.com" class="contact-email">contact@sawtooth-roofing.com</a>
-        </p>
-        <p class="contact-hours">Open 8:00 AM&ndash;9:00 PM daily</p>
+      <div class="contact-cards">
+
+        <div class="contact-card">
+          <svg class="contact-card-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+            <path
+              d="M2 3a1.5 1.5 0 0 1 1.5-1.5h1.8c.6 0 1.1.4 1.3 1l.9 2.7a1.5 1.5 0 0 1-.4 1.6L6 7.8c.9 1.8 2.4 3.3 4.2 4.2l1-1.1a1.5 1.5 0 0 1 1.6-.4l2.7.9c.6.2 1 .7 1 1.3v1.8A1.5 1.5 0 0 1 15 16C7.8 16 2 10.2 2 3Z"
+              fill="currentColor"
+            />
+          </svg>
+          <p class="contact-card-label">Phone</p>
+          <p class="contact-card-value">
+            <a href="tel:+12089968748" class="contact-card-phone">208.996.8748</a>
+          </p>
+          <p class="contact-card-sub">Open 8:00 AM&ndash;9:00 PM daily</p>
+        </div>
+
+        <div class="contact-card">
+          <svg class="contact-card-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+            <rect x="2" y="4" width="16" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+            <path d="M2.5 5 L10 11 L17.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <p class="contact-card-label">Email</p>
+          <p class="contact-card-value">
+            <a href="mailto:contact@sawtooth-roofing.com" class="contact-card-email">contact@sawtooth-roofing.com</a>
+          </p>
+        </div>
+
+        <div class="contact-card">
+          <svg class="contact-card-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+            <path
+              d="M10 18s6-6.5 6-10.5A6 6 0 0 0 4 7.5C4 11.5 10 18 10 18Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+            />
+            <circle cx="10" cy="7.5" r="2" fill="currentColor" />
+          </svg>
+          <p class="contact-card-label">Address</p>
+          <p class="contact-card-value">
+            <a href={GBP_URL} target="_blank" rel="noopener" class="contact-card-address-link">
+              1560 S Carol St<br />Meridian, ID 83646
+            </a>
+          </p>
+        </div>
+
       </div>
 
       <h2>Book a free roof inspection</h2>
@@ -62,75 +99,112 @@ import GHLBookingEmbed from '../components/forms/GHLBookingEmbed.astro';
     }
   }
 
-  .contact-block {
-    text-align: left;
-  }
-
-  .contact-block p {
-    margin: 0;
-  }
-
-  .contact-block p + p {
-    margin-top: var(--space-xs);
-  }
-
-  .contact-name {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--color-headline);
-  }
-
-  .contact-address {
-    font-size: 1.5rem;
-    color: var(--color-body);
-  }
-
-  .contact-phone {
-    font-size: 2.4rem;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.015em;
-    color: var(--color-brand-red);
-    text-decoration: none;
-  }
-
-  .contact-phone:hover {
-    color: var(--color-brand-red-hover);
-  }
-
-  .contact-email {
-    font-size: 1.5rem;
-    color: var(--color-brand-red);
-    text-decoration: none;
-  }
-
-  .contact-email:hover {
-    color: var(--color-brand-red-hover);
-  }
-
-  .contact-hours {
-    font-size: 1.5rem;
-    color: var(--color-muted);
+  .contact-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
   }
 
   @media (min-width: 768px) {
-    .contact-name {
+    .contact-cards {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+
+  /* Card treatment reused verbatim from the Home service-card pattern
+     (background/border/radius/padding tokens) — no hover-lift, these are
+     informational, not navigational. */
+  .contact-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-md);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .contact-card-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    color: var(--color-brand-red);
+    margin-bottom: var(--space-xs);
+  }
+
+  .contact-card-label {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .contact-card-value {
+    margin: var(--space-2xs) 0 0;
+  }
+
+  .contact-card-phone {
+    font-size: 2.0rem;
+    font-weight: 700;
+    color: var(--color-brand-red);
+    text-decoration: none;
+  }
+
+  .contact-card-phone:hover {
+    color: var(--color-brand-red-hover);
+  }
+
+  .contact-card-sub {
+    margin: var(--space-2xs) 0 0;
+    font-size: 1.4rem;
+    color: var(--color-body);
+  }
+
+  .contact-card-email {
+    font-size: 1.5rem;
+    color: var(--color-brand-red);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .contact-card-email:hover {
+    color: var(--color-brand-red-hover);
+  }
+
+  .contact-card-address-link {
+    font-size: 1.5rem;
+    color: var(--color-body);
+    text-decoration: none;
+  }
+
+  .contact-card-address-link:hover {
+    color: var(--color-brand-red);
+  }
+
+  @media (min-width: 768px) {
+    .contact-card-label {
+      font-size: 1.4rem;
+    }
+
+    .contact-card-phone {
+      font-size: 2.4rem;
+    }
+
+    .contact-card-sub {
       font-size: 1.6rem;
     }
 
-    .contact-address,
-    .contact-email,
-    .contact-hours {
+    .contact-card-email,
+    .contact-card-address-link {
       font-size: 1.8rem;
-    }
-
-    .contact-phone {
-      font-size: 3.4rem;
     }
   }
 
   h2 {
     margin-top: var(--space-lg);
+    text-align: center;
   }
 
   /* GHLBookingEmbed's own wrapper carries no top margin — reach into its
