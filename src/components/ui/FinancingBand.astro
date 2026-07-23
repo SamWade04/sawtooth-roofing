@@ -11,7 +11,16 @@ import SectionBand from './SectionBand.astro';
       Financing options available through our lending partner. Ask about flexible
       payment options when you book your free inspection.
     </p>
-    <!-- TODO[financing-link]: optional "See financing options" button when Hearth href supplied -->
+    <div class="financing-band-actions">
+      <a
+        href="https://app.gethearth.com/financing/60785/107307/prequalify?utm_campaign=60785&utm_content=calculator&utm_medium=widget-calculator&utm_source=contractor&utm_term=107307"
+        class="btn btn--primary"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        See Financing Options
+      </a>
+    </div>
   </div>
 </SectionBand>
 
@@ -23,5 +32,9 @@ import SectionBand from './SectionBand.astro';
   .financing-band p {
     color: var(--color-body);
     margin: 0;
+  }
+
+  .financing-band-actions {
+    margin-top: var(--space-sm);
   }
 </style>
