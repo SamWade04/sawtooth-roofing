@@ -1,6 +1,7 @@
 ---
+import { getCollection } from 'astro:content';
+
 // §S3 — Footer NAP + legal line.
-// F1: RCE-##### pending DOPL (launch gate — Idaho legally requires the number in advertising; footer counts).
 const year = new Date().getFullYear();
 
 // A2 Quick Links nav PRESERVED — Blog link must remain here per IA decision.
@@ -14,13 +15,11 @@ const footerLinks = [
   { label: 'Terms of Use',    href: '/terms'     },
 ];
 
-const serviceAreas = [
-  { city: 'Nampa',    href: '/locations/nampa'    },
-  { city: 'Caldwell', href: '/locations/caldwell' },
-  { city: 'Meridian', href: '/locations/meridian' },
-  { city: 'Boise',    href: '/locations/boise'    },
-  { city: 'Kuna',     href: '/locations/kuna'     },
-];
+// Collection-driven, draft-aware — mirrors the /locations hub pattern.
+// draft:true cities render as plain text (no 404), draft:false auto-link.
+const serviceAreas = (await getCollection('locations')).sort(
+  (a, b) => a.data.order - b.data.order
+);
 ---
 
 <footer class="site-footer">
@@ -45,8 +44,14 @@ const serviceAreas = [
     <div class="footer-section">
       <p class="footer-section-heading">Service Areas</p>
       <ul class="footer-city-list">
-        {serviceAreas.map(({ city, href }) => (
-          <li><a href={href} class="footer-link">{city}</a></li>
+        {serviceAreas.map((location) => (
+          <li>
+            {location.data.draft ? (
+              <span class="footer-city-text">{location.data.city}</span>
+            ) : (
+              <a href={`/locations/${location.id}`} class="footer-link">{location.data.city}</a>
+            )}
+          </li>
         ))}
       </ul>
     </div>
@@ -68,10 +73,8 @@ const serviceAreas = [
     <p class="footer-legal">
       &copy; {year} Sawtooth Roofing &amp; Construction LLC
     </p>
-    {/* F1 LAUNCH GATE: real RCE-##### must be sourced from DOPL before launch — see doc 30 §2.
-        Idaho legally requires the contractor registration number in advertising; footer counts. */}
     <p class="footer-legal footer-license-placeholder">
-      Idaho-Registered Roofing Contractor RCE-##### &mdash; <em>PENDING DOPL</em>
+      Idaho-registered roofing contractor #7371651
     </p>
   </div>
 </footer>
@@ -167,7 +170,10 @@ const serviceAreas = [
     gap: var(--space-xs); /* snapped: 0.6rem → 0.8rem */
   }
 
-  .footer-link {
+  /* Shared box: .footer-city-text (draft city, no link) matches .footer-link
+     visually minus the link affordance — same technique as the /locations hub. */
+  .footer-link,
+  .footer-city-text {
     font-size: 1.4rem;
     color: var(--color-body);
     text-decoration: none;

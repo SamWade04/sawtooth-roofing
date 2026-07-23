@@ -10,6 +10,15 @@ html {
   font-size: 62.5%;
 }
 
+/* ─── Sticky header offset — header is sticky only ≥768px, so anchor jumps
+   only need the offset there. --header-height is measured at runtime by
+   Header.astro (varies with content), not hardcoded. ───────────────────── */
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: var(--header-height, 0px);
+  }
+}
+
 /* ─── Self-hosted Inter @font-face ─────────────────────────────────────── */
 @font-face {
   font-family: 'Inter';
@@ -57,6 +66,19 @@ figure {
 body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Mobile call bar clearance — reserves space so the fixed bar never
+   covers the footer legal line. --mobile-call-bar-height is measured at
+   runtime by MobileCallBar.astro (varies with content), not hardcoded. ─── */
+body {
+  padding-bottom: var(--mobile-call-bar-height, 0px);
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-bottom: 0;
+  }
 }
 
 img,

@@ -1,5 +1,6 @@
 ---
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
+import PageTailCTA from '../components/ui/PageTailCTA.astro';
 import { GBP_URL } from '../consts';
 ---
 
@@ -35,4 +36,6 @@ import { GBP_URL } from '../consts';
   <p>We serve homeowners across the Treasure Valley from our Meridian base: <strong>Nampa, Caldwell, Meridian, Boise, and Kuna.</strong></p>
 
   <p><strong>Storm damage, a stubborn leak, or a roof near the end of its life? <a href="/contact">Book a free roof inspection</a> — no obligation, straight answers.</strong></p>
+
+  <PageTailCTA slot="after" />
 </ContentPageLayout>
