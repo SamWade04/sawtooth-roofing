@@ -9,48 +9,69 @@ const seo = z
   })
   .optional();
 
+// Shared image-array shape: an ARRAY, not a single field, because a ground-level
+// image must be able to join an aerial later as a data edit with no markup change.
+// sourceFile is the provenance key back to the source archive — NO coordinates,
+// NO addresses, ever, in this repo.
+const images = ({ image }) =>
+  z
+    .array(
+      z.object({
+        src: image(),
+        alt: z.string(),
+        role: z.enum(['aerial', 'ground']),
+        sourceFile: z.string(),
+      })
+    )
+    .default([]);
+
 const services = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/services' }),
-  schema: z.object({
-    title: z.string(), // = page H1
-    shortTitle: z.string().optional(),
-    order: z.number(),
-    summary: z.string(),
-    icon: z.string().optional(),
-    seo,
-    draft: z.boolean().default(false),
-    financingBand: z.boolean().default(false),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(), // = page H1
+      shortTitle: z.string().optional(),
+      order: z.number(),
+      summary: z.string(),
+      icon: z.string().optional(),
+      seo,
+      draft: z.boolean().default(false),
+      financingBand: z.boolean().default(false),
+      images: images({ image }),
+    }),
 });
 
 const locations = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/locations' }),
-  schema: z.object({
-    city: z.string(),
-    state: z.string().default('ID'),
-    order: z.number(),
-    summary: z.string(),
-    seo,
-    draft: z.boolean().default(false),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      city: z.string(),
+      state: z.string().default('ID'),
+      order: z.number(),
+      summary: z.string(),
+      seo,
+      draft: z.boolean().default(false),
+      images: images({ image }),
+    }),
 });
 
 const blog = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
-    author: z.string(),
-    reviewedBy: z.string().optional(), // YMYL expert reviewer, doc 08
-    category: z.string().optional(),
-    tags: z.array(z.string()).default([]),
-    image: z.string().optional(),
-    aiDisclosure: z.boolean().default(false),
-    seo,
-    draft: z.boolean().default(true),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      pubDate: z.coerce.date(),
+      updatedDate: z.coerce.date().optional(),
+      author: z.string(),
+      reviewedBy: z.string().optional(), // YMYL expert reviewer, doc 08
+      category: z.string().optional(),
+      tags: z.array(z.string()).default([]),
+      image: image().optional(),
+      aiDisclosure: z.boolean().default(false),
+      seo,
+      draft: z.boolean().default(true),
+    }),
 });
 
 const faqs = defineCollection({
