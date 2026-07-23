@@ -8,6 +8,12 @@ seo:
   description: "Hail and wind roof damage? Sawtooth Roofing inspects, documents the damage for your insurance claim, and completes the approved restoration across the Treasure Valley. Free inspection."
 draft: false
 financingBand: true
+images:
+  - src: ../../assets/projects/nampa-01.jpg
+    alt: "Aerial view of a completed dark shingle roof on a two-story home with dormers in Nampa, Idaho."
+    role: aerial
+    source: own
+    sourceFile: "3978312_100DRONE_SING0574.JPEG"
 ---
 
 After a hailstorm or windstorm, Sawtooth Roofing inspects your roof, documents the damage for your insurance claim, and completes the approved restoration. We work with your insurance throughout the process — you stay in control of your claim, your insurer decides what's covered, and we do the inspecting, documenting, and approved restoration. As a Treasure Valley insurance-restoration specialist based in Meridian, this is the work we do most.
