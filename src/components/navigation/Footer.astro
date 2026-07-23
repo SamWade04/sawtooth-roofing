@@ -1,6 +1,5 @@
 ---
 // §S3 — Footer NAP + legal line.
-// F1: RCE-##### pending DOPL (launch gate — Idaho legally requires the number in advertising; footer counts).
 const year = new Date().getFullYear();
 
 // A2 Quick Links nav PRESERVED — Blog link must remain here per IA decision.
@@ -68,10 +67,8 @@ const serviceAreas = [
     <p class="footer-legal">
       &copy; {year} Sawtooth Roofing &amp; Construction LLC
     </p>
-    {/* F1 LAUNCH GATE: real RCE-##### must be sourced from DOPL before launch — see doc 30 §2.
-        Idaho legally requires the contractor registration number in advertising; footer counts. */}
     <p class="footer-legal footer-license-placeholder">
-      Idaho-Registered Roofing Contractor RCE-##### &mdash; <em>PENDING DOPL</em>
+      Idaho-registered roofing contractor #7371651
     </p>
   </div>
 </footer>
