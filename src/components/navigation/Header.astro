@@ -59,12 +59,23 @@ const navLinks = [
 <script>
   const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
   const nav    = document.getElementById('primary-nav');
+  const header = document.querySelector<HTMLElement>('.site-header');
 
   toggle?.addEventListener('click', () => {
     const expanded = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', String(!expanded));
     nav?.setAttribute('data-open', String(!expanded));
   });
+
+  // Sticky header height varies with content/viewport — measure rather than
+  // hardcode, so in-page anchor jumps (scroll-padding-top) stay accurate.
+  if (header) {
+    const setHeaderHeightVar = () => {
+      document.documentElement.style.setProperty('--header-height', `${header.offsetHeight}px`);
+    };
+    setHeaderHeightVar();
+    new ResizeObserver(setHeaderHeightVar).observe(header);
+  }
 </script>
 
 <style>
@@ -216,6 +227,12 @@ const navLinks = [
 
   /* ── Desktop (≥768px) ── */
   @media (min-width: 768px) {
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
     .nav-toggle {
       display: none;
     }

@@ -10,6 +10,15 @@ html {
   font-size: 62.5%;
 }
 
+/* ─── Sticky header offset — header is sticky only ≥768px, so anchor jumps
+   only need the offset there. --header-height is measured at runtime by
+   Header.astro (varies with content), not hardcoded. ───────────────────── */
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: var(--header-height, 0px);
+  }
+}
+
 /* ─── Self-hosted Inter @font-face ─────────────────────────────────────── */
 @font-face {
   font-family: 'Inter';
