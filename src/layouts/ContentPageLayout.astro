@@ -50,7 +50,7 @@ const {
             <script is:inline src="https://link.msgsndr.com/js/form_embed.js" defer></script>
 
             <div class="content-main">
-              {images.map((img) => (
+              {images.map((img, index) => (
                 <figure class="content-media" style={`aspect-ratio: ${img.src.width} / ${img.src.height}`}>
                   <Picture
                     src={img.src}
@@ -59,8 +59,9 @@ const {
                     fallbackFormat="jpeg"
                     widths={[400, 800, 1200, 1600]}
                     sizes="(min-width: 1135px) 68rem, (min-width: 768px) calc(100vw - 45.5rem), 100vw"
-                    loading="lazy"
+                    loading={index === 0 ? 'eager' : 'lazy'}
                     decoding="async"
+                    fetchpriority={index === 0 ? 'high' : undefined}
                   />
                 </figure>
               ))}
@@ -78,7 +79,7 @@ const {
           </div>
         ) : (
           <div class="content-main">
-            {images.map((img) => (
+            {images.map((img, index) => (
               <figure class="content-media" style={`aspect-ratio: ${img.src.width} / ${img.src.height}`}>
                 <Picture
                   src={img.src}
@@ -87,8 +88,9 @@ const {
                   fallbackFormat="jpeg"
                   widths={[400, 800, 1200, 1600]}
                   sizes="(min-width: 1135px) 68rem, (min-width: 768px) calc(100vw - 45.5rem), 100vw"
-                  loading="lazy"
+                  loading={index === 0 ? 'eager' : 'lazy'}
                   decoding="async"
+                  fetchpriority={index === 0 ? 'high' : undefined}
                 />
               </figure>
             ))}
