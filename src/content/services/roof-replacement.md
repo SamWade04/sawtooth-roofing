@@ -7,6 +7,12 @@ seo:
   description: "Full roof replacement with Owens Corning products, built for Idaho weather. Free inspection and written estimate across Nampa, Caldwell, Meridian, Boise & Kuna."
 draft: false
 financingBand: true
+images:
+  - src: ../../assets/projects/boise-01.jpg
+    alt: "Aerial view of a completed gray shingle roof on a multi-gabled single-family home in Boise, Idaho."
+    role: aerial
+    source: own
+    sourceFile: "4357508_100DRONE_SING0602.JPEG"
 ---
 
 Sawtooth Roofing replaces storm-worn and aging roofs across the Treasure Valley with Owens Corning roofing products built for Idaho's hail, wind, and temperature swings. A full replacement means a complete tear-off down to the decking, repair of any damaged sheathing, and a new roof system installed to manufacturer specification — and it always starts with a free, no-obligation inspection so you know exactly what your roof needs before you commit to anything.

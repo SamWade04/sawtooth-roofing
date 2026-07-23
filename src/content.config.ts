@@ -20,6 +20,7 @@ const images = ({ image }) =>
         src: image(),
         alt: z.string(),
         role: z.enum(['aerial', 'ground']),
+        source: z.enum(['own', 'stock', 'ai']).default('own'),
         sourceFile: z.string(),
       })
     )
