@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import ContentPageLayout from './ContentPageLayout.astro';
 import FinancingBand from '../components/ui/FinancingBand.astro';
+import PageTailCTA from '../components/ui/PageTailCTA.astro';
 
 interface Props {
   entry: CollectionEntry<'services'>;
@@ -26,4 +27,5 @@ const pageDescription = seo?.description ?? summary;
 >
   <slot />
   {financingBand && <FinancingBand slot="after" />}
+  <PageTailCTA slot="after" />
 </ContentPageLayout>
