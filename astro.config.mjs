@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  // PLACEHOLDER — swap in the Cloudflare Pages preview URL after first deploy (A0),
-  // then the production domain at A9: https://sawtoothroofing.com
-  site: 'https://placeholder.pages.dev',
+  // A9 LAUNCH TASK — swap to the final production domain when it goes live:
+  // https://sawtooth-roofing.com
+  site: 'https://sawtooth-roofing.pages.dev',
 });
