@@ -3,6 +3,7 @@ import '../styles/global.css';
 import SeoHead from '../components/seo/SeoHead.astro';
 import Header from '../components/navigation/Header.astro';
 import Footer from '../components/navigation/Footer.astro';
+import MobileCallBar from '../components/ui/MobileCallBar.astro';
 
 interface Props {
   title?: string;
@@ -43,5 +44,6 @@ interface Props {
     <Header />
     <slot />
     <Footer />
+    <MobileCallBar />
   </body>
 </html>
