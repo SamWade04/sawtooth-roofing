@@ -1,4 +1,6 @@
 ---
+import { getCollection } from 'astro:content';
+
 // §S3 — Footer NAP + legal line.
 const year = new Date().getFullYear();
 
@@ -13,13 +15,11 @@ const footerLinks = [
   { label: 'Terms of Use',    href: '/terms'     },
 ];
 
-const serviceAreas = [
-  { city: 'Nampa',    href: '/locations/nampa'    },
-  { city: 'Caldwell', href: '/locations/caldwell' },
-  { city: 'Meridian', href: '/locations/meridian' },
-  { city: 'Boise',    href: '/locations/boise'    },
-  { city: 'Kuna',     href: '/locations/kuna'     },
-];
+// Collection-driven, draft-aware — mirrors the /locations hub pattern.
+// draft:true cities render as plain text (no 404), draft:false auto-link.
+const serviceAreas = (await getCollection('locations')).sort(
+  (a, b) => a.data.order - b.data.order
+);
 ---
 
 <footer class="site-footer">
@@ -44,8 +44,14 @@ const serviceAreas = [
     <div class="footer-section">
       <p class="footer-section-heading">Service Areas</p>
       <ul class="footer-city-list">
-        {serviceAreas.map(({ city, href }) => (
-          <li><a href={href} class="footer-link">{city}</a></li>
+        {serviceAreas.map((location) => (
+          <li>
+            {location.data.draft ? (
+              <span class="footer-city-text">{location.data.city}</span>
+            ) : (
+              <a href={`/locations/${location.id}`} class="footer-link">{location.data.city}</a>
+            )}
+          </li>
         ))}
       </ul>
     </div>
@@ -164,7 +170,10 @@ const serviceAreas = [
     gap: var(--space-xs); /* snapped: 0.6rem → 0.8rem */
   }
 
-  .footer-link {
+  /* Shared box: .footer-city-text (draft city, no link) matches .footer-link
+     visually minus the link affordance — same technique as the /locations hub. */
+  .footer-link,
+  .footer-city-text {
     font-size: 1.4rem;
     color: var(--color-body);
     text-decoration: none;
