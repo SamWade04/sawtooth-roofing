@@ -1,10 +1,10 @@
 ---
 title: Roof Replacement
 order: 1
-summary: "Sawtooth Roofing replaces storm-worn and aging roofs across the Treasure Valley with Owens Corning roofing products built for Idaho's hail, wind, and temperature swings. A full replacement means a complete tear-off to the decking, repair of any damaged sheathing, and a new roof system installed to manufacturer spec — starting with a free, no-obligation inspection."
+summary: "Sawtooth Roofing replaces storm-worn and aging roofs across the Treasure Valley with roofing products built for Idaho's hail, wind, and temperature swings. A full replacement means a complete tear-off to the decking, repair of any damaged sheathing, and a new roof system installed to manufacturer spec — starting with a free, no-obligation inspection."
 seo:
   title: "Roof Replacement in the Treasure Valley, ID | Sawtooth Roofing"
-  description: "Full roof replacement with Owens Corning products, built for Idaho weather. Free inspection and written estimate across Nampa, Caldwell, Meridian, Boise & Kuna."
+  description: "Full roof replacement with products, built for Idaho weather. Free inspection and written estimate across Nampa, Caldwell, Meridian, Boise & Kuna."
 draft: false
 financingBand: true
 images:
@@ -15,7 +15,7 @@ images:
     sourceFile: "4357508_100DRONE_SING0602.JPEG"
 ---
 
-Sawtooth Roofing replaces storm-worn and aging roofs across the Treasure Valley with Owens Corning roofing products built for Idaho's hail, wind, and temperature swings. A full replacement means a complete tear-off down to the decking, repair of any damaged sheathing, and a new roof system installed to manufacturer specification — and it always starts with a free, no-obligation inspection so you know exactly what your roof needs before you commit to anything.
+Sawtooth Roofing replaces storm-worn and aging roofs across the Treasure Valley with roofing products built for Idaho's hail, wind, and temperature swings. A full replacement means a complete tear-off down to the decking, repair of any damaged sheathing, and a new roof system installed to manufacturer specification — and it always starts with a free, no-obligation inspection so you know exactly what your roof needs before you commit to anything.
 
 ## When does a roof need full replacement instead of repair?
 
@@ -23,7 +23,7 @@ Replacement is usually the right call when damage is widespread rather than isol
 
 ## What roofing materials hold up best in Idaho weather?
 
-We install Owens Corning roofing products and source materials through ABC Supply Co. Architectural asphalt shingles are the workhorse for Treasure Valley homes — they balance hail and wind resistance, longevity, and cost, and they handle Idaho's wide temperature swings well. During your inspection we'll walk you through the specific product lines and options that fit your home and budget.
+We install roofing products and source materials through ABC Supply Co. Architectural asphalt shingles are the workhorse for Treasure Valley homes — they balance hail and wind resistance, longevity, and cost, and they handle Idaho's wide temperature swings well. During your inspection we'll walk you through the specific product lines and options that fit your home and budget.
 
 ## What does a roof replacement involve?
 

@@ -19,7 +19,7 @@ In broad terms, the process belongs to you, the homeowner, at every step:
 3. **You file your claim** with your insurance company and give them our documentation as supporting evidence.
 4. **Your insurer assigns an adjuster** to assess the damage. When that happens, **we meet the adjuster on-site** so the roof's condition is reviewed accurately and nothing gets missed.
 5. **Your insurer determines coverage** and approves a scope of work. That decision is theirs and yours — not ours.
-6. **We complete the approved restoration** to manufacturer specification with Owens Corning products, and document the finished work.
+6. **We complete the approved restoration** to manufacturer specification with products, and document the finished work.
 
 ### What is Sawtooth's role — and what isn't it?
 
@@ -29,7 +29,7 @@ What we do **not** do — and legally cannot do as a roofing contractor in Idaho
 
 ### Why work with an insurance-restoration specialist?
 
-Most of what we do is storm and hail restoration for Treasure Valley homeowners, so the documentation, the adjuster meetings, and the manufacturer-spec rebuild are routine for us rather than occasional. Thorough, accurate documentation gives you solid footing for your claim — and a roof rebuilt to spec with Owens Corning products is one you won't have to think about for a long time.
+Most of what we do is storm and hail restoration for Treasure Valley homeowners, so the documentation, the adjuster meetings, and the manufacturer-spec rebuild are routine for us rather than occasional. Thorough, accurate documentation gives you solid footing for your claim — and a roof rebuilt to spec with products is one you won't have to think about for a long time.
 
 ---
 

@@ -28,7 +28,7 @@ First, stay off the roof — assessing storm damage safely takes the right footi
 
 ## How does Sawtooth restore a storm-damaged roof?
 
-Our process is built around your claim, not around us: we inspect and document the damage in detail (photos and measurements), provide that documentation for your insurance claim, meet your adjuster on-site when one is assigned, and — once your insurer approves the scope — complete the repair or replacement to manufacturer spec with Owens Corning products. You file and control the claim; we handle the roof work.
+Our process is built around your claim, not around us: we inspect and document the damage in detail (photos and measurements), provide that documentation for your insurance claim, meet your adjuster on-site when one is assigned, and — once your insurer approves the scope — complete the repair or replacement to manufacturer spec with products. You file and control the claim; we handle the roof work.
 
 ## Is storm damage covered by homeowner's insurance?
 
