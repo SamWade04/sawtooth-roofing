@@ -6,6 +6,7 @@ interface Props {
   ogTitle?: string;
   ogDescription?: string;
   ogType?: string;
+  robots?: string;   // omitted on every real page — only the temporary type-lab sets it
 }
 
 const {
@@ -15,6 +16,7 @@ const {
   ogTitle,
   ogDescription,
   ogType = 'website',
+  robots,
 } = Astro.props;
 
 const SITE_NAME = 'Sawtooth Roofing'; // the ONLY hardcoded string allowed
@@ -32,6 +34,8 @@ const resolvedOgDescription = ogDescription ?? description;
 ---
 
 <title>{resolvedTitle}</title>
+
+{robots && <meta name="robots" content={robots} />}
 
 {description && <meta name="description" content={description} />}
 

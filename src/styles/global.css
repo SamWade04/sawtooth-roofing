@@ -1,8 +1,11 @@
 @import './tokens.css';
 
 /* ─── Font family token ─────────────────────────────────────────────────── */
+/* 'Inter Fallback' is a metric-matched local face (see @font-face below) that
+   occupies near-identical space to Inter, so the swap costs little or no
+   reflow. It must sit immediately after 'Inter' and before the system stack. */
 :root {
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* ─── Rem baseline (1rem = 10px) ────────────────────────────────────────── */
@@ -42,6 +45,54 @@ html {
   font-weight: 700;
   font-display: swap;
   src: url('/fonts/inter-latin-700-normal.woff2') format('woff2');
+}
+
+/* ─── Metric-matched fallback for Inter — font-swap CLS fix ─────────────────
+   Anchored to Arial (Helvetica Neue / Roboto as secondary locals). All values
+   were computed from the actual font binaries in public/fonts, not copied.
+
+   ascent/descent/line-gap-override come from Inter's hhea table
+   (ascent 1984, descent -494, lineGap 0 @ 2048upm; Inter does NOT set the
+   USE_TYPO_METRICS flag, so hhea is the set the browser uses), each divided
+   by size-adjust so the rendered line box lands on Inter's own 1.21em.
+
+   size-adjust is the ratio of total advance width of real page strings
+   rendered in Inter vs in the anchor. NOTE: the usual OS/2 xAvgCharWidth
+   shortcut is WRONG for this pairing — Inter reports xAvg over all glyphs
+   (OS/2 v4) while Arial uses the legacy lowercase-weighted computation, which
+   yields ~138% instead of the true ~107%. Ratios below are stable to within
+   2.5% across the sampled strings. ─────────────────────────────────────── */
+@font-face {
+  font-family: 'Inter Fallback';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arial'), local('Helvetica Neue'), local('Roboto');
+  size-adjust: 107.08%;
+  ascent-override: 90.47%;
+  descent-override: 22.53%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Arial Bold'), local('Helvetica Neue Bold'), local('Roboto Bold');
+  size-adjust: 100.9%;
+  ascent-override: 96.01%;
+  descent-override: 23.9%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Arial Bold'), local('Helvetica Neue Bold'), local('Roboto Bold');
+  size-adjust: 101.68%;
+  ascent-override: 95.27%;
+  descent-override: 23.72%;
+  line-gap-override: 0%;
 }
 
 /* ─── Minimal modern reset ──────────────────────────────────────────────── */

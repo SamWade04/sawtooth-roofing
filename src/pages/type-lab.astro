@@ -1,0 +1,450 @@
+---
+/* ═══════════════════════════════════════════════════════════════════════════
+   TEMPORARY — Stage 3a typography comparison lab.
+   DELETE THIS FILE in the follow-up dispatch that applies the chosen option.
+   Not linked from nav, footer, sitemap, or any content collection.
+   Every rule below is scoped under `.lab` so no existing page is affected.
+   ═══════════════════════════════════════════════════════════════════════════ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// All specimen copy is verbatim existing site copy — nothing here is newly authored.
+//   eyebrow / H3 / list / button  → src/pages/index.astro
+//   H1 + lead                     → src/content/services/storm-damage-restoration.md
+//   H2 + body paragraphs          → src/content/services/roof-repair.md
+//   card                          → src/content/services/roof-repair.md (title + summary)
+const SPEC = {
+  eyebrow: 'Insurance-Restoration Roofing · Treasure Valley, Idaho',
+  h1: 'Storm Damage Restoration',
+  lead:
+    "After a hailstorm or windstorm, Sawtooth Roofing inspects your roof, documents the damage " +
+    "for your insurance claim, and completes the approved restoration. We work with your insurance " +
+    "throughout — you stay in control of your claim, your insurer decides what's covered, and we do " +
+    "the inspection, documentation, and approved restoration. Serving the Treasure Valley from Meridian.",
+  h2: 'What roof problems can be repaired instead of replaced?',
+  p1:
+    "Repairs work well for localized issues: a handful of missing or wind-lifted shingles, a single " +
+    "leak traced to flashing or a penetration, damaged flashing around a chimney or vent, or a small " +
+    "area of storm damage on an otherwise healthy roof. When damage is spread across the roof, the " +
+    "system is aging out, or leaks are showing up in more than one place, replacement is usually the " +
+    "more honest long-term fix. We'll tell you which you're looking at — even when the answer is " +
+    "“this can wait.”",
+  p2:
+    "Idaho's wind and hail drive most of what we see: shingles lifted or torn off by high wind, hail " +
+    "bruising and granule loss, cracked or pulled-away flashing, and leaks at valleys and penetrations. " +
+    "Sun and temperature swings age shingles over time, too. Many of these start small and quiet — " +
+    "which is why a roof that “looks fine” from the driveway is still worth an inspection " +
+    "after a big storm.",
+  h3: 'Damage documentation',
+  list: ['Free inspection', 'Damage documentation', 'Adjuster meeting', 'Restoration'],
+  cardTitle: 'Roof Repair',
+  cardBody:
+    "Sawtooth Roofing repairs leaks, missing or wind-lifted shingles, and failed flashing for " +
+    "homeowners across the Treasure Valley. A repair is the right call when damage is isolated and " +
+    "the rest of the roof has sound life left.",
+  cardCta: 'Learn more →',
+  button: 'Book a Free Inspection',
+};
+
+// Only `headings` differs between options. Everything else is held constant
+// so the comparison isolates the heading typeface.
+const OPTIONS = [
+  {
+    id: 'a',
+    name: 'Option A — “Inter, tuned”',
+    note: 'Control. No new typeface — current Inter, re-scaled and re-spaced.',
+    headings: 'Inter',
+  },
+  {
+    id: 'b',
+    name: 'Option B — Archivo headings',
+    note: 'Grotesque, squared terminals. Body stays Inter.',
+    headings: 'Archivo',
+  },
+  {
+    id: 'c',
+    name: 'Option C — Outfit headings',
+    note: 'Geometric, circular bowls. Body stays Inter.',
+    headings: 'Outfit',
+  },
+];
+
+// Shown in each section's spec strip so Sam sees exactly what he is picking.
+const SHARED_SPEC = [
+  ['Body face', 'Inter 400 — identical in all three'],
+  ['Body size / line-height', '16px / 1.65  (was 16px / 1.5)'],
+  ['H1', '64px / 1.1 / -0.015em / 700  (was 52px / 1.15 / -0.02em)'],
+  ['H2', '42px / 1.1 / -0.015em / 700  (was 34px / 1.2 / -0.015em)'],
+  ['H3', '17px / 1.3 / +0.08em / 700 uppercase — Inter in ALL options (under 20px)'],
+  ['Lead', '20px / 1.55  (was 18px / 1.5)'],
+  ['Section padding', '120px top+bottom  (was 96px, +25%)'],
+];
+---
+
+<BaseLayout
+  title="Typography Lab | Sawtooth Roofing"
+  description="Temporary internal typography comparison. Not for publication."
+  robots="noindex, nofollow"
+>
+  <main class="lab">
+
+    <section class="lab-band lab-band--intro">
+      <div class="lab-inner">
+        <p class="lab-kicker">Internal — Stage 3a</p>
+        <h1 class="lab-title">Typography options</h1>
+        <p class="lab-note">
+          Three treatments of the same specimen. Scale, spacing, colour, reading width, card and
+          button styling, and body face are <strong>identical</strong> in all three &mdash; the only
+          variable is the heading typeface. Copy is real site copy throughout. Judge the rhythm, not
+          just the letterforms.
+        </p>
+      </div>
+    </section>
+
+    {OPTIONS.map((opt) => (
+      <section class={`lab-band opt opt--${opt.id}`}>
+        <div class="lab-inner">
+
+          <div class="spec-strip">
+            <p class="spec-name">{opt.name}</p>
+            <p class="spec-note">{opt.note}</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>Heading face</dt>
+                <dd><strong>{opt.headings}</strong> 700</dd>
+              </div>
+              {SHARED_SPEC.map(([k, v]) => (
+                <div class="spec-row">
+                  <dt>{k}</dt>
+                  <dd>{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div class="specimen">
+            <p class="eyebrow">{SPEC.eyebrow}</p>
+            <h1>{SPEC.h1}</h1>
+            <p class="lead">{SPEC.lead}</p>
+
+            <h2>{SPEC.h2}</h2>
+            <p>{SPEC.p1}</p>
+            <p>{SPEC.p2}</p>
+
+            <h3>{SPEC.h3}</h3>
+            <ul>
+              {SPEC.list.map((item) => <li>{item}</li>)}
+            </ul>
+
+            <div class="specimen-card">
+              <h2 class="specimen-card-title">{SPEC.cardTitle}</h2>
+              <p>{SPEC.cardBody}</p>
+              <span class="specimen-card-cta">{SPEC.cardCta}</span>
+            </div>
+
+            <p class="specimen-actions">
+              <span class="btn btn--primary">{SPEC.button}</span>
+            </p>
+          </div>
+
+        </div>
+      </section>
+    ))}
+
+  </main>
+</BaseLayout>
+
+<style>
+  /* ═══ Display faces — loaded ONLY by this page ═══════════════════════════
+     Latin subset, weight 700 only (every heading on this site is 700, so a
+     variable font or a weight range would be dead payload). Both SIL OFL 1.1,
+     confirmed from the LICENSE text shipped in each upstream package. */
+  @font-face {
+    font-family: 'Archivo';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/fonts/archivo-latin-700-normal.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/fonts/outfit-latin-700-normal.woff2') format('woff2');
+  }
+
+  /* ═══ Metric-matched fallbacks for the display faces ══════════════════════
+     Same derivation as 'Inter Fallback' in global.css: overrides are the
+     face's own hhea ascent/descent/lineGap over unitsPerEm, divided by
+     size-adjust; size-adjust is the measured advance-width ratio of real
+     heading strings against Arial Bold.
+       Archivo 700 : hhea 878 / -210 / 0 @ 1000upm
+       Outfit  700 : hhea 1000 / -260 / 0 @ 1000upm */
+  @font-face {
+    font-family: 'Archivo Fallback';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Arial Bold'), local('Helvetica Neue Bold'), local('Roboto Bold');
+    size-adjust: 98.09%;
+    ascent-override: 89.51%;
+    descent-override: 21.41%;
+    line-gap-override: 0%;
+  }
+
+  @font-face {
+    font-family: 'Outfit Fallback';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Arial Bold'), local('Helvetica Neue Bold'), local('Roboto Bold');
+    size-adjust: 95.53%;
+    ascent-override: 104.68%;
+    descent-override: 27.22%;
+    line-gap-override: 0%;
+  }
+
+  /* ═══ Lab shell ═════════════════════════════════════════════════════════ */
+  .lab {
+    --lab-heading-font: var(--font-sans);
+
+    /* Improved section padding — SectionBand's current values +25%.
+       mobile  --space-xl  6.4rem → 8.0rem
+       desktop --space-2xl 9.6rem → 12.0rem
+       Applied identically to all three options; SectionBand itself untouched. */
+    --lab-pad-block: 8.0rem;
+  }
+
+  @media (min-width: 768px) {
+    .lab {
+      --lab-pad-block: 12.0rem;
+    }
+  }
+
+  .lab-band {
+    width: 100%;
+    padding-block: var(--lab-pad-block);
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .lab-band--intro {
+    padding-block: var(--space-lg);
+    background: var(--color-card);
+    border-top: 0;
+  }
+
+  .lab-inner {
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  @media (min-width: 768px) {
+    .lab-inner {
+      padding-inline: var(--gutter-lg);
+    }
+  }
+
+  /* ═══ Intro + spec chrome — always Inter, always small ══════════════════ */
+  .lab-kicker {
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-brand-red);
+  }
+
+  .lab-title {
+    margin-top: var(--space-xs);
+    font-size: 2.8rem;
+    line-height: 1.2;
+  }
+
+  .lab-note {
+    max-width: var(--reading-width);
+    margin-top: var(--space-sm);
+    font-size: 1.4rem;
+    line-height: 1.6;
+  }
+
+  .spec-strip {
+    max-width: var(--reading-width);
+    margin-bottom: var(--space-lg);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-brand-red);
+    border-radius: var(--radius-md);
+  }
+
+  .spec-name {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--color-headline);
+  }
+
+  .spec-note {
+    margin-top: 0.2rem;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .spec-list {
+    margin: var(--space-sm) 0 0;
+  }
+
+  .spec-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0 var(--space-sm);
+    padding-block: 0.3rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 560px) {
+    .spec-row {
+      grid-template-columns: 15rem 1fr;
+    }
+  }
+
+  .spec-row dt,
+  .spec-row dd {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .spec-row dt {
+    font-weight: 700;
+    color: var(--color-headline);
+  }
+
+  .spec-row dd {
+    color: var(--color-body);
+  }
+
+  /* ═══ SPECIMEN — the constants ═══════════════════════════════════════════
+     Held identical across all three options: reading width, colours, body
+     face, body size/line-height, card and button styling, spacing rhythm. */
+  .specimen {
+    max-width: var(--reading-width);
+  }
+
+  .specimen .eyebrow {
+    font-size: 1.3rem;   /* under 20px → Inter in every option */
+  }
+
+  .specimen h1,
+  .specimen h2 {
+    font-family: var(--lab-heading-font);   /* THE ONLY VARIABLE */
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--color-headline);
+  }
+
+  .specimen h1 {
+    margin-top: var(--space-sm);
+    font-size: 3.7rem;
+  }
+
+  .specimen h2 {
+    margin-top: var(--space-lg);
+    font-size: 3.0rem;
+  }
+
+  /* H3 is a 14px uppercase micro-label in this design system, not a display
+     size. It scales with the ramp (14 → 17px desktop) but stays INTER in all
+     three options — display faces are for large text only. */
+  .specimen h3 {
+    margin-top: var(--space-md);
+    font-family: var(--font-sans);
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-headline);
+  }
+
+  .specimen .lead {
+    margin-top: var(--space-sm);
+    font-size: 1.7rem;
+    line-height: 1.55;
+  }
+
+  .specimen p {
+    margin-top: var(--space-sm);
+    font-size: 1.4rem;
+    line-height: 1.65;   /* was 1.5 */
+  }
+
+  .specimen ul {
+    margin-top: var(--space-sm);
+    padding-left: var(--space-md);
+  }
+
+  .specimen li {
+    margin-top: var(--space-xs);
+    font-size: 1.4rem;
+    line-height: 1.65;
+    color: var(--color-body);
+  }
+
+  @media (min-width: 768px) {
+    .specimen h1 { font-size: 6.4rem; }
+    .specimen h2 { font-size: 4.2rem; }
+    .specimen h3 { font-size: 1.7rem; }
+    .specimen .lead { font-size: 2.0rem; }
+    .specimen p,
+    .specimen li { font-size: 1.6rem; }
+  }
+
+  /* Card — replicates the existing .service-card-link pattern verbatim */
+  .specimen-card {
+    margin-top: var(--space-lg);
+    padding: var(--space-md);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  /* Needs the `.specimen` prefix to outrank `.specimen h2` above, which would
+     otherwise impose the 42px section-heading size and its top margin. */
+  .specimen .specimen-card-title {
+    margin-top: 0;
+    font-size: 2.0rem;
+    line-height: 1.25;
+  }
+
+  @media (min-width: 768px) {
+    .specimen .specimen-card-title {
+      font-size: 2.4rem;
+    }
+  }
+
+  .specimen-card p {
+    margin-top: var(--space-xs);
+  }
+
+  .specimen-card-cta {
+    display: inline-block;
+    margin-top: var(--space-sm);
+    font-family: var(--font-sans);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-brand-red);
+  }
+
+  .specimen-actions {
+    margin-top: var(--space-lg);
+  }
+
+  /* ═══ THE VARIABLE — heading face per option ════════════════════════════ */
+  .opt--a { --lab-heading-font: 'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, sans-serif; }
+  .opt--b { --lab-heading-font: 'Archivo', 'Archivo Fallback', Arial, sans-serif; }
+  .opt--c { --lab-heading-font: 'Outfit', 'Outfit Fallback', Arial, sans-serif; }
+</style>
