@@ -1,11 +1,16 @@
 @import './tokens.css';
 
-/* ─── Font family token ─────────────────────────────────────────────────── */
-/* 'Inter Fallback' is a metric-matched local face (see @font-face below) that
-   occupies near-identical space to Inter, so the swap costs little or no
-   reflow. It must sit immediately after 'Inter' and before the system stack. */
+/* ─── Font family tokens ────────────────────────────────────────────────── */
+/* 'Inter Fallback' / 'Outfit Fallback' are metric-matched local faces (see
+   @font-face below) that occupy near-identical space to their web face, so the
+   swap costs little or no reflow. Each must sit immediately after its web face
+   and before the system stack.
+   --font-sans   : Inter — body, and every sub-20px role (nav, buttons, labels,
+                   eyebrows, h3 micro-label, TrustBar, footer, captions).
+   --font-display: Outfit — headings ≥20px only (h1, h2, ≥20px card titles). */
 :root {
-  --font-sans: 'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans:    'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Outfit', 'Outfit Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* ─── Rem baseline (1rem = 10px) ────────────────────────────────────────── */
@@ -95,6 +100,33 @@ html {
   line-gap-override: 0%;
 }
 
+/* ─── Self-hosted Outfit @font-face (display face — headings ≥20px) ───────
+   Latin subset, weight 700 only (every heading is 700). SIL OFL 1.1. */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/outfit-latin-700-normal.woff2') format('woff2');
+}
+
+/* ─── Metric-matched fallback for Outfit — font-swap CLS fix ────────────────
+   Same derivation as 'Inter Fallback': overrides are Outfit's own hhea metrics
+   (ascent 1000, descent -260, lineGap 0 @ 1000upm) over unitsPerEm, divided by
+   size-adjust; size-adjust is the measured advance-width ratio of real heading
+   strings against Arial Bold. Values computed and verified in the type lab —
+   reused verbatim, not recomputed. ──────────────────────────────────────── */
+@font-face {
+  font-family: 'Outfit Fallback';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Arial Bold'), local('Helvetica Neue Bold'), local('Roboto Bold');
+  size-adjust: 95.53%;
+  ascent-override: 104.68%;
+  descent-override: 27.22%;
+  line-gap-override: 0%;
+}
+
 /* ─── Minimal modern reset ──────────────────────────────────────────────── */
 *,
 *::before,
@@ -152,27 +184,35 @@ body {
   background: var(--color-bg);
   color: var(--color-body);
   font-size: 1.4rem;
-  line-height: 1.5;
+  line-height: 1.65;
 }
 
 /* ─── Type scale — MOBILE values (base) ────────────────────────────────── */
+/* h1/h2 use the Outfit display face; heading line-height 1.1 and tracking
+   -0.015em are held across breakpoints (Option C from the type lab). */
 h1 {
-  font-size: 3.0rem;
+  font-family: var(--font-display);
+  font-size: 3.7rem;
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--color-headline);
-}
-
-h2 {
-  font-size: 2.4rem;
-  font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.1;
   letter-spacing: -0.015em;
   color: var(--color-headline);
 }
 
+h2 {
+  font-family: var(--font-display);
+  font-size: 3.0rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--color-headline);
+}
+
+/* h3 is a sub-20px uppercase micro-label, NOT a display heading — stays Inter
+   (Option C rule: display faces are for large text only). Explicit binding
+   guards against inheriting --font-display via any future refactor. */
 h3 {
+  font-family: var(--font-sans);
   font-size: 1.3rem;
   font-weight: 700;
   line-height: 1.3;
@@ -184,7 +224,7 @@ h3 {
 .lead {
   font-size: 1.5rem;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.65;
   letter-spacing: normal;
   color: var(--color-body);
 }
@@ -192,7 +232,7 @@ h3 {
 p {
   font-size: 1.4rem;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.65;
   letter-spacing: normal;
   color: var(--color-body);
 }
@@ -248,13 +288,13 @@ small {
   }
 
   h1 {
-    font-size: 5.2rem;
-    line-height: 1.15;
+    font-size: 6.4rem;
+    line-height: 1.1;
   }
 
   h2 {
-    font-size: 3.4rem;
-    line-height: 1.2;
+    font-size: 4.2rem;
+    line-height: 1.1;
   }
 
   h3 {
