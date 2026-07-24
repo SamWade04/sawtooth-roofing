@@ -23,7 +23,7 @@ Replacement is usually the right call when damage is widespread rather than isol
 
 ## What roofing materials hold up best in Idaho weather?
 
-We install roofing products and source materials through ABC Supply Co. Architectural asphalt shingles are the workhorse for Treasure Valley homes — they balance hail and wind resistance, longevity, and cost, and they handle Idaho's wide temperature swings well. During your inspection we'll walk you through the specific product lines and options that fit your home and budget.
+We source materials through ABC Supply and Pacific Supply. Architectural asphalt shingles are the workhorse for Treasure Valley homes — they balance hail and wind resistance, longevity, and cost, and they handle Idaho's wide temperature swings well. During your inspection we'll walk you through the specific product lines and options that fit your home and budget.
 
 ## What does a roof replacement involve?
 
