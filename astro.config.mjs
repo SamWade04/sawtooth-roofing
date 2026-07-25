@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  // A9 LAUNCH TASK — swap to the final production domain when it goes live:
-  // https://sawtooth-roofing.com
-  site: 'https://sawtooth-roofing.pages.dev',
+  // A9 LAUNCH — cutover complete: sawtooth-roofing.com is live (2026-07-25).
+  // pages.dev remains reachable as a non-canonical surface.
+  site: 'https://sawtooth-roofing.com',
 });

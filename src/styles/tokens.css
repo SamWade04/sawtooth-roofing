@@ -15,8 +15,8 @@
   --space-sm:  1.6rem;
   --space-md:  2.4rem;
   --space-lg:  4.0rem;
-  --space-xl:  6.4rem;   /* section band vertical padding — mobile */
-  --space-2xl: 9.6rem;   /* section band vertical padding — desktop */
+  --space-xl:  8.0rem;   /* section band vertical padding — mobile  (Option C: 6.4→8.0rem) */
+  --space-2xl: 12.0rem;  /* section band vertical padding — desktop (Option C: 9.6→12.0rem) */
   --space-3xl: 12.8rem;
 
   /* radius — doc 31 §4 */

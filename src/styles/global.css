@@ -1,8 +1,17 @@
 @import './tokens.css';
 
-/* ─── Font family token ─────────────────────────────────────────────────── */
+/* ─── Font family tokens ────────────────────────────────────────────────── */
+/* 'Inter Fallback' is a metric-matched local face (see @font-face below) that
+   occupies near-identical space to Inter, so the swap costs little or no
+   reflow. It must sit immediately after Inter and before the system stack.
+   --font-sans   : Inter — body, and every sub-20px role (nav, buttons, labels,
+                   eyebrows, h3 micro-label, TrustBar, footer, captions).
+   --font-display: headings ≥20px (h1, h2, ≥20px card titles). Finalized at
+                   Inter (lab Option A) — kept as its own token so a future
+                   face change stays a one-line edit. */
 :root {
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans:    'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* ─── Rem baseline (1rem = 10px) ────────────────────────────────────────── */
@@ -42,6 +51,54 @@ html {
   font-weight: 700;
   font-display: swap;
   src: url('/fonts/inter-latin-700-normal.woff2') format('woff2');
+}
+
+/* ─── Metric-matched fallback for Inter — font-swap CLS fix ─────────────────
+   Anchored to Arial (Helvetica Neue / Roboto as secondary locals). All values
+   were computed from the actual font binaries in public/fonts, not copied.
+
+   ascent/descent/line-gap-override come from Inter's hhea table
+   (ascent 1984, descent -494, lineGap 0 @ 2048upm; Inter does NOT set the
+   USE_TYPO_METRICS flag, so hhea is the set the browser uses), each divided
+   by size-adjust so the rendered line box lands on Inter's own 1.21em.
+
+   size-adjust is the ratio of total advance width of real page strings
+   rendered in Inter vs in the anchor. NOTE: the usual OS/2 xAvgCharWidth
+   shortcut is WRONG for this pairing — Inter reports xAvg over all glyphs
+   (OS/2 v4) while Arial uses the legacy lowercase-weighted computation, which
+   yields ~138% instead of the true ~107%. Ratios below are stable to within
+   2.5% across the sampled strings. ─────────────────────────────────────── */
+@font-face {
+  font-family: 'Inter Fallback';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arial'), local('Helvetica Neue'), local('Roboto');
+  size-adjust: 107.08%;
+  ascent-override: 90.47%;
+  descent-override: 22.53%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Arial Bold'), local('Helvetica Neue Bold'), local('Roboto Bold');
+  size-adjust: 100.9%;
+  ascent-override: 96.01%;
+  descent-override: 23.9%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Arial Bold'), local('Helvetica Neue Bold'), local('Roboto Bold');
+  size-adjust: 101.68%;
+  ascent-override: 95.27%;
+  descent-override: 23.72%;
+  line-gap-override: 0%;
 }
 
 /* ─── Minimal modern reset ──────────────────────────────────────────────── */
@@ -101,27 +158,35 @@ body {
   background: var(--color-bg);
   color: var(--color-body);
   font-size: 1.4rem;
-  line-height: 1.5;
+  line-height: 1.65;
 }
 
 /* ─── Type scale — MOBILE values (base) ────────────────────────────────── */
+/* h1/h2 use --font-display (Inter); heading line-height 1.1 and tracking
+   -0.015em are held across breakpoints. */
 h1 {
-  font-size: 3.0rem;
+  font-family: var(--font-display);
+  font-size: 3.7rem;
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--color-headline);
-}
-
-h2 {
-  font-size: 2.4rem;
-  font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.1;
   letter-spacing: -0.015em;
   color: var(--color-headline);
 }
 
+h2 {
+  font-family: var(--font-display);
+  font-size: 3.0rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--color-headline);
+}
+
+/* h3 is a sub-20px uppercase micro-label, NOT a display heading — stays Inter
+   (Option C rule: display faces are for large text only). Explicit binding
+   guards against inheriting --font-display via any future refactor. */
 h3 {
+  font-family: var(--font-sans);
   font-size: 1.3rem;
   font-weight: 700;
   line-height: 1.3;
@@ -133,7 +198,7 @@ h3 {
 .lead {
   font-size: 1.5rem;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.65;
   letter-spacing: normal;
   color: var(--color-body);
 }
@@ -141,7 +206,7 @@ h3 {
 p {
   font-size: 1.4rem;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.65;
   letter-spacing: normal;
   color: var(--color-body);
 }
@@ -197,13 +262,13 @@ small {
   }
 
   h1 {
-    font-size: 5.2rem;
-    line-height: 1.15;
+    font-size: 6.4rem;
+    line-height: 1.1;
   }
 
   h2 {
-    font-size: 3.4rem;
-    line-height: 1.2;
+    font-size: 4.2rem;
+    line-height: 1.1;
   }
 
   h3 {

@@ -12,6 +12,7 @@ interface Props {
   ogTitle?: string;
   ogDescription?: string;
   ogType?: string;
+  robots?: string;
 }
 ---
 
@@ -22,6 +23,8 @@ interface Props {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Preload critical weights only (400 body + 700 headings/buttons).
+         Headings are Inter 700 again and render above the fold on every page,
+         so it belongs back on the critical path.
          crossorigin is required even same-origin — omitting it causes a double-fetch. -->
     <link
       rel="preload"
