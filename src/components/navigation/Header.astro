@@ -11,22 +11,21 @@ const navLinks = [
   <div class="header-inner">
 
     <!-- Logo lockup — links to home, NOT an h1.
-         Roof mark: traced from the brand lockup PNG (sawtooth-logo-horizontal.png)
-         — the sawtooth roofline glyph only, not the "SAWTOOTH ROOFING" lettering
-         (that stays live text in .wordmark). Decorative: the text wordmark
-         carries the name, so the mark is aria-hidden. -->
+         Roof mark: cropped directly from the brand lockup PNG
+         (sawtooth-logo-horizontal.png, Assets/Logo) — just the sawtooth
+         roofline glyph, trimmed to its alpha bounding box, native gray,
+         transparent background. The "SAWTOOTH ROOFING" lettering stays live
+         text in .wordmark, not part of the image. Decorative: alt="" since
+         the parent link's aria-label carries the accessible name. -->
     <a href="/" class="logo" aria-label="Sawtooth Roofing — home">
-      <svg viewBox="0 0 210 140" width="38" height="25" aria-hidden="true" focusable="false">
-        <path
-          d="M8,126 L8,94 L34,80 L40,126 L66,68 L72,126 L98,54 L104,126 L150,16 L196,126"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="14"
-          stroke-linecap="round"
-          stroke-linejoin="miter"
-          stroke-miterlimit="2"
-        />
-      </svg>
+      <img
+        src="/logo-mark.png"
+        srcset="/logo-mark.png 1x, /logo-mark@2x.png 2x"
+        width="74"
+        height="25"
+        alt=""
+        class="logo-mark"
+      />
       <span class="wordmark">Sawtooth Roofing</span>
     </a>
 
@@ -108,8 +107,7 @@ const navLinks = [
     flex-shrink: 0;
   }
 
-  .logo svg {
-    color: var(--color-brand-red);
+  .logo-mark {
     flex-shrink: 0;
   }
 
