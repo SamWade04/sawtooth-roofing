@@ -1,16 +1,17 @@
 @import './tokens.css';
 
 /* ─── Font family tokens ────────────────────────────────────────────────── */
-/* 'Inter Fallback' / 'Outfit Fallback' are metric-matched local faces (see
-   @font-face below) that occupy near-identical space to their web face, so the
-   swap costs little or no reflow. Each must sit immediately after its web face
-   and before the system stack.
+/* 'Inter Fallback' is a metric-matched local face (see @font-face below) that
+   occupies near-identical space to Inter, so the swap costs little or no
+   reflow. It must sit immediately after Inter and before the system stack.
    --font-sans   : Inter — body, and every sub-20px role (nav, buttons, labels,
                    eyebrows, h3 micro-label, TrustBar, footer, captions).
-   --font-display: Outfit — headings ≥20px only (h1, h2, ≥20px card titles). */
+   --font-display: headings ≥20px (h1, h2, ≥20px card titles). Finalized at
+                   Inter (lab Option A) — kept as its own token so a future
+                   face change stays a one-line edit. */
 :root {
   --font-sans:    'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Outfit', 'Outfit Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* ─── Rem baseline (1rem = 10px) ────────────────────────────────────────── */
@@ -100,33 +101,6 @@ html {
   line-gap-override: 0%;
 }
 
-/* ─── Self-hosted Outfit @font-face (display face — headings ≥20px) ───────
-   Latin subset, weight 700 only (every heading is 700). SIL OFL 1.1. */
-@font-face {
-  font-family: 'Outfit';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/fonts/outfit-latin-700-normal.woff2') format('woff2');
-}
-
-/* ─── Metric-matched fallback for Outfit — font-swap CLS fix ────────────────
-   Same derivation as 'Inter Fallback': overrides are Outfit's own hhea metrics
-   (ascent 1000, descent -260, lineGap 0 @ 1000upm) over unitsPerEm, divided by
-   size-adjust; size-adjust is the measured advance-width ratio of real heading
-   strings against Arial Bold. Values computed and verified in the type lab —
-   reused verbatim, not recomputed. ──────────────────────────────────────── */
-@font-face {
-  font-family: 'Outfit Fallback';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Arial Bold'), local('Helvetica Neue Bold'), local('Roboto Bold');
-  size-adjust: 95.53%;
-  ascent-override: 104.68%;
-  descent-override: 27.22%;
-  line-gap-override: 0%;
-}
-
 /* ─── Minimal modern reset ──────────────────────────────────────────────── */
 *,
 *::before,
@@ -188,8 +162,8 @@ body {
 }
 
 /* ─── Type scale — MOBILE values (base) ────────────────────────────────── */
-/* h1/h2 use the Outfit display face; heading line-height 1.1 and tracking
-   -0.015em are held across breakpoints (Option C from the type lab). */
+/* h1/h2 use --font-display (Inter); heading line-height 1.1 and tracking
+   -0.015em are held across breakpoints. */
 h1 {
   font-family: var(--font-display);
   font-size: 3.7rem;

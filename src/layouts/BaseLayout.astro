@@ -22,10 +22,9 @@ interface Props {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Preload only what renders above the fold: Inter 400 (body) + Outfit 700
-         (the display H1 in every page hero). Inter 700 is NOT preloaded — its
-         remaining roles (buttons, eyebrows, bold body) sit below the hero and
-         are covered by font-display: swap + the tuned Inter Fallback.
+    <!-- Preload critical weights only (400 body + 700 headings/buttons).
+         Headings are Inter 700 again and render above the fold on every page,
+         so it belongs back on the critical path.
          crossorigin is required even same-origin — omitting it causes a double-fetch. -->
     <link
       rel="preload"
@@ -38,7 +37,7 @@ interface Props {
       rel="preload"
       as="font"
       type="font/woff2"
-      href="/fonts/outfit-latin-700-normal.woff2"
+      href="/fonts/inter-latin-700-normal.woff2"
       crossorigin
     />
 
