@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionBand from '../../components/ui/SectionBand.astro';
 
-const services = (await getCollection('services')).sort(
+const services = (await getCollection('services', ({ data }) => !data.hidden)).sort(
   (a, b) => a.data.order - b.data.order
 );
 ---
@@ -31,7 +31,7 @@ const services = (await getCollection('services')).sort(
         {
           services.map((service) =>
             service.data.draft ? (
-              /* Insurance Restoration: DRAFT — link held until Anthony clears (doc 30 §3(b)) */
+              /* Any draft, non-hidden entry renders as an unlinked coming-soon card */
               <li class="service-card service-card--draft">
                 <div class="service-card-link service-card-link--draft">
                   <span class="draft-badge">DRAFT — coming soon</span>

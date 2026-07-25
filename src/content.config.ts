@@ -37,6 +37,10 @@ const services = defineCollection({
       icon: z.string().optional(),
       seo,
       draft: z.boolean().default(false),
+      // Parks an entry out of public listings (e.g. the /services tile grid)
+      // without removing it from the collection or its routing/draft state —
+      // for copy that stays canon but shouldn't currently be discoverable.
+      hidden: z.boolean().default(false),
       financingBand: z.boolean().default(false),
       images: images({ image }),
     }),

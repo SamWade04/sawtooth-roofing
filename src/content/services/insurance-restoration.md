@@ -6,6 +6,7 @@ seo:
   title: "Insurance Restoration & Roof Claim Support in Idaho | Sawtooth Roofing"
   description: "How storm-damage roof insurance claims work in Idaho — and how Sawtooth Roofing inspects, documents, and restores your roof while you stay in control of your claim."
 draft: true
+hidden: true # parked out of the /services tile grid — Commercial Roofing takes the coming-soon slot; this stays canon, unrouted
 ---
 
 If a storm damaged your roof, your homeowner's insurance may help pay to restore it. Sawtooth Roofing supports that process the way an Idaho-registered roofing contractor should: we inspect your roof, document the damage in detail for your claim, meet your adjuster on-site, and complete the repairs your insurer approves. You file and stay in control of your claim throughout — we're the roofing contractor who works with your insurance, not a stand-in for it.
@@ -35,6 +36,6 @@ Most of what we do is storm and hail restoration for Treasure Valley homeowners,
 
 *This page is general information about the storm-damage roofing process in Idaho — it is **not legal or insurance advice.** Your insurer determines what your policy covers. For questions about your coverage or your claim, contact your insurance company or a licensed public adjuster. Sawtooth Roofing & Construction LLC is a roofing contractor, not a public adjuster, and does not file, negotiate, or appraise insurance claims on a homeowner's behalf.*
 
-*Reviewed for accuracy by Anthony [TK: last name], co-owner of Sawtooth Roofing & Construction LLC, who leads the company's insurance-restoration and claims-coordination work. [TK: 1–2 sentences of Anthony's verifiable, relevant background — role tenure in roofing/claims, relevant training or credentials. Do not invent.]*
+*Reviewed for accuracy by Anthony Leiser, co-owner of Sawtooth Roofing & Construction LLC, who leads the company's insurance-restoration and claims-coordination work.*
 
 *This guide was prepared with AI assistance and reviewed by a member of the Sawtooth Roofing team before publication.*
