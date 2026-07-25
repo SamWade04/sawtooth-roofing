@@ -36,6 +36,6 @@ Most of what we do is storm and hail restoration for Treasure Valley homeowners,
 
 *This page is general information about the storm-damage roofing process in Idaho — it is **not legal or insurance advice.** Your insurer determines what your policy covers. For questions about your coverage or your claim, contact your insurance company or a licensed public adjuster. Sawtooth Roofing & Construction LLC is a roofing contractor, not a public adjuster, and does not file, negotiate, or appraise insurance claims on a homeowner's behalf.*
 
-*Reviewed for accuracy by Anthony [TK: last name], co-owner of Sawtooth Roofing & Construction LLC, who leads the company's insurance-restoration and claims-coordination work. [TK: 1–2 sentences of Anthony's verifiable, relevant background — role tenure in roofing/claims, relevant training or credentials. Do not invent.]*
+*Reviewed for accuracy by Anthony Leiser, co-owner of Sawtooth Roofing & Construction LLC, who leads the company's insurance-restoration and claims-coordination work.*
 
 *This guide was prepared with AI assistance and reviewed by a member of the Sawtooth Roofing team before publication.*
