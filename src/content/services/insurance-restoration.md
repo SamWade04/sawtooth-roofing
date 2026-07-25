@@ -6,6 +6,7 @@ seo:
   title: "Insurance Restoration & Roof Claim Support in Idaho | Sawtooth Roofing"
   description: "How storm-damage roof insurance claims work in Idaho — and how Sawtooth Roofing inspects, documents, and restores your roof while you stay in control of your claim."
 draft: true
+hidden: true # parked out of the /services tile grid — Commercial Roofing takes the coming-soon slot; this stays canon, unrouted
 ---
 
 If a storm damaged your roof, your homeowner's insurance may help pay to restore it. Sawtooth Roofing supports that process the way an Idaho-registered roofing contractor should: we inspect your roof, document the damage in detail for your claim, meet your adjuster on-site, and complete the repairs your insurer approves. You file and stay in control of your claim throughout — we're the roofing contractor who works with your insurance, not a stand-in for it.
