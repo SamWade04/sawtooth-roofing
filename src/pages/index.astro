@@ -39,6 +39,14 @@ const serviceTileImages = {
   'roof-repair': { src: shingleDetail01, alt: 'close-up texture of asphalt roof shingles' },
 };
 
+// Round 2 amendment §3 — tile copy cut to its first sentence only (pure
+// deletion from each service's own `summary`, byte-identical, no rewording).
+const serviceTileSummaries = {
+  'storm-damage-restoration': "After a hailstorm or windstorm, Sawtooth Roofing inspects your roof, documents the damage for your insurance claim, and completes the approved restoration.",
+  'roof-replacement': "Sawtooth Roofing replaces storm-worn and aging roofs across the Treasure Valley with roofing products built for Idaho's hail, wind, and temperature swings.",
+  'roof-repair': "Sawtooth Roofing repairs leaks, missing or wind-lifted shingles, and failed flashing for homeowners across the Treasure Valley.",
+};
+
 // Verbatim from the prior inline markup — restructured into data for the
 // shared ProcessSteps component, no copy authored or reworded (§41-5802).
 const HOW_IT_WORKS_STEPS = [
@@ -90,17 +98,15 @@ const services = homeGridSlugs
       image={roofAerial06}
       alt="aerial view of a large residential roof surrounded by lawn and a pond"
       overlayToken="--hero-overlay-light"
+      innerClass="home-hero-inner"
     >
       <div class="hero">
         <div class="hero-content">
           <p class="eyebrow">Insurance-Restoration Roofing &middot; Treasure Valley, Idaho</p>
           <h1>Treasure Valley Roofing &amp; Storm-Damage Restoration</h1>
           <p class="lead u-reading">
-            Sawtooth Roofing is an Idaho-registered roofing contractor specializing in storm- and
-            hail-damage restoration across the Treasure Valley. We inspect your roof, document the
-            damage in detail for your insurer, and complete the repair or full replacement — turning
-            a covered claim into a finished roof. Free, no-obligation inspections in Nampa, Caldwell,
-            Meridian, Boise, and Kuna.
+            Idaho-registered roofing contractor specializing in storm- and hail-damage restoration
+            across the Treasure Valley.
           </p>
           <div class="hero-ctas">
             {/* Primary CTA → dedicated planned-project booking page */}
@@ -116,6 +122,7 @@ const services = homeGridSlugs
             title="Emergency inspection request"
             minHeight="52rem"
             loading="eager"
+            desktopOnly
           />
         </div>
       </div>
@@ -210,7 +217,7 @@ const services = homeGridSlugs
                     />
                   </figure>
                   <h2>{service.data.shortTitle ?? service.data.title}</h2>
-                  <p>{service.data.summary}</p>
+                  <p>{serviceTileSummaries[service.id]}</p>
                   <span class="service-card-cta">Learn more &rarr;</span>
                 </a>
               </li>
@@ -222,14 +229,17 @@ const services = homeGridSlugs
 
     <!-- ─────────────────────────────────────────────────
          SECTION 6 — SERVICE AREA STRIP
-         NOTE: city names are plain text here (not linked).
+         NOTE: city names are plain text here (not linked) — this is the only
+         body-copy city mention on Home and the future link target for city
+         hubs (Round 2 amendment §4: thinned to a slim strip, large H2
+         removed — heading kept visually-hidden for the document outline).
          Internal links to location pages deferred — location
          pages out of scope this pass (doc 30 F5). Link once
          location routes exist.
          ───────────────────────────────────────────────── -->
-    <SectionBand surface="light" width="reading" pad="band">
+    <SectionBand surface="light" width="reading" pad="thin">
       <div class="service-area">
-        <h2>Serving the Treasure Valley</h2>
+        <h2 class="u-visually-hidden">Serving the Treasure Valley</h2>
         <p class="u-reading">
           Sawtooth Roofing serves homeowners across <strong>Nampa, Caldwell, Meridian, Boise, and
           Kuna.</strong> Storm damage doesn't keep to one zip code — if you're in the valley and
@@ -302,9 +312,12 @@ const services = homeGridSlugs
 
     <!-- ─────────────────────────────────────────────────
          SECTION 9 — FINAL CTA
-         Dark band, solid. §S2-B planned-project form scaffold.
+         Round 2 amendment §5: switched from the dark surface to contrast
+         (Sam's ruling) — content centered. `divider="top"` since Social
+         Proof directly above is also `contrast`; the footer below is its
+         own component with a built-in top border, so no divider needed there.
          ───────────────────────────────────────────────── -->
-    <SectionBand surface="dark" width="content" pad="band">
+    <SectionBand surface="contrast" width="content" pad="band" divider="top">
       <div class="final-cta">
         <h2>Think your roof took storm damage?</h2>
         <p>
@@ -313,7 +326,6 @@ const services = homeGridSlugs
         </p>
         <div class="final-cta-actions">
           <a href="/contact" class="btn btn--primary">Book a Free Inspection</a>
-          {/* Secondary: tap-to-call — renders as light outline on dark band */}
           <a href="tel:+12089968748" class="btn btn--secondary">Call 208.996.8748</a>
         </div>
       </div>
@@ -357,6 +369,14 @@ const services = homeGridSlugs
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-lg);
       padding: var(--space-md);
+    }
+
+    /* Round 2 amendment: shift the card closer to the right edge — tighten
+       the band's right-side gutter for this hero only (PhotoHeroBand's
+       default padding-inline is symmetric; interior H1-only bands are
+       untouched since they don't pass innerClass). */
+    .home-hero-inner {
+      padding-inline-end: var(--space-sm);
     }
   }
 
@@ -452,7 +472,10 @@ const services = homeGridSlugs
   }
 
   /* ── SERVICES GRID ── */
-  .home-services h2 {
+  /* Direct-child combinator: centers only the section heading, not the
+     nested tile h2 titles (Round 2 amendment §3). */
+  .home-services > h2 {
+    text-align: center;
     margin-bottom: var(--space-md);
   }
 
@@ -522,11 +545,6 @@ const services = homeGridSlugs
     font-weight: 700;
     font-size: 1.4rem;
     color: var(--color-brand-red);
-  }
-
-  /* ── SERVICE AREA ── */
-  .service-area h2 {
-    margin-bottom: var(--space-sm);
   }
 
   /* ── SOCIAL PROOF ── */
@@ -605,19 +623,26 @@ const services = homeGridSlugs
     color: var(--color-muted);
   }
 
-  /* ── FINAL CTA (dark band; band--dark cascade handles text colors) ── */
+  /* ── FINAL CTA (contrast surface, centered — Round 2 amendment §5;
+     standard on-light text registers apply, no dark-cascade overrides) ── */
+  .final-cta {
+    text-align: center;
+  }
+
   .final-cta h2 {
     margin-bottom: var(--space-sm);
   }
 
   .final-cta > p {
     max-width: var(--reading-width);
+    margin-inline: auto;
     margin-bottom: 0;
   }
 
   .final-cta-actions {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-sm);
     margin-top: var(--space-md);
   }

@@ -17,9 +17,10 @@ interface Props {
   alt: string;
   heading?: string;
   overlayToken?: string; // CSS custom property name; defaults to --hero-overlay
+  innerClass?: string;   // extra class on hero-photo-inner, for a caller-scoped override
 }
 
-const { image, alt, heading, overlayToken } = Astro.props;
+const { image, alt, heading, overlayToken, innerClass } = Astro.props;
 const style = overlayToken ? `--hero-overlay: var(${overlayToken})` : undefined;
 ---
 
@@ -38,7 +39,7 @@ const style = overlayToken ? `--hero-overlay: var(${overlayToken})` : undefined;
     />
   </div>
   <div class="hero-photo-overlay"></div>
-  <div class={`hero-photo-inner ${heading ? 'hero-photo-inner--center' : ''}`}>
+  <div class={`hero-photo-inner ${heading ? 'hero-photo-inner--center' : ''} ${innerClass ?? ''}`}>
     {heading ? <h1>{heading}</h1> : <slot />}
   </div>
 </section>

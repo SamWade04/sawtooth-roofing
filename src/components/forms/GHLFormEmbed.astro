@@ -4,19 +4,62 @@ interface Props {
   title: string;
   minHeight: string;
   loading?: 'lazy' | 'eager';
+  // When true, the iframe is not present in the initial HTML at all below
+  // 768px — display:none alone doesn't stop an already-present iframe from
+  // fetching (Stage 3b Round 2 diagnostic: the hidden hero form was pulling
+  // ~366KB of third-party payload on mobile for a form nobody there sees).
+  // Rail forms on the service pages stay eager at every width — their
+  // mobile cost is legitimate since that form IS visible there.
+  desktopOnly?: boolean;
 }
 
-const { formId, title, minHeight, loading = 'lazy' } = Astro.props;
+const { formId, title, minHeight, loading = 'lazy', desktopOnly = false } = Astro.props;
+const src = `https://api.leadconnectorhq.com/widget/form/${formId}`;
 ---
 
-<div class="ghl-form-wrap" style={`--_mh: ${minHeight}`}>
-  <iframe
-    src={`https://api.leadconnectorhq.com/widget/form/${formId}`}
-    title={title}
-    class="ghl-form-iframe"
-    loading={loading}
-  ></iframe>
+<div
+  class="ghl-form-wrap"
+  style={`--_mh: ${minHeight}`}
+  data-ghl-wrap={desktopOnly ? '' : undefined}
+  data-src={desktopOnly ? src : undefined}
+  data-title={desktopOnly ? title : undefined}
+  data-loading={desktopOnly ? loading : undefined}
+>
+  {!desktopOnly && (
+    <iframe
+      src={src}
+      title={title}
+      class="ghl-form-iframe"
+      loading={loading}
+    ></iframe>
+  )}
 </div>
+
+{desktopOnly && (
+  <script>
+    // Mounts the iframe only once matchMedia confirms desktop width — never
+    // on initial mobile render. Listens for the breakpoint being crossed
+    // live (not just at load), so a resize/rotate to desktop still works
+    // without a reload.
+    document.querySelectorAll('[data-ghl-wrap]').forEach((wrap) => {
+      const mq = window.matchMedia('(min-width: 768px)');
+      const mount = () => {
+        if (wrap.querySelector('iframe')) return;
+        const iframe = document.createElement('iframe');
+        iframe.src = wrap.dataset.src;
+        iframe.title = wrap.dataset.title;
+        iframe.className = 'ghl-form-iframe';
+        iframe.loading = wrap.dataset.loading;
+        wrap.appendChild(iframe);
+      };
+      const sync = () => {
+        if (mq.matches) mount();
+      };
+      sync();
+      mq.addEventListener('change', sync);
+    });
+  </script>
+)}
 
 <style>
   .ghl-form-wrap {

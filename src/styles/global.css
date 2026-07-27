@@ -357,6 +357,19 @@ small {
   max-width: var(--reading-width);
 }
 
+/* ─── Visually-hidden but accessible — standard sr-only technique ──────── */
+.u-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ─── Band surface-context cascade rules — doc 31 §3 ───────────────────── */
 /* Dark band (#0F172A bg): override all content to light tones.
    Contrast ratios against #0F172A:
