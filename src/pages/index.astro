@@ -381,8 +381,20 @@ const services = homeGridSlugs
        selector ties in specificity with PhotoHeroBand's own
        .hero-photo-inner rule, so source order (which this component
        cannot control) decided the winner and silently lost. (Found and
-       fixed during verification — the Round 2 "shift closer" version of
-       this rule had the same bug and never actually applied.) */
+       fixed during amendment 3 verification — this rule, and the Round 2
+       "shift closer" version before it, had the same bug and never
+       actually applied in any previously-deployed preview — Sam's "large
+       gap at 1700px" report was against a build where this padding was
+       still the original symmetric --gutter-lg, not a widening problem.)
+
+       Amendment 3 §2: measured with this fix genuinely active (not the
+       --content-max container itself widened) — form's right edge lands
+       at 97.4% / 85.6% / 81.5% of viewport width at 1280 / 1700 / 1920px,
+       already matching the "~85% at 1700px" target. Widening
+       --content-max further for this hero would OVERSHOOT past 85% (e.g.
+       a 1400px cap computes to ~91% at 1700px), so no additional
+       container-widening was added — reported instead of applied per
+       Sam's "diagnose first" standing rule. */
     :global(.hero-photo-inner.home-hero-inner) {
       padding-inline-end: 0;
     }

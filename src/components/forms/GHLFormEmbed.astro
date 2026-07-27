@@ -50,6 +50,13 @@ const src = `https://api.leadconnectorhq.com/widget/form/${formId}`;
         iframe.title = wrap.dataset.title;
         iframe.className = 'ghl-form-iframe';
         iframe.loading = wrap.dataset.loading;
+        // Inline, not the class's scoped .ghl-form-iframe rule: a JS-created
+        // element never gets this component's Astro scope attribute, so the
+        // scoped `border: 0` silently never matched it — the visible box
+        // was the browser's own default 2px inset iframe border (found
+        // during Round 2 amendment 3 verification).
+        iframe.style.border = '0';
+        iframe.style.borderRadius = 'var(--radius-sm)';
         wrap.appendChild(iframe);
       };
       const sync = () => {
