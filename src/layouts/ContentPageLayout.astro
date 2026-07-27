@@ -5,6 +5,7 @@ import type { ImageMetadata } from 'astro';
 import { Picture } from 'astro:assets';
 import BaseLayout from './BaseLayout.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
+import PhotoHeroBand from '../components/ui/PhotoHeroBand.astro';
 import GHLFormEmbed from '../components/forms/GHLFormEmbed.astro';
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
   eyebrow?: string;       // optional; when absent, render nothing
   lead?: string;          // optional; when absent, render nothing
   heroSurface?: 'dark' | 'light';
+  heroImage?: { src: ImageMetadata; alt: string }; // full-bleed photo band instead of the solid band
   images?: { src: ImageMetadata; alt: string; role: string }[];
   asideSlot?: boolean;    // A6 form-rail placeholder
 }
@@ -25,6 +27,7 @@ const {
   eyebrow,
   lead,
   heroSurface = 'dark',
+  heroImage,
   images = [],
   asideSlot = false,
 } = Astro.props;
@@ -33,13 +36,17 @@ const {
 <BaseLayout title={title} description={description}>
   <main class="content-page">
 
-    <SectionBand surface={heroSurface} width="content" pad="band">
-      <div class="content-hero">
-        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-        <h1>{heading}</h1>
-        {lead && <p class="lead u-reading">{lead}</p>}
-      </div>
-    </SectionBand>
+    {heroImage ? (
+      <PhotoHeroBand image={heroImage.src} alt={heroImage.alt} heading={heading} />
+    ) : (
+      <SectionBand surface={heroSurface} width="content" pad="band">
+        <div class="content-hero">
+          {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+          <h1>{heading}</h1>
+          {lead && <p class="lead u-reading">{lead}</p>}
+        </div>
+      </SectionBand>
+    )}
 
     <SectionBand surface="light" width={asideSlot ? 'content' : 'reading'} pad="band">
       {
@@ -50,6 +57,9 @@ const {
             <script is:inline src="https://link.msgsndr.com/js/form_embed.js" defer></script>
 
             <div class="content-main">
+              {/* Photo-header pages relocate the lead here, verbatim, as the
+                  answer-first opening — the band above carries the H1 only. */}
+              {heroImage && lead && <p class="lead u-reading">{lead}</p>}
               {images.map((img, index) => (
                 <figure class="content-media" style={`aspect-ratio: ${img.src.width} / ${img.src.height}`}>
                   <Picture
@@ -79,6 +89,7 @@ const {
           </div>
         ) : (
           <div class="content-main">
+            {heroImage && lead && <p class="lead u-reading">{lead}</p>}
             {images.map((img, index) => (
               <figure class="content-media" style={`aspect-ratio: ${img.src.width} / ${img.src.height}`}>
                 <Picture

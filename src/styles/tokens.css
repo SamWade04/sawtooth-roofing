@@ -42,4 +42,8 @@
   --gutter:    var(--space-md);   /* page side padding — mobile */
   --gutter-lg: var(--space-lg);   /* page side padding — desktop */
   --rail-width: 32rem;   /* content-page aside rail — A3.6 */
+
+  /* photo page-header band — Stage 3b Round 1 apply, variant A ruling */
+  --hero-overlay: 0.78;
+  --hero-min-h:   40rem;
 }

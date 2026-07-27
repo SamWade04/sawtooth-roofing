@@ -7,6 +7,11 @@ seo:
   description: "Full roof replacement with products, built for Idaho weather. Free inspection and written estimate across Nampa, Caldwell, Meridian, Boise & Kuna."
 draft: false
 financingBand: true
+heroImage:
+  src: ../../assets/ai/ai-roof-aerial-02.png
+  alt: "aerial view of a residential roof with brown shingles"
+  source: ai
+  sourceFile: "ai-roof-aerial-02.png"
 images:
   - src: ../../assets/projects/boise-01.jpg
     alt: "Aerial view of a completed gray shingle roof on a multi-gabled single-family home in Boise, Idaho."

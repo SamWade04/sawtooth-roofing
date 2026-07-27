@@ -8,6 +8,11 @@ seo:
   description: "Hail and wind roof damage? Sawtooth Roofing inspects, documents the damage for your insurance claim, and completes the approved restoration across the Treasure Valley. Free inspection."
 draft: false
 financingBand: true
+heroImage:
+  src: ../../assets/ai/ai-storm-sky-01.png
+  alt: "dark storm clouds over a residential neighborhood"
+  source: ai
+  sourceFile: "ai-storm-sky-01.png"
 images:
   - src: ../../assets/projects/nampa-01.jpg
     alt: "Aerial view of a completed dark shingle roof on a two-story home with dormers in Nampa, Idaho."

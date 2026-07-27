@@ -26,6 +26,18 @@ const images = ({ image }) =>
     )
     .default([]);
 
+// Full-bleed page-header photo band (Stage 3b Round 1 apply). Singular, not an
+// array like `images` — one hero per page. Same provenance contract as above.
+const heroImage = ({ image }) =>
+  z
+    .object({
+      src: image(),
+      alt: z.string(),
+      source: z.enum(['own', 'stock', 'ai']).default('own'),
+      sourceFile: z.string(),
+    })
+    .optional();
+
 const services = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/services' }),
   schema: ({ image }) =>
@@ -42,6 +54,7 @@ const services = defineCollection({
       // for copy that stays canon but shouldn't currently be discoverable.
       hidden: z.boolean().default(false),
       financingBand: z.boolean().default(false),
+      heroImage: heroImage({ image }),
       images: images({ image }),
     }),
 });

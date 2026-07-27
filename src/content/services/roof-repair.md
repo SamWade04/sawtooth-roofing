@@ -7,6 +7,11 @@ seo:
   description: "Fast, reliable roof repair for leaks, missing shingles & failed flashing across Nampa, Caldwell, Meridian, Boise & Kuna. Free inspection — repair or replace, in writing."
 draft: false
 financingBand: true
+heroImage:
+  src: ../../assets/ai/ai-shingle-detail-01.png
+  alt: "close-up texture of asphalt roof shingles"
+  source: ai
+  sourceFile: "ai-shingle-detail-01.png"
 images:
   - src: ../../assets/projects/kuna-01.jpg
     alt: "Aerial view of a completed dark gray shingle roof on a single-story ranch-style home in Kuna, Idaho."
