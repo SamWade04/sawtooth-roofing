@@ -312,12 +312,15 @@ const services = homeGridSlugs
 
     <!-- ─────────────────────────────────────────────────
          SECTION 9 — FINAL CTA
-         Round 2 amendment §5: switched from the dark surface to contrast
-         (Sam's ruling) — content centered. `divider="top"` since Social
-         Proof directly above is also `contrast`; the footer below is its
-         own component with a built-in top border, so no divider needed there.
+         Amendment 2 §5: switched contrast → light (--color-bg, the standard
+         page background) — content stays centered. Divider re-checked
+         against both neighbors: Social Proof directly above is `contrast`
+         (differs, no seam issue); the footer below shares this same light
+         background but is a separate component with its own built-in
+         top border, so that seam is already covered. No divider needed
+         on this band either side.
          ───────────────────────────────────────────────── -->
-    <SectionBand surface="contrast" width="content" pad="band" divider="top">
+    <SectionBand surface="light" width="content" pad="band">
       <div class="final-cta">
         <h2>Think your roof took storm damage?</h2>
         <p>
@@ -359,24 +362,29 @@ const services = homeGridSlugs
       gap: var(--space-lg);
     }
 
-    /* Solid card floating over the photo (Stage 3b Round 2, Bartlett
-       pattern) — the card carries the contrast so the overlay can stay
-       light enough for the photo to read. Sized to the short form only;
-       the form itself (GHLFormEmbed) is untouched. */
+    /* Round 2 amendment 2: card treatment removed per Sam's ruling — the
+       GHL iframe renders its own surface, so this is back to a plain
+       transparent container. Position/mount behavior (desktopOnly)
+       unchanged. */
     .hero-form {
       display: block;
-      background: var(--color-card);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-lg);
-      padding: var(--space-md);
     }
 
-    /* Round 2 amendment: shift the card closer to the right edge — tighten
-       the band's right-side gutter for this hero only (PhotoHeroBand's
-       default padding-inline is symmetric; interior H1-only bands are
-       untouched since they don't pass innerClass). */
-    .home-hero-inner {
-      padding-inline-end: var(--space-sm);
+    /* Amendment 2: shifted further right — right-side gutter reduced to 0
+       for this hero only (PhotoHeroBand's default padding-inline is
+       symmetric; interior H1-only bands are untouched since they don't
+       pass innerClass). :global() is required here — this class is passed
+       as a prop and applied to a div PhotoHeroBand itself renders, so it
+       carries PhotoHeroBand's scope attribute, not this component's; a
+       scoped selector here silently never matches it. The compound
+       selector (both classes) is ALSO required — a single-class :global()
+       selector ties in specificity with PhotoHeroBand's own
+       .hero-photo-inner rule, so source order (which this component
+       cannot control) decided the winner and silently lost. (Found and
+       fixed during verification — the Round 2 "shift closer" version of
+       this rule had the same bug and never actually applied.) */
+    :global(.hero-photo-inner.home-hero-inner) {
+      padding-inline-end: 0;
     }
   }
 
@@ -474,9 +482,23 @@ const services = homeGridSlugs
   /* ── SERVICES GRID ── */
   /* Direct-child combinator: centers only the section heading, not the
      nested tile h2 titles (Round 2 amendment §3). */
+  /* Amendment 2: evens out the heading's position between the section top
+     and the tile grid. The band's own padding-block (SectionBand pad="band")
+     is --space-xl mobile / --space-2xl desktop — pulling the heading up by
+     --space-lg (mobile) / --space-xl (desktop) leaves --space-lg (4rem) of
+     visible space above it on both breakpoints, now matching the increased
+     --space-lg gap below it to the grid (was --space-md, effectively
+     unbalanced against the much larger band padding above). */
   .home-services > h2 {
     text-align: center;
-    margin-bottom: var(--space-md);
+    margin-top: calc(var(--space-lg) * -1);
+    margin-bottom: var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    .home-services > h2 {
+      margin-top: calc(var(--space-xl) * -1);
+    }
   }
 
   .service-grid {
@@ -623,7 +645,7 @@ const services = homeGridSlugs
     color: var(--color-muted);
   }
 
-  /* ── FINAL CTA (contrast surface, centered — Round 2 amendment §5;
+  /* ── FINAL CTA (light surface, centered — amendment 2 §5;
      standard on-light text registers apply, no dark-cascade overrides) ── */
   .final-cta {
     text-align: center;
