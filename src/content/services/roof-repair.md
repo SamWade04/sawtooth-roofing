@@ -8,10 +8,10 @@ seo:
 draft: false
 financingBand: true
 heroImage:
-  src: ../../assets/ai/ai-roof-aerial-01.png
-  alt: "aerial view of a residential roof with dark gray shingles"
+  src: ../../assets/ai/ai-shingle-detail-01.png
+  alt: "close-up texture of asphalt roof shingles"
   source: ai
-  sourceFile: "ai-roof-aerial-01.png"
+  sourceFile: "ai-shingle-detail-01.png"
 images:
   - src: ../../assets/projects/kuna-01.jpg
     alt: "Aerial view of a completed dark gray shingle roof on a single-story ranch-style home in Kuna, Idaho."
