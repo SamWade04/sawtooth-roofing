@@ -46,4 +46,7 @@
   /* photo page-header band — Stage 3b Round 1 apply, variant A ruling */
   --hero-overlay: 0.78;
   --hero-min-h:   40rem;
+  /* Home hero — Stage 3b Round 2: lighter than the interior --hero-overlay so
+     the photo stays visible; the white form card carries the contrast instead. */
+  --hero-overlay-light: 0.52;
 }

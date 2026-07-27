@@ -1,0 +1,71 @@
+---
+// Numbered process-step cards (Stage 3b Round 2) — extracted from Home's
+// how-it-works band so it can be reused on service pages in a later round.
+// Copy is supplied by the caller; this component owns structure only.
+interface Step {
+  title: string;
+  body: string;
+}
+
+interface Props {
+  steps: Step[];
+}
+
+const { steps } = Astro.props;
+---
+
+<ol class="process-steps">
+  {steps.map((step, i) => (
+    <li class="process-step">
+      <span class="step-number">{i + 1}</span>
+      <div class="step-content">
+        <h3>{step.title}</h3>
+        <p>{step.body}</p>
+      </div>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .process-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  @media (min-width: 768px) {
+    .process-steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .process-step {
+    display: flex;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.6rem;
+    height: 3.6rem;
+    background: var(--color-brand-red);
+    color: var(--color-card);
+    font-weight: 700;
+    font-size: 1.6rem;
+    border-radius: 50%;
+  }
+
+  .step-content h3 {
+    margin-bottom: var(--space-xs);
+  }
+</style>

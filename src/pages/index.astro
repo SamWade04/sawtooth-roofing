@@ -15,11 +15,50 @@
 //   NOTE: do NOT emit Review with consentVerified=true. Aggregate rating only.
 
 import { getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TrustBar from '../components/ui/TrustBar.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
+import PhotoHeroBand from '../components/ui/PhotoHeroBand.astro';
+import ProcessSteps from '../components/ui/ProcessSteps.astro';
 import GHLFormEmbed from '../components/forms/GHLFormEmbed.astro';
 import { GBP_URL } from '../consts';
+// Direct imports (Home has no content-collection entry) — unlike the service
+// pages' heroImage frontmatter, no extra full-res passthrough copy lands in
+// dist/_astro for these (doc 11 learning).
+import roofAerial06 from '../assets/ai/ai-roof-aerial-06.png';
+import stormSky01 from '../assets/ai/ai-storm-sky-01.png';
+import roofAerial02 from '../assets/ai/ai-roof-aerial-02.png';
+import shingleDetail01 from '../assets/ai/ai-shingle-detail-01.png';
+
+// Same photo + neutral alt already wired to each service's own hero, so the
+// tile and its destination match (Stage 3b Round 2 §3).
+const serviceTileImages = {
+  'storm-damage-restoration': { src: stormSky01, alt: 'dark storm clouds over a residential neighborhood' },
+  'roof-replacement': { src: roofAerial02, alt: 'aerial view of a residential roof with brown shingles' },
+  'roof-repair': { src: shingleDetail01, alt: 'close-up texture of asphalt roof shingles' },
+};
+
+// Verbatim from the prior inline markup — restructured into data for the
+// shared ProcessSteps component, no copy authored or reworded (§41-5802).
+const HOW_IT_WORKS_STEPS = [
+  {
+    title: 'Free inspection',
+    body: 'We assess the roof and photograph storm or hail damage — bruising, granule loss, lifted or torn shingles, flashing and vent damage.',
+  },
+  {
+    title: 'Damage documentation',
+    body: 'You get a detailed, itemized report you can submit to your insurance carrier as part of your claim.',
+  },
+  {
+    title: 'Adjuster meeting',
+    body: 'When your carrier sends an adjuster, we meet them on the roof to show them the damage we documented, so nothing gets missed.',
+  },
+  {
+    title: 'Restoration',
+    body: 'Once your claim is approved, we schedule the work and complete the repair or full replacement with quality materials and a clean jobsite.',
+  },
+];
 
 const allServices = await getCollection('services');
 // Home grid: exactly 3 core tiles in canonical order (doc 11 + doc 30 §1/§3(b)/§6)
@@ -42,9 +81,16 @@ const services = homeGridSlugs
 
     <!-- ─────────────────────────────────────────────────
          SECTION 1 — HERO
-         Dark band, solid. NO image (F6 launch gate).
+         Photo band (Stage 3b Round 2, Bartlett card pattern): full-bleed
+         ai-roof-aerial-06 behind the band at --hero-overlay-light (lighter
+         than the interior --hero-overlay — the white form card carries the
+         contrast, not the overlay). Hero image is the LCP element.
          ───────────────────────────────────────────────── -->
-    <SectionBand surface="dark" width="content" pad="band">
+    <PhotoHeroBand
+      image={roofAerial06}
+      alt="aerial view of a large residential roof surrounded by lawn and a pond"
+      overlayToken="--hero-overlay-light"
+    >
       <div class="hero">
         <div class="hero-content">
           <p class="eyebrow">Insurance-Restoration Roofing &middot; Treasure Valley, Idaho</p>
@@ -73,7 +119,7 @@ const services = homeGridSlugs
           />
         </div>
       </div>
-    </SectionBand>
+    </PhotoHeroBand>
 
     <!-- ─────────────────────────────────────────────────
          SECTION 2 — TRUST BAR (§S1, directly under hero)
@@ -136,48 +182,7 @@ const services = homeGridSlugs
           and complete the approved repair or replacement. You stay in control of your claim
           throughout.
         </p>
-        <ol class="process-steps">
-          <li class="process-step">
-            <span class="step-number">1</span>
-            <div class="step-content">
-              <h3>Free inspection</h3>
-              <p>
-                We assess the roof and photograph storm or hail damage — bruising, granule loss,
-                lifted or torn shingles, flashing and vent damage.
-              </p>
-            </div>
-          </li>
-          <li class="process-step">
-            <span class="step-number">2</span>
-            <div class="step-content">
-              <h3>Damage documentation</h3>
-              <p>
-                You get a detailed, itemized report you can submit to your insurance carrier as part
-                of your claim.
-              </p>
-            </div>
-          </li>
-          <li class="process-step">
-            <span class="step-number">3</span>
-            <div class="step-content">
-              <h3>Adjuster meeting</h3>
-              <p>
-                When your carrier sends an adjuster, we meet them on the roof to show them the
-                damage we documented, so nothing gets missed.
-              </p>
-            </div>
-          </li>
-          <li class="process-step">
-            <span class="step-number">4</span>
-            <div class="step-content">
-              <h3>Restoration</h3>
-              <p>
-                Once your claim is approved, we schedule the work and complete the repair or full
-                replacement with quality materials and a clean jobsite.
-              </p>
-            </div>
-          </li>
-        </ol>
+        <ProcessSteps steps={HOW_IT_WORKS_STEPS} />
       </div>
     </SectionBand>
 
@@ -192,7 +197,19 @@ const services = homeGridSlugs
             services.map((service) => (
               <li class="service-card">
                 <a href={`/services/${service.id}`} class="service-card-link">
-                  <h3>{service.data.shortTitle ?? service.data.title}</h3>
+                  <figure class="service-card-media">
+                    <Picture
+                      src={serviceTileImages[service.id].src}
+                      alt={serviceTileImages[service.id].alt}
+                      formats={['avif', 'webp']}
+                      fallbackFormat="jpeg"
+                      widths={[400, 800]}
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                  <h2>{service.data.shortTitle ?? service.data.title}</h2>
                   <p>{service.data.summary}</p>
                   <span class="service-card-cta">Learn more &rarr;</span>
                 </a>
@@ -330,8 +347,16 @@ const services = homeGridSlugs
       gap: var(--space-lg);
     }
 
+    /* Solid card floating over the photo (Stage 3b Round 2, Bartlett
+       pattern) — the card carries the contrast so the overlay can stay
+       light enough for the photo to read. Sized to the short form only;
+       the form itself (GHLFormEmbed) is untouched. */
     .hero-form {
       display: block;
+      background: var(--color-card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: var(--space-md);
     }
   }
 
@@ -426,48 +451,6 @@ const services = homeGridSlugs
     /* max-width delegated to .u-reading class */
   }
 
-  .process-steps {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-md);
-  }
-
-  @media (min-width: 768px) {
-    .process-steps {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  .process-step {
-    display: flex;
-    gap: var(--space-sm);
-    padding: var(--space-md);
-    background: var(--color-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-  }
-
-  .step-number {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3.6rem;
-    height: 3.6rem;
-    background: var(--color-brand-red);
-    color: var(--color-card);
-    font-weight: 700;
-    font-size: 1.6rem;
-    border-radius: 50%;
-  }
-
-  .step-content h3 {
-    margin-bottom: var(--space-xs);
-  }
-
   /* ── SERVICES GRID ── */
   .home-services h2 {
     margin-bottom: var(--space-md);
@@ -513,8 +496,24 @@ const services = homeGridSlugs
     border-color: var(--color-border-strong);
   }
 
-  .service-card h3 {
+  /* Display title (Stage 3b Round 2) — h2 register, not the 14px uppercase
+     h3 micro-label; reuses the same card-title pattern as .value-prop h2. */
+  .service-card h2 {
     margin-bottom: var(--space-xs);
+  }
+
+  .service-card-media {
+    margin: calc(var(--space-md) * -1) calc(var(--space-md) * -1) var(--space-sm);
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+  }
+
+  .service-card-media :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .service-card-cta {
