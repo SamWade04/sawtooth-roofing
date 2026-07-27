@@ -273,6 +273,18 @@ const services = homeGridSlugs
           <span class="rating-stars">&#9733;</span>
           <span class="rating-score"><strong>5.0</strong> average from <strong>83 Google reviews</strong></span>
         </a>
+
+        <!-- TRIAL[trustindex]: VENDOR EVALUATION ONLY — Professional-tier template on a
+             7-day trial. Preview surface only. MUST NOT reach production in this state.
+             Remove or replace before any main merge. Static stat above is retained as the
+             working interim element and is NOT to be removed while this test runs. -->
+        <div class="trustindex-widget" data-trial="trustindex">
+          <script
+            is:inline
+            defer
+            async
+            src="https://cdn.trustindex.io/loader.js?bd10da777d7e86560306d7937ff"></script>
+        </div>
       </div>
     </SectionBand>
 
@@ -614,6 +626,20 @@ const services = homeGridSlugs
   .rating-score {
     font-size: 1.6rem;
     color: var(--color-body);
+  }
+
+  /* TRIAL[trustindex]: reserved box so the async loader cannot shift layout.
+     CLS 0 is a standing requirement — the widget must paint into space that
+     already exists. Remove with the widget if the vendor is rejected. */
+  .trustindex-widget {
+    min-height: 420px;
+    margin-top: var(--space-lg);
+  }
+
+  @media (max-width: 48rem) {
+    .trustindex-widget {
+      min-height: 560px;
+    }
   }
 
   /* ── FAQ TEASER ── */
