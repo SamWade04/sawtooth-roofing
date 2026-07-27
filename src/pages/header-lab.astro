@@ -1,0 +1,137 @@
+---
+// TEMP LAB — dev-only visual comparison, noindexed, unlinked. Deleted after Round-1 apply.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Picture } from 'astro:assets';
+import roofAerial from '../assets/ai/ai-roof-aerial-01.png';
+
+const LEAD =
+  "Sawtooth Roofing repairs leaks, missing or wind-lifted shingles, and failed flashing for homeowners across the Treasure Valley. A repair is the right call when damage is isolated and the rest of the roof has sound life left. Not sure which you need? A free inspection gives you a straight answer — repair or replace — in writing.";
+
+const VARIANTS = [
+  { key: 'A', label: 'A — heavy overlay · centered · 400px', overlay: 0.78, height: '40rem', align: 'center' },
+  { key: 'B', label: 'B — mid overlay · centered · 400px', overlay: 0.55, height: '40rem', align: 'center' },
+  { key: 'C', label: 'C — heavy overlay · left-aligned · 400px', overlay: 0.78, height: '40rem', align: 'left' },
+  { key: 'D', label: 'D — heavy overlay · centered · 300px', overlay: 0.78, height: '30rem', align: 'center' },
+];
+---
+
+<BaseLayout
+  title="Header Lab — Sawtooth Roofing (internal)"
+  robots="noindex, nofollow"
+>
+  <main class="lab-page">
+    <div class="band-inner band-inner--content lab-page-intro">
+      <h1 class="lab-page-title">Header Lab</h1>
+      <p>Internal comparison — four page-header band treatments, same source photo. Not a live page.</p>
+    </div>
+
+    {VARIANTS.map((v) => (
+      <div class="lab-variant">
+        <p class="lab-variant-label band-inner band-inner--content">{v.label}</p>
+        <section
+          class="band band--dark lab-header-band"
+          style={`--lab-overlay-opacity: ${v.overlay}; --lab-band-height: ${v.height};`}
+        >
+          <div class="lab-header-photo">
+            <Picture
+              src={roofAerial}
+              alt="aerial view of a residential roof"
+              formats={['avif', 'webp']}
+              fallbackFormat="jpeg"
+              widths={[640, 960, 1280, 1672]}
+              sizes="100vw"
+              loading={v.key === 'A' ? 'eager' : 'lazy'}
+              decoding="async"
+              fetchpriority={v.key === 'A' ? 'high' : undefined}
+            />
+          </div>
+          <div class="lab-header-overlay"></div>
+          <div class={`band-inner band-inner--content lab-header-content lab-header-content--${v.align}`}>
+            <p class="eyebrow">Roof Repair</p>
+            <h1>Roof Repair in the Treasure Valley</h1>
+            <p class="lead u-reading">{LEAD}</p>
+          </div>
+        </section>
+      </div>
+    ))}
+  </main>
+</BaseLayout>
+
+<style>
+  .lab-page-intro {
+    padding-block: var(--space-lg);
+  }
+
+  .lab-page-title {
+    margin-bottom: var(--space-sm);
+  }
+
+  .lab-variant {
+    margin-bottom: var(--space-md);
+  }
+
+  .lab-variant-label {
+    padding-block: var(--space-xs);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-muted);
+  }
+
+  .lab-header-band {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    min-height: calc(var(--lab-band-height) * 0.72);
+  }
+
+  @media (min-width: 768px) {
+    .lab-header-band {
+      min-height: var(--lab-band-height);
+    }
+  }
+
+  .lab-header-photo {
+    position: absolute;
+    inset: 0;
+  }
+
+  .lab-header-photo :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .lab-header-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, var(--lab-overlay-opacity));
+  }
+
+  .lab-header-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
+  .lab-header-content--center {
+    text-align: center;
+  }
+
+  .lab-header-content--center .lead {
+    margin-inline: auto;
+  }
+
+  .lab-header-content--left {
+    text-align: left;
+  }
+
+  .lab-header-content .eyebrow {
+    margin-bottom: var(--space-sm);
+  }
+
+  .lab-header-content .lead {
+    margin-top: var(--space-sm);
+  }
+</style>
