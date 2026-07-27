@@ -3,10 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PhotoHeroBand from '../components/ui/PhotoHeroBand.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
 import PageTailCTA from '../components/ui/PageTailCTA.astro';
-import { Picture } from 'astro:assets';
 import neighborhood from '../assets/ai/ai-neighborhood-01.png';
-import roofAerial02 from '../assets/ai/ai-roof-aerial-02.png';
-import roofAerial01 from '../assets/ai/ai-roof-aerial-01.png';
 import { GBP_URL } from '../consts';
 
 const LEAD =
@@ -32,51 +29,13 @@ const LEAD =
 
         <h3>Why we specialize in insurance restoration</h3>
         <p>The Treasure Valley gets real weather — hail and high wind that does real damage to roofs. Because the majority of our work is storm and insurance restoration, the parts of the job that are occasional for a general contractor are routine for us: thorough damage documentation, on-site adjuster meetings, and manufacturer-spec rebuilds. That focus is the point. It means a homeowner dealing with a damaged roof and an insurance claim is working with a crew that does this every week, not once in a while.</p>
-      </div>
-    </SectionBand>
 
-    <SectionBand surface="contrast" width="content" pad="band">
-      <figure class="about-image-media">
-        <Picture
-          src={roofAerial02}
-          alt="aerial view of a residential roof with brown shingles"
-          formats={['avif', 'webp']}
-          fallbackFormat="jpeg"
-          widths={[640, 960, 1280, 1672]}
-          sizes="(min-width: 768px) 100vw, 100vw"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-    </SectionBand>
-
-    <SectionBand surface="light" width="reading" pad="band">
-      <div class="content-main">
         <h3>Products and partners</h3>
         <p>We source materials through <strong>ABC Supply</strong> and <strong>Pacific Supply</strong> — quality systems installed to manufacturer specification, built for Idaho's climate.</p>
 
         <h3>Proof, not promises</h3>
         <p>We let the work speak. Sawtooth Roofing holds a <strong>5.0 average across 83 Google reviews</strong> — see them for yourself on our <a href={GBP_URL} target="_blank" rel="noopener">Google Business Profile</a>.</p>
-      </div>
-    </SectionBand>
 
-    <SectionBand surface="contrast" width="content" pad="band">
-      <figure class="about-image-media">
-        <Picture
-          src={roofAerial01}
-          alt="aerial view of a residential roof with dark gray shingles"
-          formats={['avif', 'webp']}
-          fallbackFormat="jpeg"
-          widths={[640, 960, 1280, 1672]}
-          sizes="(min-width: 768px) 100vw, 100vw"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-    </SectionBand>
-
-    <SectionBand surface="light" width="reading" pad="band">
-      <div class="content-main">
         <h3>The team</h3>
         <p>Sawtooth Roofing &amp; Construction LLC is owner-led by a small, hands-on team:</p>
         <ul>
@@ -93,7 +52,8 @@ const LEAD =
       </div>
     </SectionBand>
 
-    <PageTailCTA />
+    {/* The body band directly above is also light, so this one carries the seam. */}
+    <PageTailCTA divider="top" />
 
   </main>
 </BaseLayout>
@@ -147,17 +107,5 @@ const LEAD =
   .content-main a:focus-visible {
     outline: 2px solid var(--color-brand-red);
     outline-offset: 2px;
-  }
-
-  .about-image-media {
-    border-radius: var(--radius-md);
-    overflow: hidden;
-  }
-
-  .about-image-media :global(img) {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
 </style>

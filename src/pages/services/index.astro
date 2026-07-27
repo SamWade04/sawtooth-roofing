@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionBand from '../../components/ui/SectionBand.astro';
+import PhotoHeroBand from '../../components/ui/PhotoHeroBand.astro';
+import heroPhoto from '../../assets/ai/ai-roof-aerial-05.png';
 
 const services = (await getCollection('services', ({ data }) => !data.hidden)).sort(
   (a, b) => a.data.order - b.data.order
@@ -10,19 +12,26 @@ const services = (await getCollection('services', ({ data }) => !data.hidden)).s
 
 <BaseLayout
   title="Our Services | Sawtooth Roofing"
-  description="TODO[A3-content]: services hub meta description, canon-sourced."
+  description="Treasure Valley storm- and hail-damage insurance-restoration specialist. We start with a free, no-obligation inspection that tells you where you stand, in writing."
 >
   <!-- main.services-hub is a plain flow container; bands own all width/padding/surface -->
   <main class="services-hub">
 
-    <SectionBand surface="dark" width="content" pad="band">
-      <h1>Our Services</h1>
+    {/* Stage 3b Round 3: interior photo header (0.78 overlay, centered H1 only).
+        This hub sits on SectionBand rather than ContentPageLayout, so PhotoHeroBand
+        is used directly — no layout restructure. The lead below moved here from
+        the old dark band, byte-identical. */}
+    <PhotoHeroBand
+      image={heroPhoto}
+      alt="top-down view of a geometric residential roof pattern"
+      heading="Our Services"
+    />
+
+    <SectionBand surface="light" width="content" pad="band">
       <p class="lead u-reading">
         Sawtooth Roofing is the Treasure Valley's storm- and hail-damage insurance-restoration specialist. Whether a storm just hit or your roof has simply reached the end of its life, we start the same way — with a free, no-obligation inspection that tells you exactly where you stand, in writing.
       </p>
-    </SectionBand>
 
-    <SectionBand surface="light" width="content" pad="band">
       <p class="services-hub-sub u-reading">
         Below are our core roofing services. When storm damage is involved, we also document it for your insurance claim and work with your insurer through the restoration — you stay in control of your claim, start to finish.
       </p>
@@ -57,8 +66,11 @@ const services = (await getCollection('services', ({ data }) => !data.hidden)).s
 </BaseLayout>
 
 <style>
+  /* Relocated out of the old dark hero band — it now opens the body, so the
+     interior answer-first pattern applies: no top margin, gap below to the
+     sub-paragraph that follows. */
   .lead {
-    margin-top: var(--space-sm);
+    margin-bottom: var(--space-md);
   }
 
   .service-grid {

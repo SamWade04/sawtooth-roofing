@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionBand from '../../components/ui/SectionBand.astro';
+import PhotoHeroBand from '../../components/ui/PhotoHeroBand.astro';
+import heroPhoto from '../../assets/ai/ai-neighborhood-02.png';
 
 const locations = (await getCollection('locations')).sort(
   (a, b) => a.data.order - b.data.order
@@ -15,17 +17,24 @@ const locations = (await getCollection('locations')).sort(
   <!-- main.locations-hub is a plain flow container; bands own all width/padding/surface -->
   <main class="locations-hub">
 
-    <SectionBand surface="dark" width="content" pad="band">
-      <h1>Where We Work</h1>
+    {/* Stage 3b Round 3: interior photo header (0.78 overlay, centered H1 only).
+        This hub sits on SectionBand rather than ContentPageLayout, so PhotoHeroBand
+        is used directly — no layout restructure. Both paragraphs below moved here
+        from the old dark band, byte-identical. */}
+    <PhotoHeroBand
+      image={heroPhoto}
+      alt="foothills horizon above a residential neighborhood"
+      heading="Where We Work"
+    />
+
+    <SectionBand surface="light" width="content" pad="band">
       <p class="lead u-reading">
         Sawtooth Roofing serves homeowners across the Treasure Valley from our Meridian base — Nampa, Caldwell, Meridian, Boise, and Kuna. Storm damage, insurance restoration, roof replacement, or roof repair: wherever you are in the valley, we inspect free, document thoroughly, and build to manufacturer spec with products.
       </p>
       <p class="hero-cta u-reading">
         Storm just moved through your neighborhood? <a href="/contact">Book a free roof inspection</a> — we'll tell you exactly where your roof stands, in writing.
       </p>
-    </SectionBand>
 
-    <SectionBand surface="light" width="content" pad="band">
       <ul class="city-grid">
         {
           locations.map((location) =>
@@ -54,20 +63,32 @@ const locations = (await getCollection('locations')).sort(
 </BaseLayout>
 
 <style>
+  /* Relocated out of the old dark hero band — these now open the body, so the
+     interior answer-first pattern applies (no top margin on the lead). */
   .lead {
-    margin-top: var(--space-sm);
+    margin-bottom: var(--space-sm);
   }
 
   .hero-cta {
-    margin-top: var(--space-sm);
+    margin-bottom: var(--space-md);
   }
 
-  /* On-dark inline link — brand red fails contrast on --color-headline; use light tone */
+  /* Now on a light surface, so the standard on-light inline-link register
+     applies — the previous --color-bg tone existed only for the dark band. */
   .hero-cta a {
-    color: var(--color-bg);
+    color: var(--color-brand-red);
     font-weight: 700;
     text-decoration: underline;
     text-underline-offset: 0.2em;
+  }
+
+  .hero-cta a:hover {
+    color: var(--color-brand-red-hover);
+  }
+
+  .hero-cta a:focus-visible {
+    outline: 2px solid var(--color-brand-red);
+    outline-offset: 2px;
   }
 
   .city-grid {
