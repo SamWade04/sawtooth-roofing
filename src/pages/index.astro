@@ -15,11 +15,58 @@
 //   NOTE: do NOT emit Review with consentVerified=true. Aggregate rating only.
 
 import { getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TrustBar from '../components/ui/TrustBar.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
+import PhotoHeroBand from '../components/ui/PhotoHeroBand.astro';
+import ProcessSteps from '../components/ui/ProcessSteps.astro';
 import GHLFormEmbed from '../components/forms/GHLFormEmbed.astro';
 import { GBP_URL } from '../consts';
+// Direct imports (Home has no content-collection entry) — unlike the service
+// pages' heroImage frontmatter, no extra full-res passthrough copy lands in
+// dist/_astro for these (doc 11 learning).
+import roofAerial06 from '../assets/ai/ai-roof-aerial-06.png';
+import stormSky01 from '../assets/ai/ai-storm-sky-01.png';
+import roofAerial02 from '../assets/ai/ai-roof-aerial-02.png';
+import shingleDetail01 from '../assets/ai/ai-shingle-detail-01.png';
+
+// Same photo + neutral alt already wired to each service's own hero, so the
+// tile and its destination match (Stage 3b Round 2 §3).
+const serviceTileImages = {
+  'storm-damage-restoration': { src: stormSky01, alt: 'dark storm clouds over a residential neighborhood' },
+  'roof-replacement': { src: roofAerial02, alt: 'aerial view of a residential roof with brown shingles' },
+  'roof-repair': { src: shingleDetail01, alt: 'close-up texture of asphalt roof shingles' },
+};
+
+// Round 2 amendment §3 — tile copy cut to its first sentence only (pure
+// deletion from each service's own `summary`, byte-identical, no rewording).
+const serviceTileSummaries = {
+  'storm-damage-restoration': "After a hailstorm or windstorm, Sawtooth Roofing inspects your roof, documents the damage for your insurance claim, and completes the approved restoration.",
+  'roof-replacement': "Sawtooth Roofing replaces storm-worn and aging roofs across the Treasure Valley with roofing products built for Idaho's hail, wind, and temperature swings.",
+  'roof-repair': "Sawtooth Roofing repairs leaks, missing or wind-lifted shingles, and failed flashing for homeowners across the Treasure Valley.",
+};
+
+// Verbatim from the prior inline markup — restructured into data for the
+// shared ProcessSteps component, no copy authored or reworded (§41-5802).
+const HOW_IT_WORKS_STEPS = [
+  {
+    title: 'Free inspection',
+    body: 'We assess the roof and photograph storm or hail damage — bruising, granule loss, lifted or torn shingles, flashing and vent damage.',
+  },
+  {
+    title: 'Damage documentation',
+    body: 'You get a detailed, itemized report you can submit to your insurance carrier as part of your claim.',
+  },
+  {
+    title: 'Adjuster meeting',
+    body: 'When your carrier sends an adjuster, we meet them on the roof to show them the damage we documented, so nothing gets missed.',
+  },
+  {
+    title: 'Restoration',
+    body: 'Once your claim is approved, we schedule the work and complete the repair or full replacement with quality materials and a clean jobsite.',
+  },
+];
 
 const allServices = await getCollection('services');
 // Home grid: exactly 3 core tiles in canonical order (doc 11 + doc 30 §1/§3(b)/§6)
@@ -42,19 +89,24 @@ const services = homeGridSlugs
 
     <!-- ─────────────────────────────────────────────────
          SECTION 1 — HERO
-         Dark band, solid. NO image (F6 launch gate).
+         Photo band (Stage 3b Round 2, Bartlett card pattern): full-bleed
+         ai-roof-aerial-06 behind the band at --hero-overlay-light (lighter
+         than the interior --hero-overlay — the white form card carries the
+         contrast, not the overlay). Hero image is the LCP element.
          ───────────────────────────────────────────────── -->
-    <SectionBand surface="dark" width="content" pad="band">
+    <PhotoHeroBand
+      image={roofAerial06}
+      alt="aerial view of a large residential roof surrounded by lawn and a pond"
+      overlayToken="--hero-overlay-light"
+      innerClass="home-hero-inner"
+    >
       <div class="hero">
         <div class="hero-content">
           <p class="eyebrow">Insurance-Restoration Roofing &middot; Treasure Valley, Idaho</p>
           <h1>Treasure Valley Roofing &amp; Storm-Damage Restoration</h1>
           <p class="lead u-reading">
-            Sawtooth Roofing is an Idaho-registered roofing contractor specializing in storm- and
-            hail-damage restoration across the Treasure Valley. We inspect your roof, document the
-            damage in detail for your insurer, and complete the repair or full replacement — turning
-            a covered claim into a finished roof. Free, no-obligation inspections in Nampa, Caldwell,
-            Meridian, Boise, and Kuna.
+            Idaho-registered roofing contractor specializing in storm- and hail-damage restoration
+            across the Treasure Valley.
           </p>
           <div class="hero-ctas">
             {/* Primary CTA → dedicated planned-project booking page */}
@@ -70,10 +122,11 @@ const services = homeGridSlugs
             title="Emergency inspection request"
             minHeight="52rem"
             loading="eager"
+            desktopOnly
           />
         </div>
       </div>
-    </SectionBand>
+    </PhotoHeroBand>
 
     <!-- ─────────────────────────────────────────────────
          SECTION 2 — TRUST BAR (§S1, directly under hero)
@@ -136,48 +189,7 @@ const services = homeGridSlugs
           and complete the approved repair or replacement. You stay in control of your claim
           throughout.
         </p>
-        <ol class="process-steps">
-          <li class="process-step">
-            <span class="step-number">1</span>
-            <div class="step-content">
-              <h3>Free inspection</h3>
-              <p>
-                We assess the roof and photograph storm or hail damage — bruising, granule loss,
-                lifted or torn shingles, flashing and vent damage.
-              </p>
-            </div>
-          </li>
-          <li class="process-step">
-            <span class="step-number">2</span>
-            <div class="step-content">
-              <h3>Damage documentation</h3>
-              <p>
-                You get a detailed, itemized report you can submit to your insurance carrier as part
-                of your claim.
-              </p>
-            </div>
-          </li>
-          <li class="process-step">
-            <span class="step-number">3</span>
-            <div class="step-content">
-              <h3>Adjuster meeting</h3>
-              <p>
-                When your carrier sends an adjuster, we meet them on the roof to show them the
-                damage we documented, so nothing gets missed.
-              </p>
-            </div>
-          </li>
-          <li class="process-step">
-            <span class="step-number">4</span>
-            <div class="step-content">
-              <h3>Restoration</h3>
-              <p>
-                Once your claim is approved, we schedule the work and complete the repair or full
-                replacement with quality materials and a clean jobsite.
-              </p>
-            </div>
-          </li>
-        </ol>
+        <ProcessSteps steps={HOW_IT_WORKS_STEPS} />
       </div>
     </SectionBand>
 
@@ -192,8 +204,20 @@ const services = homeGridSlugs
             services.map((service) => (
               <li class="service-card">
                 <a href={`/services/${service.id}`} class="service-card-link">
-                  <h3>{service.data.shortTitle ?? service.data.title}</h3>
-                  <p>{service.data.summary}</p>
+                  <figure class="service-card-media">
+                    <Picture
+                      src={serviceTileImages[service.id].src}
+                      alt={serviceTileImages[service.id].alt}
+                      formats={['avif', 'webp']}
+                      fallbackFormat="jpeg"
+                      widths={[400, 800]}
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                  <h2>{service.data.shortTitle ?? service.data.title}</h2>
+                  <p>{serviceTileSummaries[service.id]}</p>
                   <span class="service-card-cta">Learn more &rarr;</span>
                 </a>
               </li>
@@ -205,14 +229,17 @@ const services = homeGridSlugs
 
     <!-- ─────────────────────────────────────────────────
          SECTION 6 — SERVICE AREA STRIP
-         NOTE: city names are plain text here (not linked).
+         NOTE: city names are plain text here (not linked) — this is the only
+         body-copy city mention on Home and the future link target for city
+         hubs (Round 2 amendment §4: thinned to a slim strip, large H2
+         removed — heading kept visually-hidden for the document outline).
          Internal links to location pages deferred — location
          pages out of scope this pass (doc 30 F5). Link once
          location routes exist.
          ───────────────────────────────────────────────── -->
-    <SectionBand surface="light" width="reading" pad="band">
+    <SectionBand surface="light" width="reading" pad="thin">
       <div class="service-area">
-        <h2>Serving the Treasure Valley</h2>
+        <h2 class="u-visually-hidden">Serving the Treasure Valley</h2>
         <p class="u-reading">
           Sawtooth Roofing serves homeowners across <strong>Nampa, Caldwell, Meridian, Boise, and
           Kuna.</strong> Storm damage doesn't keep to one zip code — if you're in the valley and
@@ -285,9 +312,15 @@ const services = homeGridSlugs
 
     <!-- ─────────────────────────────────────────────────
          SECTION 9 — FINAL CTA
-         Dark band, solid. §S2-B planned-project form scaffold.
+         Amendment 2 §5: switched contrast → light (--color-bg, the standard
+         page background) — content stays centered. Divider re-checked
+         against both neighbors: Social Proof directly above is `contrast`
+         (differs, no seam issue); the footer below shares this same light
+         background but is a separate component with its own built-in
+         top border, so that seam is already covered. No divider needed
+         on this band either side.
          ───────────────────────────────────────────────── -->
-    <SectionBand surface="dark" width="content" pad="band">
+    <SectionBand surface="light" width="content" pad="band">
       <div class="final-cta">
         <h2>Think your roof took storm damage?</h2>
         <p>
@@ -296,7 +329,6 @@ const services = homeGridSlugs
         </p>
         <div class="final-cta-actions">
           <a href="/contact" class="btn btn--primary">Book a Free Inspection</a>
-          {/* Secondary: tap-to-call — renders as light outline on dark band */}
           <a href="tel:+12089968748" class="btn btn--secondary">Call 208.996.8748</a>
         </div>
       </div>
@@ -330,8 +362,41 @@ const services = homeGridSlugs
       gap: var(--space-lg);
     }
 
+    /* Round 2 amendment 2: card treatment removed per Sam's ruling — the
+       GHL iframe renders its own surface, so this is back to a plain
+       transparent container. Position/mount behavior (desktopOnly)
+       unchanged. */
     .hero-form {
       display: block;
+    }
+
+    /* Amendment 2: shifted further right — right-side gutter reduced to 0
+       for this hero only (PhotoHeroBand's default padding-inline is
+       symmetric; interior H1-only bands are untouched since they don't
+       pass innerClass). :global() is required here — this class is passed
+       as a prop and applied to a div PhotoHeroBand itself renders, so it
+       carries PhotoHeroBand's scope attribute, not this component's; a
+       scoped selector here silently never matches it. The compound
+       selector (both classes) is ALSO required — a single-class :global()
+       selector ties in specificity with PhotoHeroBand's own
+       .hero-photo-inner rule, so source order (which this component
+       cannot control) decided the winner and silently lost. (Found and
+       fixed during amendment 3 verification — this rule, and the Round 2
+       "shift closer" version before it, had the same bug and never
+       actually applied in any previously-deployed preview — Sam's "large
+       gap at 1700px" report was against a build where this padding was
+       still the original symmetric --gutter-lg, not a widening problem.)
+
+       Amendment 3 §2: measured with this fix genuinely active (not the
+       --content-max container itself widened) — form's right edge lands
+       at 97.4% / 85.6% / 81.5% of viewport width at 1280 / 1700 / 1920px,
+       already matching the "~85% at 1700px" target. Widening
+       --content-max further for this hero would OVERSHOOT past 85% (e.g.
+       a 1400px cap computes to ~91% at 1700px), so no additional
+       container-widening was added — reported instead of applied per
+       Sam's "diagnose first" standing rule. */
+    :global(.hero-photo-inner.home-hero-inner) {
+      padding-inline-end: 0;
     }
   }
 
@@ -426,51 +491,26 @@ const services = homeGridSlugs
     /* max-width delegated to .u-reading class */
   }
 
-  .process-steps {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-md);
+  /* ── SERVICES GRID ── */
+  /* Direct-child combinator: centers only the section heading, not the
+     nested tile h2 titles (Round 2 amendment §3). */
+  /* Amendment 2: evens out the heading's position between the section top
+     and the tile grid. The band's own padding-block (SectionBand pad="band")
+     is --space-xl mobile / --space-2xl desktop — pulling the heading up by
+     --space-lg (mobile) / --space-xl (desktop) leaves --space-lg (4rem) of
+     visible space above it on both breakpoints, now matching the increased
+     --space-lg gap below it to the grid (was --space-md, effectively
+     unbalanced against the much larger band padding above). */
+  .home-services > h2 {
+    text-align: center;
+    margin-top: calc(var(--space-lg) * -1);
+    margin-bottom: var(--space-lg);
   }
 
   @media (min-width: 768px) {
-    .process-steps {
-      grid-template-columns: repeat(2, 1fr);
+    .home-services > h2 {
+      margin-top: calc(var(--space-xl) * -1);
     }
-  }
-
-  .process-step {
-    display: flex;
-    gap: var(--space-sm);
-    padding: var(--space-md);
-    background: var(--color-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-  }
-
-  .step-number {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3.6rem;
-    height: 3.6rem;
-    background: var(--color-brand-red);
-    color: var(--color-card);
-    font-weight: 700;
-    font-size: 1.6rem;
-    border-radius: 50%;
-  }
-
-  .step-content h3 {
-    margin-bottom: var(--space-xs);
-  }
-
-  /* ── SERVICES GRID ── */
-  .home-services h2 {
-    margin-bottom: var(--space-md);
   }
 
   .service-grid {
@@ -513,8 +553,24 @@ const services = homeGridSlugs
     border-color: var(--color-border-strong);
   }
 
-  .service-card h3 {
+  /* Display title (Stage 3b Round 2) — h2 register, not the 14px uppercase
+     h3 micro-label; reuses the same card-title pattern as .value-prop h2. */
+  .service-card h2 {
     margin-bottom: var(--space-xs);
+  }
+
+  .service-card-media {
+    margin: calc(var(--space-md) * -1) calc(var(--space-md) * -1) var(--space-sm);
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+  }
+
+  .service-card-media :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .service-card-cta {
@@ -523,11 +579,6 @@ const services = homeGridSlugs
     font-weight: 700;
     font-size: 1.4rem;
     color: var(--color-brand-red);
-  }
-
-  /* ── SERVICE AREA ── */
-  .service-area h2 {
-    margin-bottom: var(--space-sm);
   }
 
   /* ── SOCIAL PROOF ── */
@@ -606,19 +657,26 @@ const services = homeGridSlugs
     color: var(--color-muted);
   }
 
-  /* ── FINAL CTA (dark band; band--dark cascade handles text colors) ── */
+  /* ── FINAL CTA (light surface, centered — amendment 2 §5;
+     standard on-light text registers apply, no dark-cascade overrides) ── */
+  .final-cta {
+    text-align: center;
+  }
+
   .final-cta h2 {
     margin-bottom: var(--space-sm);
   }
 
   .final-cta > p {
     max-width: var(--reading-width);
+    margin-inline: auto;
     margin-bottom: 0;
   }
 
   .final-cta-actions {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-sm);
     margin-top: var(--space-md);
   }

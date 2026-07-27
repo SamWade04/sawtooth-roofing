@@ -26,7 +26,17 @@ const navLinks = [
         alt=""
         class="logo-mark"
       />
-      <span class="wordmark">Sawtooth Roofing</span>
+      <!-- WORDMARK TEST (Stage 3b Round 2 amendment, item 7) — Sam's gate
+           judgment call, one commit, trivially revertible: swap the
+           `<span class="wordmark">` back in and delete public/wordmark-test.png
+           to revert. ai-wordmark-test-01.png, letterforms inspected clean. -->
+      <img
+        src="/wordmark-test.png"
+        width="1180"
+        height="76"
+        alt="Sawtooth Roofing"
+        class="wordmark-test-img"
+      />
     </a>
 
     <!-- Phone CTA — always visible (not behind toggle) -->
@@ -118,6 +128,19 @@ const navLinks = [
     letter-spacing: 0.04em;
     color: var(--color-headline);
     white-space: nowrap;
+  }
+
+  /* WORDMARK TEST — sized to the live-text wordmark's rendered height */
+  /* Mobile-first: this display face runs much wider per unit height than
+     the live-text wordmark it replaces, so matching the text's cap-height
+     directly overflowed a 375px header. Sized instead to roughly the same
+     rendered WIDTH the text wordmark had (~146px at 375px, verified in
+     PR #20); desktop gets the taller, more legible size since there's
+     ample room there. */
+  .wordmark-test-img {
+    height: 0.9rem;
+    width: auto;
+    flex-shrink: 0;
   }
 
   /* ── Phone CTA — always visible ── */
@@ -234,6 +257,10 @@ const navLinks = [
       position: sticky;
       top: 0;
       z-index: 40;
+    }
+
+    .wordmark-test-img {
+      height: 1.8rem;
     }
 
     .nav-toggle {

@@ -41,6 +41,13 @@ interface Props {
       crossorigin
     />
 
+    <!-- Roof-mark glyph only — the full "SAWTOOTH ROOFING" lockup is
+         illegible at 16-32px. Same source crop as the header mark (PR #20),
+         non-uniformly scaled to a square (the mark is natively ~2.98:1). -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
     <SeoHead {...Astro.props} />
   </head>
   <body>
