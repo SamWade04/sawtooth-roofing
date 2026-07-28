@@ -2,10 +2,25 @@
 // Full-width closing CTA band for pages that don't end on /contact itself.
 // Copy reused verbatim from the Home Final-CTA band (index.astro) — no new
 // homeowner-facing prose authored here.
+//
+// Stage 3b Round 3: brought to parity with the Home final CTA, which amendment 2
+// §5 switched to the light surface (--color-bg) with centered content. Surface,
+// centering and button treatment now match Home exactly on every page this
+// renders (service pages via ServiceLayout, plus /about).
+// Now that this band is light, a caller whose own last body band is ALSO light
+// must pass divider="top" so the two same-surface bands don't touch without a
+// seam (/about). Service pages don't need it — FinancingBand's dark band sits
+// directly above, so the surfaces already differ.
 import SectionBand from './SectionBand.astro';
+
+interface Props {
+  divider?: 'top';
+}
+
+const { divider } = Astro.props;
 ---
 
-<SectionBand surface="dark" width="content" pad="band" class="page-tail-cta">
+<SectionBand surface="light" width="content" pad="band" divider={divider} class="page-tail-cta">
   <div class="final-cta">
     <h2>Think your roof took storm damage?</h2>
     <p>
@@ -20,19 +35,27 @@ import SectionBand from './SectionBand.astro';
 </SectionBand>
 
 <style>
-  /* ── FINAL CTA — copied verbatim from the Home band (index.astro) ── */
+  /* ── FINAL CTA — mirrors the Home band (index.astro) rule-for-rule:
+     light surface, centered content, mobile-stacked full-width buttons
+     promoting to an inline centered row at ≥768px. ── */
+  .final-cta {
+    text-align: center;
+  }
+
   .final-cta h2 {
     margin-bottom: var(--space-sm);
   }
 
   .final-cta > p {
     max-width: var(--reading-width);
+    margin-inline: auto;
     margin-bottom: 0;
   }
 
   .final-cta-actions {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-sm);
     margin-top: var(--space-md);
     flex-direction: column;

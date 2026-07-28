@@ -79,11 +79,17 @@ const {
             </div>
             <aside class="content-rail">
               <p class="content-rail-heading">Request a free inspection</p>
+              {/* Stage 3b Round 3: desktopOnly — the rail iframe is absent from the
+                  initial HTML below 768px, same mechanism as the home hero form.
+                  Sam accepted the tradeoff: this removes the mobile form-fill path
+                  from the service pages; mobile conversion is the fixed call bar
+                  and the tail CTA to /contact. */}
               <GHLFormEmbed
                 formId="lS0Y9yigL7YY609WmWYG"
                 title="Request a free inspection"
                 minHeight="120rem"
                 loading="eager"
+                desktopOnly
               />
             </aside>
           </div>
@@ -161,25 +167,34 @@ const {
     object-fit: cover;
   }
 
-  /* ── A6 form rail — micro-form eyebrow ── */
+  /* ── A6 form rail ──
+     Round 3: the rail is desktopOnly, so the whole aside is hidden below
+     768px — not just the iframe. Same pattern as the home hero's .hero-form.
+     Without this the reserved min-height below would hold ~650px of empty
+     space open on mobile, under an orphaned "Request a free inspection"
+     heading, for a form that is deliberately never mounted there. */
+  .content-rail {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .content-rail {
+      display: block;
+    }
+  }
+
+  /* micro-form eyebrow */
   .content-rail-heading {
     margin-bottom: var(--space-sm);
     font-weight: 700;
     color: var(--color-headline);
   }
 
-  /* Rail form's reserved floor is responsive: the GHLFormEmbed prop sets a
-     ~120rem floor for desktop (matches the form's ~1156px natural height there),
-     but the form reflows much shorter on mobile — the same floor there just
-     over-reserves and leaves a gap before the footer. Override min-height
-     directly (:global reaches into the child component's scoped markup;
-     the extra `aside.content-rail` specificity wins deterministically over
-     GHLFormEmbed's own scoped rule without needing !important). */
-  aside.content-rail :global(.ghl-form-wrap),
-  aside.content-rail :global(.ghl-form-iframe) {
-    min-height: 65rem;
-  }
-
+  /* Rail form's reserved floor. The rail no longer renders at all below 768px
+     (see .content-rail above), so only the desktop floor is needed — it matches
+     the form's ~1156px natural height there. :global reaches into the child
+     component's scoped markup; the extra `aside.content-rail` specificity wins
+     deterministically over GHLFormEmbed's own scoped rule without !important. */
   @media (min-width: 768px) {
     aside.content-rail :global(.ghl-form-wrap),
     aside.content-rail :global(.ghl-form-iframe) {

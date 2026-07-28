@@ -12,12 +12,6 @@ heroImage:
   alt: "close-up texture of asphalt roof shingles"
   source: ai
   sourceFile: "ai-shingle-detail-01.png"
-images:
-  - src: ../../assets/projects/kuna-01.jpg
-    alt: "Aerial view of a completed dark gray shingle roof on a single-story ranch-style home in Kuna, Idaho."
-    role: aerial
-    source: own
-    sourceFile: "3940698_100DRONE_SING0436.JPEG"
 ---
 
 Sawtooth Roofing repairs leaks, missing or wind-lifted shingles, and failed flashing for homeowners across Nampa, Caldwell, Meridian, Boise, and Kuna. A repair is the right call when damage is isolated and the rest of the roof still has sound service life left. Not sure which you need? A free inspection gives you a straight answer — repair or replace — in writing, with no obligation.

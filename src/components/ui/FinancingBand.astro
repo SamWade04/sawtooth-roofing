@@ -1,13 +1,16 @@
 ---
-// Slim financing note. Self-contained band — mirrors the trust-bar thin-band
-// treatment (SectionBand surface="contrast" pad="thin" divider) so callers
-// just drop in <FinancingBand /> with no wrapping required.
+// Financing CTA band. Stage 3b Round 3: rebuilt on the Bartlett CTA structure —
+// full-width dark band, copy LEFT and button RIGHT, stacking centered below
+// 768px. Surface is --color-headline (the dark band), NOT red: per doc 02 red
+// stays scarce, so the band concentrates it on the single brand-red button
+// rather than flooding the surface. On-dark text is handled entirely by the
+// global .band--dark cascade — no color rules here.
 import SectionBand from './SectionBand.astro';
 ---
 
-<SectionBand surface="contrast" width="reading" pad="thin" divider="top">
+<SectionBand surface="dark" width="content" pad="thin">
   <div class="financing-band">
-    <p>
+    <p class="lead">
       Financing options available through our lending partner. Ask about flexible
       payment options when you book your free inspection.
     </p>
@@ -25,16 +28,52 @@ import SectionBand from './SectionBand.astro';
 </SectionBand>
 
 <style>
+  /* Mobile-first: stacked and centered. */
   .financing-band {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+    gap: var(--space-md);
   }
 
+  /* Round 3b: promoted off the body register to the existing .lead token
+     (1.5rem) and bolded, so the strip reads as a statement, not a paragraph.
+     The .lead class also buys the correct on-dark colour: the global cascade
+     gives `.band--dark p` the muted --color-border-strong (12.0:1) but
+     `.band--dark .lead` the full --color-bg (17.1:1) — which is the point of a
+     band that has to stand out. Weight is the only local override. */
   .financing-band p {
-    color: var(--color-body);
+    max-width: var(--reading-width);
     margin: 0;
+    font-weight: 700;
   }
 
   .financing-band-actions {
-    margin-top: var(--space-sm);
+    width: 100%;
+  }
+
+  .financing-band-actions .btn {
+    width: 100%;
+  }
+
+  /* ≥768px: copy left, button right, on one row. */
+  @media (min-width: 768px) {
+    .financing-band {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      text-align: left;
+      gap: var(--space-lg);
+    }
+
+    .financing-band-actions {
+      width: auto;
+      flex-shrink: 0;
+    }
+
+    .financing-band-actions .btn {
+      width: auto;
+    }
   }
 </style>
