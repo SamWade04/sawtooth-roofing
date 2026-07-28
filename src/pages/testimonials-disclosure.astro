@@ -4,10 +4,22 @@
 // beyond what the source text itself specifies. Sam routes this to Anthony
 // for approval BEFORE merge.
 //
-// CORRECTED (2026-07-28): "How we display reviews" and "Compensation" were
-// rewritten because the original text stated "We do not filter reviews by
-// star rating," which is false under the config.minStars=5 ruling — the
-// feed IS filtered to 5-star only. Every other section is unchanged.
+// CORRECTED (2026-07-28, round 1): "How we display reviews" and
+// "Compensation" were rewritten because the original text stated "We do not
+// filter reviews by star rating," which is false under the config.minStars=5
+// ruling — the feed IS filtered to 5-star only.
+//
+// CORRECTED (2026-07-28, round 2): "How we display reviews" second paragraph
+// lost its middle sentence ("The overall rating and review count shown on
+// this website describe our complete Google Business Profile...") — Round 4
+// removed the rating/count display from the site entirely, so that sentence
+// now describes something that no longer exists on the page.
+//
+// KNOWN REMAINING ISSUE, not fixed here (out of this dispatch's scope — see
+// Round 4 report): "How often reviews update" still says "The overall
+// rating and review count shown on this site reflect our Google Business
+// Profile..." — same orphaned-reference problem, different section. Flagged
+// for Sam/Anthony; not touched because it wasn't in the ruled replacement.
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 import heroPhoto from '../assets/ai/ai-roof-aerial-01.png';
 
@@ -30,7 +42,7 @@ const lastUpdated = new Date().toLocaleDateString('en-US', {
 
   <h2>How we display reviews</h2>
   <p>The reviews shown on this website are five-star reviews left by our customers on Google. We display them exactly as our customers wrote them — we do not edit, shorten, or rewrite review text.</p>
-  <p>These are not all of our reviews. We display a selection of our most recent five-star reviews here, and we do not display lower-rated reviews on this page. The overall rating and review count shown on this website describe our complete Google Business Profile, including any reviews not shown here. You can read every review we have received, unfiltered and in full, on our Google Business Profile — we link to it directly from our reviews section so you can check for yourself.</p>
+  <p>These are not all of our reviews. We display a selection of our most recent five-star reviews here, and we do not display lower-rated reviews on this page. You can read every review we have received, unfiltered and in full, on our Google Business Profile — we link to it directly from our reviews section so you can check for yourself.</p>
 
   <h2>How often reviews update</h2>
   <p>Reviews on this website are updated periodically rather than instantly. A review left on Google today may not appear here immediately. The overall rating and review count shown on this site reflect our Google Business Profile as of the last time our website was updated. For the current total at any moment, see our Google Business Profile.</p>

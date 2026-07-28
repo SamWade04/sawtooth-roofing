@@ -10,8 +10,10 @@
 //   areaServed: Nampa, Caldwell, Meridian, Boise, Kuna
 //   sameAs: TODO[F2] — live GBP URL after NAP reconcile
 //   AggregateRating: source from reviews.ts getReviews() (totalReviewCount /
-//     averageRating) at A5, NOT hardcoded — profile-wide figures, must match
-//     the aggregate string rendered by ReviewsSection.
+//     averageRating) at A5, NOT hardcoded — profile-wide figures. Round 4:
+//     the page no longer DISPLAYS these numbers (Sam's ruling — a published
+//     figure drifts between deploys), but reviewsData below still holds them
+//     for this future schema emitter to read.
 //   openingHoursSpecification: 8:00 AM–9:00 PM daily (sourced from live GBP, June 26 2026)
 //   FAQPage: built from FAQ collection (later step); 3 Home teaser Qs must match canonical entries verbatim
 //   NOTE: do NOT emit Review with consentVerified=true. Aggregate rating only.
@@ -238,21 +240,19 @@ const services = homeGridSlugs
     </SectionBand>
 
     <!-- ─────────────────────────────────────────────────
-         SECTION 7 — SOCIAL PROOF (Stage 3b Phase A)
+         SECTION 7 — SOCIAL PROOF (Stage 3b Phase A, figures removed Round 4)
          Build-time-fetched Google reviews, our own static markup — see
-         src/reviews.ts and components/ui/ReviewsSection.astro. RULING
-         (2026-07-28): the feed is 5-star only (vendor-side config.minStars=5);
-         totalReviewCount/averageRating describe the COMPLETE Google Business
-         Profile, the cards show a subset of it. ReviewsSection owns keeping
-         that distinction visible — do not simplify its aggregate string.
+         src/reviews.ts and components/ui/ReviewsSection.astro. Round 4
+         ruling (Sam): no review count or rating displays on the site — a
+         published figure drifts between deploys. reviewsData above still
+         holds totalReviewCount/averageRating (unused by ReviewsSection now)
+         for the future A5 schema emitter to read.
          No JSON-LD emitted here — schema stays A5-gated (doc 31 §S4).
          ───────────────────────────────────────────────── -->
     <SectionBand surface="contrast" width="content" pad="band">
       <div class="social-proof">
         <h2>What Treasure Valley homeowners say</h2>
         <ReviewsSection
-          totalReviewCount={reviewsData.totalReviewCount}
-          averageRating={reviewsData.averageRating}
           reviews={reviewsData.reviews}
           profileUrl={GBP_URL}
         />

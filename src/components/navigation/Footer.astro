@@ -5,23 +5,36 @@ import { HEARTH_FINANCING_URL } from '../../consts';
 // §S3 — Footer NAP + legal line.
 const year = new Date().getFullYear();
 
-// A2 Quick Links nav PRESERVED — Blog link must remain here per IA decision.
-// Financing is interim (see Header.astro note) — external, marked as such.
-// Testimonials Disclosure sits with Privacy/Terms as the third legal link.
-const footerLinks = [
-  { label: 'Services',                 href: '/services'  },
-  { label: 'Locations',                href: '/locations' },
-  { label: 'About',                    href: '/about'     },
-  { label: 'Portfolio',                href: '/portfolio' },
-  { label: 'Contact',                  href: '/contact'   },
-  { label: 'Financing',                href: HEARTH_FINANCING_URL, external: true },
-  { label: 'Blog',                     href: '/blog'      },
-  { label: 'Privacy Policy',           href: '/privacy'   },
-  { label: 'Terms of Use',             href: '/terms'     },
-  { label: 'Testimonials Disclosure',  href: '/testimonials-disclosure' },
+// Round 4 restructure: Quick Links had grown to 9 items and the footer was
+// too tall — split into three link columns (Bartlett is a reference, not a
+// template; groupings below are this implementer's call, reported at the
+// gate). Legal links moved into the bottom bar as inline links, alongside
+// the unchanged copyright/registration line.
+
+// SERVICES — a deliberately curated, explicitly-ordered list (matching the
+// dispatch text), same precedent as Home's own service-tile grid (doc 11 +
+// doc 30 §1/§3(b)/§6 hardcode 3 canonical slugs rather than dumping the
+// collection) — NOT collection-driven. "Locations" dropped from this column;
+// city links live in Service Areas already, and the hub link belongs there.
+const serviceLinks = [
+  { label: 'Roof Replacement',          href: '/services/roof-replacement' },
+  { label: 'Roof Repair',               href: '/services/roof-repair' },
+  { label: 'Storm Damage Restoration',  href: '/services/storm-damage-restoration' },
+  { label: 'Services',                  href: '/services' },
 ];
 
-// Collection-driven, draft-aware — mirrors the /locations hub pattern.
+// COMPANY — Financing is interim (see Header.astro note) — external, marked
+// as such, sharing the one HEARTH_FINANCING_URL definition.
+const companyLinks = [
+  { label: 'About',      href: '/about'    },
+  { label: 'Portfolio',  href: '/portfolio' },
+  { label: 'Contact',    href: '/contact'  },
+  { label: 'Financing',  href: HEARTH_FINANCING_URL, external: true },
+  { label: 'Blog',       href: '/blog'     },
+];
+
+// SERVICE AREAS — collection-driven, draft-aware, unchanged from before this
+// restructure — do NOT hardcode. Mirrors the /locations hub pattern.
 // draft:true cities render as plain text (no 404), draft:false auto-link.
 const serviceAreas = (await getCollection('locations')).sort(
   (a, b) => a.data.order - b.data.order
@@ -46,7 +59,17 @@ const serviceAreas = (await getCollection('locations')).sort(
       </p>
     </div>
 
-    <!-- Service area links -->
+    <!-- Column 2: SERVICES -->
+    <div class="footer-section">
+      <p class="footer-section-heading">Services</p>
+      <ul class="footer-link-list">
+        {serviceLinks.map(({ label, href }) => (
+          <li><a href={href} class="footer-link">{label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Column 3: SERVICE AREAS — collection-driven, unchanged -->
     <div class="footer-section">
       <p class="footer-section-heading">Service Areas</p>
       <ul class="footer-city-list">
@@ -62,11 +85,11 @@ const serviceAreas = (await getCollection('locations')).sort(
       </ul>
     </div>
 
-    <!-- Quick Links — A2 nav preserved; Blog link must stay here -->
-    <div class="footer-section footer-section--links">
-      <p class="footer-section-heading">Quick Links</p>
+    <!-- Column 4: COMPANY -->
+    <div class="footer-section">
+      <p class="footer-section-heading">Company</p>
       <ul class="footer-link-list">
-        {footerLinks.map(({ label, href, external }) => (
+        {companyLinks.map(({ label, href, external }) => (
           <li>
             <a
               href={href}
@@ -83,7 +106,8 @@ const serviceAreas = (await getCollection('locations')).sort(
 
   </div>
 
-  <!-- §S3 Legal bar -->
+  <!-- §S3 Legal bar — copyright + registration number UNCHANGED (F1 legal
+       gate), now followed by the three legal pages as inline links. -->
   <div class="footer-legal-bar">
     <p class="footer-legal">
       &copy; {year} Sawtooth Roofing &amp; Construction LLC
@@ -91,6 +115,13 @@ const serviceAreas = (await getCollection('locations')).sort(
     <p class="footer-legal footer-license-placeholder">
       Idaho-registered roofing contractor #7371651
     </p>
+    <nav class="footer-legal-links" aria-label="Legal">
+      <a href="/privacy" class="footer-legal-link">Privacy Policy</a>
+      <span aria-hidden="true" class="footer-legal-sep">&middot;</span>
+      <a href="/terms" class="footer-legal-link">Terms of Use</a>
+      <span aria-hidden="true" class="footer-legal-sep">&middot;</span>
+      <a href="/testimonials-disclosure" class="footer-legal-link">Testimonials Disclosure</a>
+    </nav>
   </div>
 </footer>
 
@@ -104,7 +135,14 @@ const serviceAreas = (await getCollection('locations')).sort(
   .footer-inner {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-lg); /* snapped: 3.2rem → 4.0rem */
+    /* Round 4: 4 stacked sections now instead of 3 (Services split out of the
+       old combined Quick Links), so the full space-lg gap between EVERY
+       section at mobile — where everything stacks into one column regardless
+       of the desktop column split — added one extra gap's worth of height
+       and made the "footer too tall" problem worse there even as it fixed
+       desktop. space-md at mobile keeps that in check; desktop gets the
+       wider gap back below, where there's no stacking penalty. */
+    gap: var(--space-md);
     max-width: 120rem;
     margin: 0 auto;
     padding: var(--space-lg) var(--space-md) var(--space-lg);
@@ -112,7 +150,10 @@ const serviceAreas = (await getCollection('locations')).sort(
 
   @media (min-width: 768px) {
     .footer-inner {
-      grid-template-columns: 1.6fr 1fr 1.4fr;
+      /* 4 columns now (brand + Services + Service Areas + Company) — brand
+         stays widest since it carries address/phone/email, the three link
+         columns split the rest evenly. */
+      grid-template-columns: 1.6fr 1fr 1fr 1fr;
       gap: var(--space-lg);
     }
   }
@@ -174,15 +215,25 @@ const serviceAreas = (await getCollection('locations')).sort(
     margin-bottom: var(--space-sm); /* snapped: 1.2rem → 1.6rem */
   }
 
-  /* ── City list + quick links ── */
+  /* ── City list + Services/Company link lists ──
+     2-col on mobile to save vertical space (Round 4: now 3 short columns
+     instead of 1 long one, so this matters for all of them, not just the
+     old combined Quick Links); single column once there's room at ≥768px. */
   .footer-city-list,
   .footer-link-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs); /* snapped: 0.6rem → 0.8rem */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xs) var(--space-sm); /* snapped: 0.6rem → 0.8rem */
+  }
+
+  @media (min-width: 768px) {
+    .footer-city-list,
+    .footer-link-list {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* Shared box: .footer-city-text (draft city, no link) matches .footer-link
@@ -196,19 +247,6 @@ const serviceAreas = (await getCollection('locations')).sort(
 
   .footer-link:hover {
     color: var(--color-brand-red);
-  }
-
-  /* 2-col on mobile to save vertical space */
-  .footer-section--links .footer-link-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-xs) var(--space-sm); /* snapped: 0.6rem → 0.8rem */
-  }
-
-  @media (min-width: 768px) {
-    .footer-section--links .footer-link-list {
-      grid-template-columns: 1fr;
-    }
   }
 
   /* ── Legal bar ── */
@@ -232,5 +270,30 @@ const serviceAreas = (await getCollection('locations')).sort(
   /* Visually distinct so placeholder cannot be confused for a real license number */
   .footer-license-placeholder {
     font-style: italic;
+  }
+
+  /* Privacy / Terms / Testimonials Disclosure — moved into the bottom bar
+     as inline links (Round 4 footer restructure), same row as the
+     copyright + registration line rather than their own Quick Links slot. */
+  .footer-legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2xs);
+  }
+
+  .footer-legal-link {
+    font-size: 1.2rem;
+    color: var(--color-muted);
+    text-decoration: none;
+  }
+
+  .footer-legal-link:hover {
+    color: var(--color-brand-red);
+  }
+
+  .footer-legal-sep {
+    color: var(--color-border-strong);
+    font-size: 1.2rem;
   }
 </style>

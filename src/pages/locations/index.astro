@@ -39,10 +39,13 @@ const locations = (await getCollection('locations')).sort(
         {
           locations.map((location) =>
             location.data.draft ? (
-              /* City pages gated (F6) — non-linked cards until per-city content clears */
+              /* City pages gated (F6) — non-linked, non-interactive plain
+                 card until per-city content clears. Round 4: badge removed
+                 per Sam's ruling; the div itself was already un-clickable
+                 (no href, no role, pointer-events:none) so nothing else
+                 needed to change to make it non-interactive. */
               <li class="city-card">
                 <div class="city-card-body">
-                  <span class="coming-soon-badge">Coming soon</span>
                   <h2>{location.data.city}</h2>
                 </div>
               </li>
@@ -157,18 +160,5 @@ const locations = (await getCollection('locations')).sort(
 
   .city-card h2 {
     font-size: 2.0rem;
-  }
-
-  .coming-soon-badge {
-    display: inline-block;
-    margin-bottom: var(--space-xs);
-    padding: 0.2rem 0.8rem;
-    background: var(--color-border);
-    color: var(--color-muted);
-    font-size: 1.2rem;
-    font-weight: 700;
-    border-radius: var(--radius-sm, 0.4rem);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
   }
 </style>
