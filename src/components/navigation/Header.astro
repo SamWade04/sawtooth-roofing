@@ -143,9 +143,15 @@ const navLinks = [
     flex-shrink: 0;
   }
 
-  /* ── Phone CTA — always visible ── */
+  /* ── Phone CTA — desktop only ──
+     Hidden below 768px (Sam's phone review): the logo lockup + number could not
+     share a 375px row, so the number wrapped and doubled the header's height —
+     and it duplicated the sticky bottom call bar, putting the same number on
+     screen twice at all times. Mobile keeps the call bar as its call path.
+     Desktop is unchanged and still shows it: there is no call bar at that
+     width, so the header number is desktop's primary call path. */
   .phone-cta {
-    display: inline-flex;
+    display: none;
     align-items: center;
     gap: var(--space-2xs); /* off-scale — flag: 0.5rem snapped from original */
     text-decoration: none;
@@ -153,7 +159,6 @@ const navLinks = [
     font-weight: 700;
     color: var(--color-brand-red);
     white-space: nowrap;
-    margin-left: auto;
   }
 
   .phone-cta:hover {
@@ -178,6 +183,10 @@ const navLinks = [
     cursor: pointer;
     color: var(--color-headline);
     flex-shrink: 0;
+    /* Carries the right-alignment that .phone-cta's margin-left:auto used to
+       provide before the number went desktop-only — without it the toggle
+       would collapse against the logo and leave the row's right edge empty. */
+    margin-left: auto;
   }
 
   .nav-toggle:hover {
@@ -279,8 +288,9 @@ const navLinks = [
       margin-left: auto;
     }
 
-    /* Override inline order: logo | nav | phone */
+    /* Restored here — desktop order stays logo | nav | phone, unchanged. */
     .phone-cta {
+      display: inline-flex;
       margin-left: var(--space-sm);
     }
 
