@@ -17,35 +17,19 @@
 import { getCollection } from 'astro:content';
 import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import TrustBar from '../components/ui/TrustBar.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
 import PhotoHeroBand from '../components/ui/PhotoHeroBand.astro';
 import ProcessSteps from '../components/ui/ProcessSteps.astro';
 import GHLFormEmbed from '../components/forms/GHLFormEmbed.astro';
 import { GBP_URL } from '../consts';
+// Round 3b: tile images + trimmed summaries moved to a shared module so the
+// /services hub renders the same cards from the same source (no parallel copy
+// to drift). Definitions and provenance notes live there.
+import { serviceTileImages, serviceTileSummaries } from '../serviceTiles';
 // Direct imports (Home has no content-collection entry) — unlike the service
 // pages' heroImage frontmatter, no extra full-res passthrough copy lands in
 // dist/_astro for these (doc 11 learning).
 import roofAerial06 from '../assets/ai/ai-roof-aerial-06.png';
-import stormSky01 from '../assets/ai/ai-storm-sky-01.png';
-import roofAerial02 from '../assets/ai/ai-roof-aerial-02.png';
-import shingleDetail01 from '../assets/ai/ai-shingle-detail-01.png';
-
-// Same photo + neutral alt already wired to each service's own hero, so the
-// tile and its destination match (Stage 3b Round 2 §3).
-const serviceTileImages = {
-  'storm-damage-restoration': { src: stormSky01, alt: 'dark storm clouds over a residential neighborhood' },
-  'roof-replacement': { src: roofAerial02, alt: 'aerial view of a residential roof with brown shingles' },
-  'roof-repair': { src: shingleDetail01, alt: 'close-up texture of asphalt roof shingles' },
-};
-
-// Round 2 amendment §3 — tile copy cut to its first sentence only (pure
-// deletion from each service's own `summary`, byte-identical, no rewording).
-const serviceTileSummaries = {
-  'storm-damage-restoration': "After a hailstorm or windstorm, Sawtooth Roofing inspects your roof, documents the damage for your insurance claim, and completes the approved restoration.",
-  'roof-replacement': "Sawtooth Roofing replaces storm-worn and aging roofs across the Treasure Valley with roofing products built for Idaho's hail, wind, and temperature swings.",
-  'roof-repair': "Sawtooth Roofing repairs leaks, missing or wind-lifted shingles, and failed flashing for homeowners across the Treasure Valley.",
-};
 
 // Verbatim from the prior inline markup — restructured into data for the
 // shared ProcessSteps component, no copy authored or reworded (§41-5802).
@@ -128,13 +112,12 @@ const services = homeGridSlugs
       </div>
     </PhotoHeroBand>
 
-    <!-- ─────────────────────────────────────────────────
-         SECTION 2 — TRUST BAR (§S1, directly under hero)
-         [F1 license · F3 verify rating]
-         ───────────────────────────────────────────────── -->
-    <SectionBand surface="light" pad="thin" divider="bottom">
-      <TrustBar />
-    </SectionBand>
+    <!-- Round 3b: the §S1 Trust Bar band that sat here was removed (Sam + Josh).
+         The hero's dark band now meets the contrast value-props band directly —
+         the surfaces already differ, so the old divider="bottom" that separated
+         the bar's light band from contrast is not needed and was not re-added.
+         F1's legal surface is unaffected: the Idaho registration number lives in
+         the footer, which is untouched. -->
 
     <!-- ─────────────────────────────────────────────────
          SECTION 3 — VALUE PROPS (3 blocks, answer-first)

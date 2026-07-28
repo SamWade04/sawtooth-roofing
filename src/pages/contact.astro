@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
+import PhotoHeroBand from '../components/ui/PhotoHeroBand.astro';
 import GHLBookingEmbed from '../components/forms/GHLBookingEmbed.astro';
+import heroPhoto from '../assets/ai/ai-neighborhood-03.png';
 import { GBP_URL } from '../consts';
 ---
 
@@ -12,9 +14,16 @@ import { GBP_URL } from '../consts';
   <!-- main.contact-page is a plain flow container; bands own all width/padding/surface -->
   <main class="contact-page">
 
-    <SectionBand surface="dark" width="content" pad="band">
-      <h1>Contact</h1>
-    </SectionBand>
+    {/* Round 3b: standard interior photo header (0.78 overlay, centered H1 only).
+        This page sits on BaseLayout + SectionBand rather than ContentPageLayout,
+        so PhotoHeroBand is used directly — same approach as the two hubs, no
+        layout restructure. The old dark band held the H1 and nothing else, so
+        there was no intro prose to relocate. */}
+    <PhotoHeroBand
+      image={heroPhoto}
+      alt="residential neighborhood street lined with houses"
+      heading="Contact"
+    />
 
     <SectionBand surface="light" width="content" pad="band" class="contact-band">
       <!-- Placed before the widget markup so the embed activates right after

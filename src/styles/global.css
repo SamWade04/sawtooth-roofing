@@ -5,7 +5,7 @@
    occupies near-identical space to Inter, so the swap costs little or no
    reflow. It must sit immediately after Inter and before the system stack.
    --font-sans   : Inter — body, and every sub-20px role (nav, buttons, labels,
-                   eyebrows, h3 micro-label, TrustBar, footer, captions).
+                   eyebrows, h3 micro-label, footer, captions).
    --font-display: headings ≥20px (h1, h2, ≥20px card titles). Finalized at
                    Inter (lab Option A) — kept as its own token so a future
                    face change stays a one-line edit. */

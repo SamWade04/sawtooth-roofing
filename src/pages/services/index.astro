@@ -1,9 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionBand from '../../components/ui/SectionBand.astro';
 import PhotoHeroBand from '../../components/ui/PhotoHeroBand.astro';
 import heroPhoto from '../../assets/ai/ai-roof-aerial-05.png';
+// Round 3b: same source Home reads, so the two grids cannot drift apart.
+import { serviceTileImages, serviceTileSummaries } from '../../serviceTiles';
 
 const services = (await getCollection('services', ({ data }) => !data.hidden)).sort(
   (a, b) => a.data.order - b.data.order
@@ -40,9 +43,25 @@ const services = (await getCollection('services', ({ data }) => !data.hidden)).s
         {
           services.map((service) =>
             service.data.draft ? (
-              /* Any draft, non-hidden entry renders as an unlinked coming-soon card */
+              /* Any draft, non-hidden entry renders as an unlinked coming-soon card.
+                 Round 3b adds the photo; the existing --draft opacity dims the whole
+                 card, image included. Badge and draft copy are untouched. */
               <li class="service-card service-card--draft">
                 <div class="service-card-link service-card-link--draft">
+                  {serviceTileImages[service.id] && (
+                    <figure class="service-card-media">
+                      <Picture
+                        src={serviceTileImages[service.id].src}
+                        alt={serviceTileImages[service.id].alt}
+                        formats={['avif', 'webp']}
+                        fallbackFormat="jpeg"
+                        widths={[400, 800]}
+                        sizes="(min-width: 768px) 33vw, 100vw"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </figure>
+                  )}
                   <span class="draft-badge">DRAFT — coming soon</span>
                   <h2>{service.data.title}</h2>
                   <p>{service.data.summary}</p>
@@ -51,8 +70,20 @@ const services = (await getCollection('services', ({ data }) => !data.hidden)).s
             ) : (
               <li class="service-card">
                 <a href={`/services/${service.id}`} class="service-card-link">
+                  <figure class="service-card-media">
+                    <Picture
+                      src={serviceTileImages[service.id].src}
+                      alt={serviceTileImages[service.id].alt}
+                      formats={['avif', 'webp']}
+                      fallbackFormat="jpeg"
+                      widths={[400, 800]}
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
                   <h2>{service.data.title}</h2>
-                  <p>{service.data.summary}</p>
+                  <p>{serviceTileSummaries[service.id]}</p>
                   <span class="service-card-cta">Learn more &rarr;</span>
                 </a>
               </li>
@@ -92,8 +123,11 @@ const services = (await getCollection('services', ({ data }) => !data.hidden)).s
     display: flex;
   }
 
+  /* Round 3b: column flex + auto-margin CTA, matching the Home tile, so the
+     "Learn more" links sit on a common baseline whatever the copy length. */
   .service-card-link {
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     padding: var(--space-md);
     background: var(--color-card);
@@ -115,8 +149,26 @@ const services = (await getCollection('services', ({ data }) => !data.hidden)).s
     border-color: var(--color-border-strong);
   }
 
+  /* Photo bleeds to the card's top corners — same negative-margin pull and
+     16:9 reservation as the Home tile (CLS-safe: the ratio holds the box). */
+  .service-card-media {
+    margin: calc(var(--space-md) * -1) calc(var(--space-md) * -1) var(--space-sm);
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+  }
+
+  .service-card-media :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Display title — plain h2 register, matching the Home tile. The previous
+     2.0rem override is gone so both grids share one type scale. */
   .service-card h2 {
-    font-size: 2.0rem;
+    margin-bottom: var(--space-xs);
   }
 
   .service-card p {
@@ -124,9 +176,10 @@ const services = (await getCollection('services', ({ data }) => !data.hidden)).s
   }
 
   .service-card-cta {
-    display: inline-block;
-    margin-top: var(--space-sm);
+    margin-top: auto;
+    padding-top: var(--space-sm);
     font-weight: 700;
+    font-size: 1.4rem;
     color: var(--color-brand-red);
   }
 
@@ -138,6 +191,9 @@ const services = (await getCollection('services', ({ data }) => !data.hidden)).s
 
   .draft-badge {
     display: inline-block;
+    /* The card is now a flex column, which would blockify this and stretch the
+       pill background across the full card width — keep it hugging its text. */
+    align-self: flex-start;
     margin-bottom: var(--space-xs);
     padding: 0.2rem 0.8rem;
     background: var(--color-border);
