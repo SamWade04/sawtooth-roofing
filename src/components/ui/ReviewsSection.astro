@@ -1,0 +1,279 @@
+---
+// Stage 3b Phase A — build-time-fetched Google reviews, our own markup, no
+// runtime third-party script. Replaces the static aggregate-only stat block
+// that used to occupy this slot on Home.
+//
+// RULING (2026-07-28): the feed is 5-star only (config.minStars = 5 on the
+// vendor side). totalReviewCount/averageRating describe the COMPLETE Google
+// Business Profile; the cards below show a subset of it. The aggregate line
+// and the attribution copy exist specifically to keep that distinction
+// visible — do not simplify them into a bare "X reviews" without the
+// profile-wide framing and the read-all-on-Google link.
+import type { Review } from '../../reviews';
+
+interface Props {
+  totalReviewCount: number;
+  averageRating: number;
+  reviews: Review[];
+  profileUrl: string;
+}
+
+const { totalReviewCount, averageRating, reviews, profileUrl } = Astro.props;
+
+const DISPLAY_COUNT = 12;
+const READ_MORE_THRESHOLD = 200; // mirrors Featurable's own config.maxCharacters
+
+const shown = reviews.slice(0, DISPLAY_COUNT);
+const ratingDisplay = averageRating.toFixed(1);
+
+// Build-time relative date — this page is static, so "3 weeks ago" is only
+// as fresh as the last deploy. Matches what the Testimonials Disclosure page
+// tells visitors: reviews update periodically, not instantly.
+function relativeTime(iso: string): string {
+  const then = new Date(iso).getTime();
+  const now = Date.now();
+  const days = Math.floor((now - then) / 86_400_000);
+  if (days < 1) return 'today';
+  if (days === 1) return '1 day ago';
+  if (days < 30) return `${days} days ago`;
+  const months = Math.floor(days / 30);
+  if (months < 12) return months === 1 ? '1 month ago' : `${months} months ago`;
+  const years = Math.floor(months / 12);
+  return years === 1 ? '1 year ago' : `${years} years ago`;
+}
+
+function initial(name: string): string {
+  return (name.trim().charAt(0) || '?').toUpperCase();
+}
+---
+
+<div class="reviews-section">
+  <div class="reviews-aggregate">
+    <span class="rating-stars" aria-hidden="true">&#9733;</span>
+    <span class="rating-score">
+      <strong>{ratingDisplay}</strong> average from <strong>{totalReviewCount} Google reviews</strong>
+    </span>
+    <a href={profileUrl} target="_blank" rel="noopener" class="reviews-read-all">
+      Read all {totalReviewCount} reviews on Google
+    </a>
+  </div>
+
+  <p class="reviews-attribution">
+    Showing our {shown.length} most recent five-star reviews from Google.
+  </p>
+
+  <ul class="reviews-grid">
+    {shown.map((review) => {
+      const long = review.comment.length > READ_MORE_THRESHOLD;
+      return (
+        <li class="review-card">
+          <div class="review-header">
+            {review.profilePhotoUrl ? (
+              <img
+                class="review-avatar"
+                src={review.profilePhotoUrl}
+                alt=""
+                width="40"
+                height="40"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'review-avatar review-avatar-fallback',textContent:this.dataset.initial}))"
+                data-initial={initial(review.displayName)}
+              />
+            ) : (
+              <span class="review-avatar review-avatar-fallback">{initial(review.displayName)}</span>
+            )}
+            <div class="review-identity">
+              <p class="review-name">{review.displayName}</p>
+              <div class="review-stars" aria-label={`${review.starRating} out of 5 stars`}>
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <span aria-hidden="true" class={i < review.starRating ? 'star star--on' : 'star'}>&#9733;</span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <p class={long ? 'review-text review-text--clamped' : 'review-text'} data-review-text>
+            {review.comment}
+          </p>
+          {long && (
+            <button type="button" class="review-read-more" data-review-toggle>
+              Read more
+            </button>
+          )}
+
+          <p class="review-date">{relativeTime(review.createTime)}</p>
+        </li>
+      );
+    })}
+  </ul>
+</div>
+
+<script>
+  // Progressive enhancement only — every review's full text is already in the
+  // DOM (clamped via CSS, not hidden), so this never gates content behind JS.
+  document.querySelectorAll<HTMLButtonElement>('[data-review-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const text = btn.previousElementSibling as HTMLElement | null;
+      if (!text) return;
+      const expanded = text.classList.toggle('review-text--expanded');
+      text.classList.toggle('review-text--clamped', !expanded);
+      btn.textContent = expanded ? 'Show less' : 'Read more';
+    });
+  });
+</script>
+
+<style>
+  .reviews-section {
+    text-align: center;
+  }
+
+  .reviews-aggregate {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs) var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .rating-stars {
+    font-size: 2.4rem;
+    color: var(--color-headline);
+    line-height: 1;
+  }
+
+  .rating-score {
+    font-size: 1.6rem;
+    color: var(--color-body);
+  }
+
+  .reviews-read-all {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-brand-red);
+    text-decoration: none;
+  }
+
+  .reviews-read-all:hover {
+    color: var(--color-brand-red-hover);
+  }
+
+  .reviews-attribution {
+    margin-top: var(--space-sm);
+    font-size: 1.3rem;
+    color: var(--color-muted);
+  }
+
+  .reviews-grid {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-lg) 0 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+    text-align: left;
+  }
+
+  @media (min-width: 768px) {
+    .reviews-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .review-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-md);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .review-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .review-avatar {
+    flex-shrink: 0;
+    width: 4.0rem;
+    height: 4.0rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .review-avatar-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-headline);
+    color: var(--color-bg);
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+
+  .review-identity {
+    min-width: 0;
+  }
+
+  .review-name {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--color-headline);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .review-stars {
+    font-size: 1.2rem;
+    line-height: 1;
+    color: var(--color-border-strong);
+    margin-top: var(--space-2xs);
+  }
+
+  .star--on {
+    color: var(--color-headline);
+  }
+
+  .review-text {
+    margin-top: var(--space-sm);
+    font-size: 1.4rem;
+    color: var(--color-body);
+  }
+
+  .review-text--clamped {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .review-read-more {
+    align-self: flex-start;
+    margin-top: var(--space-xs);
+    padding: 0;
+    background: none;
+    border: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-brand-red);
+    cursor: pointer;
+  }
+
+  .review-read-more:hover {
+    color: var(--color-brand-red-hover);
+  }
+
+  .review-date {
+    margin-top: auto;
+    padding-top: var(--space-sm);
+    font-size: 1.2rem;
+    color: var(--color-muted);
+  }
+</style>

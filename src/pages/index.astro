@@ -9,7 +9,9 @@
 //   email: contact@sawtooth-roofing.com
 //   areaServed: Nampa, Caldwell, Meridian, Boise, Kuna
 //   sameAs: TODO[F2] — live GBP URL after NAP reconcile
-//   AggregateRating: 5.0 / 83 — TODO[F3] verify at publish; schema must match displayed number
+//   AggregateRating: source from reviews.ts getReviews() (totalReviewCount /
+//     averageRating) at A5, NOT hardcoded — profile-wide figures, must match
+//     the aggregate string rendered by ReviewsSection.
 //   openingHoursSpecification: 8:00 AM–9:00 PM daily (sourced from live GBP, June 26 2026)
 //   FAQPage: built from FAQ collection (later step); 3 Home teaser Qs must match canonical entries verbatim
 //   NOTE: do NOT emit Review with consentVerified=true. Aggregate rating only.
@@ -20,7 +22,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
 import PhotoHeroBand from '../components/ui/PhotoHeroBand.astro';
 import ProcessSteps from '../components/ui/ProcessSteps.astro';
+import ReviewsSection from '../components/ui/ReviewsSection.astro';
 import GHLFormEmbed from '../components/forms/GHLFormEmbed.astro';
+import { getReviews } from '../reviews';
 import { GBP_URL } from '../consts';
 // Round 3b: tile images + trimmed summaries moved to a shared module so the
 // /services hub renders the same cards from the same source (no parallel copy
@@ -51,6 +55,8 @@ const HOW_IT_WORKS_STEPS = [
     body: 'Once your claim is approved, we schedule the work and complete the repair or full replacement with quality materials and a clean jobsite.',
   },
 ];
+
+const reviewsData = await getReviews();
 
 const allServices = await getCollection('services');
 // Home grid: exactly 3 core tiles in canonical order (doc 11 + doc 30 §1/§3(b)/§6)
@@ -232,30 +238,24 @@ const services = homeGridSlugs
     </SectionBand>
 
     <!-- ─────────────────────────────────────────────────
-         SECTION 7 — SOCIAL PROOF
-         Aggregate stat ONLY — no individual review text.
-         Google remains system of record; stat links out to
-         the live profile so visitors read reviews there.
-         consentVerified = false for all testimonials.
-         Decision locked: aggregate-only per Command
-         (FTC + consent + review-gating risk).
-         [F2: replace href with live GBP URL after NAP reconcile]
-         [F3: verify 83/5.0 against live GBP at publish; AggregateRating schema must match]
+         SECTION 7 — SOCIAL PROOF (Stage 3b Phase A)
+         Build-time-fetched Google reviews, our own static markup — see
+         src/reviews.ts and components/ui/ReviewsSection.astro. RULING
+         (2026-07-28): the feed is 5-star only (vendor-side config.minStars=5);
+         totalReviewCount/averageRating describe the COMPLETE Google Business
+         Profile, the cards show a subset of it. ReviewsSection owns keeping
+         that distinction visible — do not simplify its aggregate string.
+         No JSON-LD emitted here — schema stays A5-gated (doc 31 §S4).
          ───────────────────────────────────────────────── -->
     <SectionBand surface="contrast" width="content" pad="band">
       <div class="social-proof">
         <h2>What Treasure Valley homeowners say</h2>
-        {/* F3: verify 83/5.0 against live GBP at publish; AggregateRating schema must match */}
-        <a
-          href={GBP_URL}
-          target="_blank"
-          rel="noopener"
-          class="rating-stat"
-          aria-label="See our 5.0 rating on Google"
-        >
-          <span class="rating-stars">&#9733;</span>
-          <span class="rating-score"><strong>5.0</strong> average from <strong>83 Google reviews</strong></span>
-        </a>
+        <ReviewsSection
+          totalReviewCount={reviewsData.totalReviewCount}
+          averageRating={reviewsData.averageRating}
+          reviews={reviewsData.reviews}
+          profileUrl={GBP_URL}
+        />
       </div>
     </SectionBand>
 
@@ -564,39 +564,15 @@ const services = homeGridSlugs
     color: var(--color-brand-red);
   }
 
-  /* ── SOCIAL PROOF ── */
+  /* ── SOCIAL PROOF ──
+     Card/stat/star styling now lives in ReviewsSection.astro's own scope —
+     this page only owns the section wrapper and heading. */
   .social-proof {
     text-align: center;
   }
 
   .social-proof h2 {
     margin-bottom: var(--space-md);
-  }
-
-  .rating-stat {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-xs);
-    text-decoration: none;
-    padding: var(--space-sm) var(--space-md);
-    background: var(--color-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-  }
-
-  .rating-stat:hover {
-    border-color: var(--color-border-strong);
-  }
-
-  .rating-stars {
-    font-size: 2.4rem;
-    color: var(--color-headline);
-    line-height: 1;
-  }
-
-  .rating-score {
-    font-size: 1.6rem;
-    color: var(--color-body);
   }
 
   /* ── FAQ TEASER ── */

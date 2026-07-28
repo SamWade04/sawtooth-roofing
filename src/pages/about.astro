@@ -4,10 +4,16 @@ import PhotoHeroBand from '../components/ui/PhotoHeroBand.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
 import PageTailCTA from '../components/ui/PageTailCTA.astro';
 import neighborhood from '../assets/ai/ai-neighborhood-01.png';
+import { getReviews } from '../reviews';
 import { GBP_URL } from '../consts';
 
 const LEAD =
   "Sawtooth Roofing is an Idaho-registered roofing contractor based in Meridian, specializing in storm- and hail-damage insurance-restoration roofing across the Treasure Valley. When a storm moves through Nampa, Caldwell, Meridian, Boise, or Kuna, we're the local crew homeowners call to inspect the damage, document it for their insurance claim, and rebuild the roof right.";
+
+// Stage 3b Phase A — derived, not hardcoded. Shares the memoized fetch with
+// Home (src/reviews.ts), so this doesn't cost a second build-time API call.
+const { totalReviewCount, averageRating } = await getReviews();
+const ratingDisplay = averageRating.toFixed(1);
 ---
 
 <BaseLayout
@@ -34,7 +40,7 @@ const LEAD =
         <p>We source materials through <strong>ABC Supply</strong> and <strong>Pacific Supply</strong> — quality systems installed to manufacturer specification, built for Idaho's climate.</p>
 
         <h3>Proof, not promises</h3>
-        <p>We let the work speak. Sawtooth Roofing holds a <strong>5.0 average across 83 Google reviews</strong> — see them for yourself on our <a href={GBP_URL} target="_blank" rel="noopener">Google Business Profile</a>.</p>
+        <p>We let the work speak. Sawtooth Roofing holds a <strong>{ratingDisplay} average across {totalReviewCount} Google reviews</strong> — see them for yourself on our <a href={GBP_URL} target="_blank" rel="noopener">Google Business Profile</a>.</p>
 
         <h3>The team</h3>
         <p>Sawtooth Roofing &amp; Construction LLC is owner-led by a small, hands-on team:</p>

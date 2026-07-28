@@ -1,0 +1,155 @@
+---
+// Stage 3b Phase C — real project photography only. No AI assets anywhere on
+// this page, including the hero: this page exists to be a proof surface, so
+// an AI-generated hero would undercut the point. No suitable real photo
+// exists for a full-bleed hero treatment (these are all roof-level project
+// shots, not neighborhood/establishing shots), so the hero is a solid dark
+// band with the heading only — reported as a deliberate choice, not an
+// oversight.
+//
+// Photo provenance: ingested from "Anthony Leiser's files - After pics" per
+// the Phase D GPS recon. Every file here was GPS-verified to fall inside its
+// named city's limits — NOT trusted from the source folder name (the recon
+// caught 5 files folder-labeled "Caldwell" that are actually inside Nampa).
+// EXIF/GPS stripped at ingest (exiftool -all=). Captions are city-level only
+// — never a street, neighborhood, or address; no coordinate is recorded here
+// or anywhere in this repo.
+import { Picture } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionBand from '../components/ui/SectionBand.astro';
+
+import kuna01 from '../assets/projects/kuna-01.jpg';
+import kuna02 from '../assets/projects/kuna-02.jpg';
+import kuna03 from '../assets/projects/kuna-03.jpg';
+import kuna04 from '../assets/projects/kuna-04.jpg';
+import kuna05 from '../assets/projects/kuna-05.jpg';
+import kuna06 from '../assets/projects/kuna-06.jpg';
+import kuna07 from '../assets/projects/kuna-07.jpg';
+import kuna08 from '../assets/projects/kuna-08.jpg';
+
+import nampa01 from '../assets/projects/nampa-01.jpg';
+import nampa02 from '../assets/projects/nampa-02.jpg';
+import nampa03 from '../assets/projects/nampa-03.jpg';
+import nampa04 from '../assets/projects/nampa-04.jpg';
+import nampa05 from '../assets/projects/nampa-05.jpg';
+import nampa06 from '../assets/projects/nampa-06.jpg';
+import nampa07 from '../assets/projects/nampa-07.jpg';
+
+import caldwell01 from '../assets/projects/caldwell-01.jpg';
+import caldwell02 from '../assets/projects/caldwell-02.jpg';
+import caldwell03 from '../assets/projects/caldwell-03.jpg';
+import caldwell04 from '../assets/projects/caldwell-04.jpg';
+import caldwell05 from '../assets/projects/caldwell-05.jpg';
+import caldwell06 from '../assets/projects/caldwell-06.jpg';
+
+import boise01 from '../assets/projects/boise-01.jpg';
+import boise02 from '../assets/projects/boise-02.jpg';
+
+const GROUPS = [
+  {
+    city: 'Kuna',
+    photos: [kuna01, kuna02, kuna03, kuna04, kuna05, kuna06, kuna07, kuna08],
+  },
+  {
+    city: 'Nampa',
+    photos: [nampa01, nampa02, nampa03, nampa04, nampa05, nampa06, nampa07],
+  },
+  {
+    city: 'Caldwell',
+    photos: [caldwell01, caldwell02, caldwell03, caldwell04, caldwell05, caldwell06],
+  },
+  {
+    city: 'Boise',
+    photos: [boise01, boise02],
+  },
+];
+
+let imageIndex = 0;
+---
+
+<BaseLayout
+  title="Our Work | Sawtooth Roofing"
+  description="Completed roofing projects across the Treasure Valley, by city."
+>
+  <main class="portfolio-page">
+
+    <SectionBand surface="dark" width="content" pad="band">
+      <h1>Our Work</h1>
+    </SectionBand>
+
+    <SectionBand surface="light" width="content" pad="band">
+      {GROUPS.map((group) => (
+        <div class="portfolio-city">
+          <h2>{group.city}</h2>
+          <ul class="portfolio-grid">
+            {group.photos.map((photo) => {
+              const eager = imageIndex === 0;
+              imageIndex += 1;
+              return (
+                <li class="portfolio-tile">
+                  <Picture
+                    src={photo}
+                    alt={`Completed roofing project in ${group.city}, Idaho`}
+                    formats={['avif', 'webp']}
+                    fallbackFormat="jpeg"
+                    widths={[400, 800, 1200]}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    loading={eager ? 'eager' : 'lazy'}
+                    decoding="async"
+                    fetchpriority={eager ? 'high' : undefined}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))}
+    </SectionBand>
+
+  </main>
+</BaseLayout>
+
+<style>
+  .portfolio-city + .portfolio-city {
+    margin-top: var(--space-xl);
+  }
+
+  .portfolio-city h2 {
+    margin-bottom: var(--space-md);
+  }
+
+  .portfolio-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  @media (min-width: 768px) {
+    .portfolio-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .portfolio-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .portfolio-tile {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+  }
+
+  .portfolio-tile :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
