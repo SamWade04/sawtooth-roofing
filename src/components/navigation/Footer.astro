@@ -1,18 +1,23 @@
 ---
 import { getCollection } from 'astro:content';
+import { HEARTH_FINANCING_URL } from '../../consts';
 
 // §S3 — Footer NAP + legal line.
 const year = new Date().getFullYear();
 
 // A2 Quick Links nav PRESERVED — Blog link must remain here per IA decision.
+// Financing is interim (see Header.astro note) — external, marked as such.
+// Testimonials Disclosure sits with Privacy/Terms as the third legal link.
 const footerLinks = [
-  { label: 'Services',        href: '/services'  },
-  { label: 'Locations',       href: '/locations' },
-  { label: 'About',           href: '/about'     },
-  { label: 'Contact',         href: '/contact'   },
-  { label: 'Blog',            href: '/blog'      },
-  { label: 'Privacy Policy',  href: '/privacy'   },
-  { label: 'Terms of Use',    href: '/terms'     },
+  { label: 'Services',                 href: '/services'  },
+  { label: 'Locations',                href: '/locations' },
+  { label: 'About',                    href: '/about'     },
+  { label: 'Contact',                  href: '/contact'   },
+  { label: 'Financing',                href: HEARTH_FINANCING_URL, external: true },
+  { label: 'Blog',                     href: '/blog'      },
+  { label: 'Privacy Policy',           href: '/privacy'   },
+  { label: 'Terms of Use',             href: '/terms'     },
+  { label: 'Testimonials Disclosure',  href: '/testimonials-disclosure' },
 ];
 
 // Collection-driven, draft-aware — mirrors the /locations hub pattern.
@@ -60,8 +65,17 @@ const serviceAreas = (await getCollection('locations')).sort(
     <div class="footer-section footer-section--links">
       <p class="footer-section-heading">Quick Links</p>
       <ul class="footer-link-list">
-        {footerLinks.map(({ label, href }) => (
-          <li><a href={href} class="footer-link">{label}</a></li>
+        {footerLinks.map(({ label, href, external }) => (
+          <li>
+            <a
+              href={href}
+              class="footer-link"
+              target={external ? '_blank' : undefined}
+              rel={external ? 'noopener noreferrer' : undefined}
+            >
+              {label}
+            </a>
+          </li>
         ))}
       </ul>
     </div>

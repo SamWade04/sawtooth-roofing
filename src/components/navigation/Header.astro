@@ -1,9 +1,17 @@
 ---
+import { HEARTH_FINANCING_URL } from '../../consts';
+
+// Financing is interim: it points straight at the lending partner's
+// application, external and marked as such. A real /financing page is
+// planned but deliberately deferred — publishing specific rates, APRs, or
+// payment figures on our own page triggers Truth in Lending / Regulation Z
+// disclosure obligations that a bare link-out does not.
 const navLinks = [
-  { label: 'Services',  href: '/services'  },
-  { label: 'Locations', href: '/locations' },
-  { label: 'About',     href: '/about'     },
-  { label: 'Contact',   href: '/contact'   },
+  { label: 'Services',   href: '/services'  },
+  { label: 'Locations',  href: '/locations' },
+  { label: 'About',      href: '/about'     },
+  { label: 'Contact',    href: '/contact'   },
+  { label: 'Financing',  href: HEARTH_FINANCING_URL, external: true },
 ];
 ---
 
@@ -60,10 +68,17 @@ const navLinks = [
       <span class="burger" aria-hidden="true"></span>
     </button>
 
-    <!-- Primary nav — 4 items -->
+    <!-- Primary nav — 5 items -->
     <nav id="primary-nav" class="primary-nav" aria-label="Primary navigation">
-      {navLinks.map(({ label, href }) => (
-        <a href={href} class="nav-link">{label}</a>
+      {navLinks.map(({ label, href, external }) => (
+        <a
+          href={href}
+          class="nav-link"
+          target={external ? '_blank' : undefined}
+          rel={external ? 'noopener noreferrer' : undefined}
+        >
+          {label}
+        </a>
       ))}
     </nav>
 

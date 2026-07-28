@@ -1,0 +1,41 @@
+---
+// LEGAL PAGE — Anthony holds the YMYL/compliance gate. Copy below is wired
+// VERBATIM from dispatch (Phase C, Round 4). Author nothing: no copy changes,
+// no added links beyond what the source text itself specifies. Sam routes
+// this to Anthony for approval BEFORE merge.
+import ContentPageLayout from '../layouts/ContentPageLayout.astro';
+import heroPhoto from '../assets/ai/ai-roof-aerial-01.png';
+
+const lastUpdated = new Date().toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<ContentPageLayout
+  title="Testimonials Disclosure | Sawtooth Roofing"
+  description="How Sawtooth Roofing displays customer reviews and testimonials, and where to read the complete, unfiltered set."
+  heading="Testimonials Disclosure"
+  heroImage={{ src: heroPhoto, alt: 'aerial view of a residential roof with dark gray shingles' }}
+>
+  <p><em>Last updated: {lastUpdated}</em></p>
+
+  <p>The reviews and testimonials displayed on this website are real reviews left by customers on our Google Business Profile.</p>
+
+  <h2>How we display reviews</h2>
+  <p>We display reviews exactly as our customers wrote them. We do not edit, shorten, or rewrite review text, and we do not select which reviews appear based on how positive or negative they are. We do not filter reviews by star rating.</p>
+  <p>The reviews shown on our website are the most recent reviews we have received. They are a portion of our total reviews, not all of them. You can read every review we have received, including any we have not displayed here, on our Google Business Profile.</p>
+
+  <h2>How often reviews update</h2>
+  <p>Reviews on this website are updated periodically rather than instantly. A review left on Google today may not appear here immediately. The overall rating and review count shown on this site reflect our Google Business Profile as of the last time our website was updated. For the current total at any moment, see our Google Business Profile.</p>
+
+  <h2>Compensation</h2>
+  <p>We do not pay for reviews. We do not offer discounts, gifts, or any other compensation in exchange for a review, and we do not offer anything in exchange for a positive review specifically. We ask every customer for a review after their job is complete, regardless of how the job went.</p>
+
+  <h2>Your results may differ</h2>
+  <p>Every roof, every storm, and every insurance policy is different. Another homeowner's experience does not predict what will happen with your roof, your claim, or your project. Reviews describe those customers' experiences and are not a promise or guarantee of any particular outcome, timeline, or insurance result.</p>
+
+  <h2>Questions</h2>
+  <p>If you have a question about a review displayed on this site, contact us at contact@sawtooth-roofing.com or 208.996.8748.</p>
+</ContentPageLayout>
