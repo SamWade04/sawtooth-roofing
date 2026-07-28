@@ -43,9 +43,13 @@ const services = (await getCollection('services', ({ data }) => !data.hidden)).s
         {
           services.map((service) =>
             service.data.draft ? (
-              /* Any draft, non-hidden entry renders as an unlinked coming-soon card.
-                 Round 3b adds the photo; the existing --draft opacity dims the whole
-                 card, image included. Badge and draft copy are untouched. */
+              /* Any draft, non-hidden entry renders as an unlinked,
+                 non-interactive card — a <div>, not an <a>, so there is no
+                 href, no hover-lift, and nothing announced as a link to
+                 assistive tech. Round 3b's photo and the --draft opacity
+                 dimming both stay; the "DRAFT — coming soon" badge is
+                 removed (Round 4, Sam's ruling) and image/description are
+                 otherwise untouched. */
               <li class="service-card service-card--draft">
                 <div class="service-card-link service-card-link--draft">
                   {serviceTileImages[service.id] && (
@@ -62,7 +66,6 @@ const services = (await getCollection('services', ({ data }) => !data.hidden)).s
                       />
                     </figure>
                   )}
-                  <span class="draft-badge">DRAFT — coming soon</span>
                   <h2>{service.data.title}</h2>
                   <p>{service.data.summary}</p>
                 </div>
@@ -187,21 +190,5 @@ const services = (await getCollection('services', ({ data }) => !data.hidden)).s
     opacity: 0.6;
     cursor: default;
     pointer-events: none;
-  }
-
-  .draft-badge {
-    display: inline-block;
-    /* The card is now a flex column, which would blockify this and stretch the
-       pill background across the full card width — keep it hugging its text. */
-    align-self: flex-start;
-    margin-bottom: var(--space-xs);
-    padding: 0.2rem 0.8rem;
-    background: var(--color-border);
-    color: var(--color-muted);
-    font-size: 1.2rem;
-    font-weight: 700;
-    border-radius: var(--radius-sm, 0.4rem);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
   }
 </style>

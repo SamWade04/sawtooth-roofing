@@ -6,6 +6,7 @@
 // rather than flooding the surface. On-dark text is handled entirely by the
 // global .band--dark cascade — no color rules here.
 import SectionBand from './SectionBand.astro';
+import { HEARTH_FINANCING_URL } from '../../consts';
 ---
 
 <SectionBand surface="dark" width="content" pad="thin">
@@ -16,7 +17,7 @@ import SectionBand from './SectionBand.astro';
     </p>
     <div class="financing-band-actions">
       <a
-        href="https://app.gethearth.com/financing/60785/107307/prequalify?utm_campaign=60785&utm_content=calculator&utm_medium=widget-calculator&utm_source=contractor&utm_term=107307"
+        href={HEARTH_FINANCING_URL}
         class="btn btn--primary"
         target="_blank"
         rel="noopener noreferrer"

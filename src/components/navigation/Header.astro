@@ -1,9 +1,17 @@
 ---
+import { HEARTH_FINANCING_URL } from '../../consts';
+
+// Financing is interim: it points straight at the lending partner's
+// application, external and marked as such. A real /financing page is
+// planned but deliberately deferred — publishing specific rates, APRs, or
+// payment figures on our own page triggers Truth in Lending / Regulation Z
+// disclosure obligations that a bare link-out does not.
 const navLinks = [
-  { label: 'Services',  href: '/services'  },
-  { label: 'Locations', href: '/locations' },
-  { label: 'About',     href: '/about'     },
-  { label: 'Contact',   href: '/contact'   },
+  { label: 'Services',   href: '/services'  },
+  { label: 'Locations',  href: '/locations' },
+  { label: 'About',      href: '/about'     },
+  { label: 'Contact',    href: '/contact'   },
+  { label: 'Financing',  href: HEARTH_FINANCING_URL, external: true },
 ];
 ---
 
@@ -11,31 +19,22 @@ const navLinks = [
   <div class="header-inner">
 
     <!-- Logo lockup — links to home, NOT an h1.
-         Roof mark: cropped directly from the brand lockup PNG
-         (sawtooth-logo-horizontal.png, Assets/Logo) — just the sawtooth
-         roofline glyph, trimmed to its alpha bounding box, native gray,
-         transparent background. The "SAWTOOTH ROOFING" lettering stays live
-         text in .wordmark, not part of the image. Decorative: alt="" since
-         the parent link's aria-label carries the accessible name. -->
+         ROUND 4 TEST (Sam's gate judgment call): the full designed horizontal
+         lockup (sawtooth-logo-horizontal.png, Assets/Logo — the same real brand
+         asset used for email signatures, and the crop source for both the old
+         header roof-mark and the favicon) as ONE image, replacing the cropped
+         mark + AI-generated wordmark it used to pair with. To revert: swap the
+         <img class="logo-horizontal"> below for the mark+wordmark pair
+         (public/logo-mark.png + public/wordmark-test.png, both still in the
+         repo, see git history prior to this commit for the exact markup) and
+         restore .logo-mark/.wordmark-test-img in the stylesheet below. -->
     <a href="/" class="logo" aria-label="Sawtooth Roofing — home">
       <img
-        src="/logo-mark.png"
-        srcset="/logo-mark.png 1x, /logo-mark@2x.png 2x"
-        width="74"
-        height="25"
-        alt=""
-        class="logo-mark"
-      />
-      <!-- WORDMARK TEST (Stage 3b Round 2 amendment, item 7) — Sam's gate
-           judgment call, one commit, trivially revertible: swap the
-           `<span class="wordmark">` back in and delete public/wordmark-test.png
-           to revert. ai-wordmark-test-01.png, letterforms inspected clean. -->
-      <img
-        src="/wordmark-test.png"
-        width="1180"
-        height="76"
+        src="/logo-horizontal.png"
+        width="900"
+        height="141"
         alt="Sawtooth Roofing"
-        class="wordmark-test-img"
+        class="logo-horizontal"
       />
     </a>
 
@@ -60,10 +59,17 @@ const navLinks = [
       <span class="burger" aria-hidden="true"></span>
     </button>
 
-    <!-- Primary nav — 4 items -->
+    <!-- Primary nav — 5 items -->
     <nav id="primary-nav" class="primary-nav" aria-label="Primary navigation">
-      {navLinks.map(({ label, href }) => (
-        <a href={href} class="nav-link">{label}</a>
+      {navLinks.map(({ label, href, external }) => (
+        <a
+          href={href}
+          class="nav-link"
+          target={external ? '_blank' : undefined}
+          rel={external ? 'noopener noreferrer' : undefined}
+        >
+          {label}
+        </a>
       ))}
     </nav>
 
@@ -117,28 +123,14 @@ const navLinks = [
     flex-shrink: 0;
   }
 
-  .logo-mark {
-    flex-shrink: 0;
-  }
-
-  .wordmark {
-    font-weight: 700;
-    font-size: 1.6rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--color-headline);
-    white-space: nowrap;
-  }
-
-  /* WORDMARK TEST — sized to the live-text wordmark's rendered height */
-  /* Mobile-first: this display face runs much wider per unit height than
-     the live-text wordmark it replaces, so matching the text's cap-height
-     directly overflowed a 375px header. Sized instead to roughly the same
-     rendered WIDTH the text wordmark had (~146px at 375px, verified in
-     PR #20); desktop gets the taller, more legible size since there's
-     ample room there. */
-  .wordmark-test-img {
-    height: 0.9rem;
+  /* ROUND 4 TEST — full horizontal lockup, one image. Mobile-first: sized so
+     mark+wordmark+hamburger all share the 375px row without wrapping (the
+     exact failure mode the old AI wordmark hit) — height chosen empirically
+     against the real header padding/gaps, not computed from the source
+     aspect ratio alone. width: auto keeps the intrinsic ~6.37:1 ratio so the
+     lockup scales uniformly and never stretches. */
+  .logo-horizontal {
+    height: 2.4rem;
     width: auto;
     flex-shrink: 0;
   }
@@ -268,8 +260,8 @@ const navLinks = [
       z-index: 40;
     }
 
-    .wordmark-test-img {
-      height: 1.8rem;
+    .logo-horizontal {
+      height: 3.2rem;
     }
 
     .nav-toggle {
