@@ -54,9 +54,14 @@ const src = `https://api.leadconnectorhq.com/widget/form/${formId}`;
         // element never gets this component's Astro scope attribute, so the
         // scoped `border: 0` silently never matched it — the visible box
         // was the browser's own default 2px inset iframe border (found
-        // during Round 2 amendment 3 verification).
+        // during Round 2 amendment 3 verification). `width` has the same
+        // bug: the scoped `width: 100%` never matched either, so the iframe
+        // sat at the browser's intrinsic default (300px) regardless of the
+        // ~467px column it had to fill (Stage 3b Phase D micro-form width
+        // diagnostic).
         iframe.style.border = '0';
         iframe.style.borderRadius = 'var(--radius-sm)';
+        iframe.style.width = '100%';
         wrap.appendChild(iframe);
       };
       const sync = () => {

@@ -1,11 +1,11 @@
 ---
 // Stage 3b Phase C — real project photography only. No AI assets anywhere on
 // this page, including the hero: this page exists to be a proof surface, so
-// an AI-generated hero would undercut the point. No suitable real photo
-// exists for a full-bleed hero treatment (these are all roof-level project
-// shots, not neighborhood/establishing shots), so the hero is a solid dark
-// band with the heading only — reported as a deliberate choice, not an
-// oversight.
+// an AI-generated hero would undercut the point. Hero uses boise-01 (aerial,
+// roof plane fills the center of the frame) — under PhotoHeroBand's cover
+// crop the roof spans nearly the full band; the driveway/vehicle at the
+// bottom edge and treeline at the top fall outside the cropped strip. Alt
+// text is neutral and city-free since the hero carries no caption.
 //
 // Photo provenance: ingested from "Anthony Leiser's files - After pics" per
 // the Phase D GPS recon. Every file here was GPS-verified to fall inside its
@@ -17,6 +17,7 @@
 import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionBand from '../components/ui/SectionBand.astro';
+import PhotoHeroBand from '../components/ui/PhotoHeroBand.astro';
 
 import kuna01 from '../assets/projects/kuna-01.jpg';
 import kuna02 from '../assets/projects/kuna-02.jpg';
@@ -73,9 +74,11 @@ let imageIndex = 0;
 >
   <main class="portfolio-page">
 
-    <SectionBand surface="dark" width="content" pad="band">
-      <h1>Our Work</h1>
-    </SectionBand>
+    <PhotoHeroBand
+      image={boise01}
+      alt="Aerial view of a completed asphalt shingle roof installation"
+      heading="Our Work"
+    />
 
     <SectionBand surface="light" width="content" pad="band">
       {GROUPS.map((group) => (
